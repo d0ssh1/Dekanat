@@ -12,3 +12,11 @@ playwright-report
 .env
 .env.*
 !.env.example
+# Служебное для тестов и отчёта — в образе не нужно, а без tests/ не проходит проверку типов
+playwright.config.ts
+vitest.config.ts
+scripts/peek.ts
+scripts/ask.ts
+scripts/report.ts
+.next-e2e
+storage-e2e
