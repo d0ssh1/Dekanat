@@ -44,7 +44,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Сценарии в браузере (360 px и компьютер)
         run: npm run test:e2e
-        env: { CI: '1' }
+        env: { CI: '1', ALLOW_TIME_OVERRIDE: '1' }
       - name: В клиентском бандле нет секретов
         run: |
           ! grep -rE "ci_app_pw|ci_owner_pw|GIGACHAT_AUTH_KEY|DATABASE_URL" .next/static

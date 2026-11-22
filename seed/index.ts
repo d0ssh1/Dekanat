@@ -96,7 +96,7 @@ const PI_COURSES: CourseDef[] = [
     short: 'БД',
     teacher: 'smirnov',
     control: 'exam',
-    threshold: 50,
+    threshold: 40,
     color: '#7C5CFF',
   },
   {
@@ -105,7 +105,7 @@ const PI_COURSES: CourseDef[] = [
     short: 'Матстат',
     teacher: 'orlova',
     control: 'exam',
-    threshold: 50,
+    threshold: 35,
     color: '#0B8F6A',
   },
   {
@@ -182,7 +182,7 @@ const KOR_COURSES: CourseDef[] = [
     short: 'История Кореи',
     teacher: 'lee',
     control: 'exam',
-    threshold: 50,
+    threshold: 40,
     color: '#7C5CFF',
   },
   {
@@ -458,16 +458,14 @@ async function main() {
       avatarColor: '#7CC4FF',
     },
   ]);
-  await db
-    .insert(s.staff)
-    .values({
-      userId: uStaff,
-      lastName: 'Иванова',
-      firstName: 'Ольга',
-      middleName: 'Петровна',
-      position: 'Методист дирекции ИМКТ',
-      instituteId: imct,
-    });
+  await db.insert(s.staff).values({
+    userId: uStaff,
+    lastName: 'Иванова',
+    firstName: 'Ольга',
+    middleName: 'Петровна',
+    position: 'Методист дирекции ИМКТ',
+    instituteId: imct,
+  });
 
   // Предметы и курсы текущего семестра
   const subjectIds = new Map<string, string>();
@@ -709,16 +707,14 @@ async function main() {
   ) {
     for (const [semester, subject, teacher, control, grade, points, on] of rows) {
       const courseId = randomUUID();
-      await db
-        .insert(s.courses)
-        .values({
-          id: courseId,
-          subjectId: await subjectId(subject, subject),
-          groupId,
-          teacherId: teacherIds[teacher],
-          semester,
-          controlType: control,
-        });
+      await db.insert(s.courses).values({
+        id: courseId,
+        subjectId: await subjectId(subject, subject),
+        groupId,
+        teacherId: teacherIds[teacher],
+        semester,
+        controlType: control,
+      });
       await db.insert(s.finalGrades).values({ studentId, courseId, grade, points, gradedOn: on });
     }
   }
@@ -778,30 +774,26 @@ async function main() {
       createdAt: opts.events[0]![1],
       updatedAt: last[1],
     });
-    await db
-      .insert(s.requestEvents)
-      .values(
-        opts.events.map(([status, when, actor, comment]) => ({
+    await db.insert(s.requestEvents).values(
+      opts.events.map(([status, when, actor, comment]) => ({
+        requestId: id,
+        studentId: opts.studentId,
+        status,
+        actorUserId: actor,
+        comment,
+        createdAt: when,
+      })),
+    );
+    if (opts.requirements?.length)
+      await db.insert(s.requestRequirements).values(
+        opts.requirements.map(([title, sat], i) => ({
           requestId: id,
           studentId: opts.studentId,
-          status,
-          actorUserId: actor,
-          comment,
-          createdAt: when,
+          title,
+          satisfiedAt: sat,
+          sort: i,
         })),
       );
-    if (opts.requirements?.length)
-      await db
-        .insert(s.requestRequirements)
-        .values(
-          opts.requirements.map(([title, sat], i) => ({
-            requestId: id,
-            studentId: opts.studentId,
-            title,
-            satisfiedAt: sat,
-            sort: i,
-          })),
-        );
     return id;
   }
   const nextWorkday = (() => {

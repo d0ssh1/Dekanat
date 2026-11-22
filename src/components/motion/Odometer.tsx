@@ -20,7 +20,12 @@ export function Odometer({ value, className }: { value: number | string; classNa
         {chars.map((ch, i) => {
           const d = DIGITS.indexOf(ch);
           const key = chars.length - i; // ключ от правого края: единицы остаются единицами
-          if (d < 0) return <span key={`s${key}`}>{ch}</span>;
+          if (d < 0)
+            return (
+              <span key={`s${key}`} style={{ display: 'inline-block', height: '1em', lineHeight: '1em' }}>
+                {ch}
+              </span>
+            );
           return (
             <m.span
               key={key}
