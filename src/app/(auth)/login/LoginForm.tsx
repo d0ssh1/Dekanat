@@ -25,6 +25,8 @@ function Submit() {
 export function LoginForm({ next }: { next?: string }) {
   const [state, action] = useActionState<LoginState, FormData>(loginAction, undefined);
   const [show, setShow] = useState(false);
+  // Caps Lock — подсказка под полем, только когда он правда включён.
+  const [caps, setCaps] = useState(false);
   const [shakeRef, shake] = useShake<HTMLDivElement>();
   const pwRef = useRef<HTMLInputElement>(null);
   const hasError = Boolean(state?.error);
@@ -65,6 +67,9 @@ export function LoginForm({ next }: { next?: string }) {
               required
               aria-invalid={hasError || undefined}
               aria-describedby={hasError ? 'login-error' : undefined}
+              onKeyDown={(e) => setCaps(e.getModifierState('CapsLock'))}
+              onKeyUp={(e) => setCaps(e.getModifierState('CapsLock'))}
+              onBlur={() => setCaps(false)}
               className={cn(field, 'pr-16', hasError && 'border-2 border-danger focus:border-danger')}
             />
             <button
@@ -79,6 +84,11 @@ export function LoginForm({ next }: { next?: string }) {
           </span>
         </label>
       </div>
+      {caps && (
+        <div className="mt-2 text-[13px] font-semibold text-ink-2" aria-live="polite">
+          Включён Caps Lock
+        </div>
+      )}
       <AnimatePresence initial={false}>
         {hasError && (
           <m.div
@@ -91,8 +101,7 @@ export function LoginForm({ next }: { next?: string }) {
             transition={spring.soft}
             className="overflow-hidden"
           >
-            <div className="mt-2 flex items-center gap-2 text-[13px] font-bold text-danger">
-              <span aria-hidden>!</span>
+            <div className="mt-2 text-[14px] font-bold text-danger">
               {/* Один блок с одним id; меняется только текст — без дублей для экранных дикторов. */}
               <m.span key={state?.error} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}>
                 {state?.error}

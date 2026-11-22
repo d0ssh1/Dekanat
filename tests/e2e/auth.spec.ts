@@ -28,9 +28,7 @@ test.describe('Вход и сессия', () => {
     await page.getByLabel('Логин или почта').fill(`nobody-${Date.now()}`);
     await page.getByLabel('Пароль', { exact: true }).fill('whatever');
     await page.getByRole('button', { name: 'Войти' }).click();
-    await expect(page.locator('#login-error')).toContainText(
-      'Неверный логин или пароль. Проверьте раскладку и Caps Lock.',
-    );
+    await expect(page.locator('#login-error')).toContainText('Неверный логин или пароль');
   });
 
   test('после 5 неудач вход блокируется', async ({ page }) => {
@@ -38,10 +36,10 @@ test.describe('Вход и сессия', () => {
     await page.goto('/login');
     // Счётчик виден только на последних попытках.
     const expected = [
-      'Проверьте раскладку',
-      'Проверьте раскладку',
-      'Ещё 2',
-      'Ещё 1',
+      'Неверный логин или пароль',
+      'Неверный логин или пароль',
+      'ещё 2',
+      'ещё 1',
       'Слишком много попыток',
     ];
     for (const [i, text] of expected.entries()) {
