@@ -1,0 +1,42 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: dekanat
+          POSTGRES_USER: dekanat_owner
+          POSTGRES_PASSWORD: ci_owner_pw
+        ports: ['54329:5432']
+        options: --health-cmd "pg_isready -U dekanat_owner" --health-interval 3s --health-retries 30
+    env:
+      DATABASE_URL: postgres://app_user:ci_app_pw@127.0.0.1:54329/dekanat
+      DATABASE_OWNER_URL: postgres://dekanat_owner:ci_owner_pw@127.0.0.1:54329/dekanat
+      APP_DB_PASSWORD: ci_app_pw
+      UNIVERSITY_TZ: Asia/Vladivostok
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22.13', cache: npm }
+      - run: npm ci --no-audit
+      - name: Поиск секретов в истории
+        uses: gitleaks/gitleaks-action@v2
+        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run db:migrate
+      - run: npm run db:seed
+      - run: npm test
+      - run: npm run build
+      - name: В клиентском бандле нет секретов
+        run: |
+          ! grep -rE "ci_app_pw|ci_owner_pw|GIGACHAT_AUTH_KEY|DATABASE_URL" .next/static

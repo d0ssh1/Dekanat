@@ -1,0 +1,10 @@
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:3000 {
+		# SSE и поток помощника — отдаём сразу, без буферизации
+		flush_interval -1
+	}
+	header {
+		-Server
+	}
+}

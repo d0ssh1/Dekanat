@@ -1,0 +1,44 @@
+/*
+ * Токены из финальных макетов (design/boards). Источник правды для цветов, радиусов и шрифта.
+ * Цвета «на глаз» в компонентах запрещены — только эти переменные (см. CLAUDE.md).
+ */
+:root {
+  /* Телефон: язык A1Calm / B2Phone */
+  --hero: #ff6a3d;
+  --hero-wash: #ffe2d4;
+  --hero-ink: #9e4317;
+  --surface: #ffffff;
+  --surface-2: #f4f1ef;
+  --line: #ece6e2;
+  --canvas: #e9e4e0;
+
+  /* Компьютер: язык B2Next */
+  --accent-desk: #ff6b2c;
+  --desk-bg: #efeff4;
+  --desk-muted: #e6e6ec;
+  --desk-chip: #f3f3f7;
+  --desk-line: #eeeef2;
+  --avatar: #ffc21a;
+
+  /* Текст */
+  --ink: #14141a;
+  --ink-desk: #16161d;
+  --ink-2: #4b4b57;
+  --ink-3: #8a8a96;
+
+  /* Статусы */
+  --ok: #0b6b43;
+  --ok-wash: #ddf3e8;
+  --danger: #b42318;
+  --danger-wash: #fde3e0;
+  --online: #1a3fa6;
+  --online-desk: #1e44c4;
+  --online-wash: #e9efff;
+
+  /* Радиусы */
+  --r-card: 28px;
+  --r-block: 24px;
+  --r-day: 16px;
+  --r-btn: 14px;
+  --r-icon: 10px;
+}

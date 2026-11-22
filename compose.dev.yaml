@@ -1,0 +1,19 @@
+# Локальная БД для разработки. Порт 54329, чтобы не конфликтовать с установленным Postgres.
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: dekanat
+      POSTGRES_USER: dekanat_owner
+      POSTGRES_PASSWORD: ${DB_OWNER_PASSWORD:-dev_owner_pw}
+    ports:
+      - '127.0.0.1:54329:5432'
+    volumes:
+      - dekanat-pg:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U dekanat_owner -d dekanat']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  dekanat-pg:

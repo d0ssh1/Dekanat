@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R2 — ошибки и фокус</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+
+
+a{color:#14141A;text-decoration:none;font-weight:700}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;box-shadow:0 0 0 10px #14141A;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.ring{position:absolute;right:-130px;top:-110px;width:340px;height:340px;border-radius:50%;border:54px solid rgba(255,255,255,.16);pointer-events:none}
+.top{padding:50px 18px 22px;position:relative}
+.bar{display:flex;align-items:center;gap:8px}
+.bell{width:44px;height:44px;border-radius:15px;border:0;background:rgba(255,255,255,.5);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cnt{position:absolute;top:5px;right:5px;min-width:18px;height:18px;border-radius:9px;background:#14141A;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.ava{width:44px;height:44px;border-radius:22px;background:#FFFFFF;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.ask{margin-top:14px;height:48px;border-radius:15px;background:rgba(255,255,255,.92);display:flex;align-items:center;gap:10px;padding:0 12px 0 6px}
+.tag{height:36px;padding:0 10px;border-radius:11px;background:#14141A;color:#FFFFFF;font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap}
+.cap{font-size:15px;font-weight:700;margin-top:20px}
+.big{font-size:104px;font-weight:900;letter-spacing:-0.06em;line-height:.88;margin-top:4px}
+.big span{font-size:36px;margin-left:8px;letter-spacing:-0.02em}
+.ttl{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-top:12px}
+.meta{font-size:14px;font-weight:600;margin-top:6px;line-height:1.45}
+.cta{margin-top:16px;width:100%;height:48px;border:0;border-radius:15px;background:#14141A;color:#FFFFFF;font-size:15px;font-weight:800;cursor:pointer}
+.sheet{flex:1;min-height:0;background:#FFFFFF;box-shadow:0 -8px 24px rgba(20,20,26,.08);position:relative;border-radius:28px 28px 0 0;padding:16px 18px 0;display:flex;flex-direction:column}
+.sh{display:flex;align-items:center;justify-content:space-between}
+.sh b{font-size:18px}
+.sh a{font-size:13px;padding:12px 0}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;font-size:15px;border-top:1px solid #ECE6E2;font-variant-numeric:tabular-nums}
+.row.first{border-top:0}
+.t{width:46px;font-weight:700}
+.sub{font-size:13px;font-weight:500;color:#4B4B57;margin-top:2px}
+.st{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+.lnk{min-height:48px;padding:0 14px;border-radius:14px;background:#F4F1EF;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;box-sizing:border-box}
+.join{height:34px;padding:0 12px;margin:-2px 0;border:0;border-radius:10px;background:#E8EEFF;color:#1A3FA6;font-size:13px;font-weight:800;cursor:pointer}
+.tab{width:72px;min-height:52px;border:0;background:transparent;color:#4B4B57;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+.tab .pi{width:56px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center}
+.tab.on{color:#14141A;font-weight:800;background:transparent}
+.tab.on .pi{background:#FFE2D4}
+.tab.on .pi svg{fill:#FFE2D4}
+.tabs{height:84px;padding:6px 10px 22px;box-sizing:border-box;background:#FFFFFF;border-top:1px solid #ECE6E2;display:flex;justify-content:space-around;flex-shrink:0}
+.lbl{font-size:13px;font-weight:600;color:#4B4B57;margin:0 0 8px}
+
+.d{width:1086px;height:844px;flex-shrink:0;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 60px rgba(20,20,26,.16)}
+.dring{position:absolute;right:-170px;top:-230px;width:640px;height:640px;border-radius:50%;border:92px solid rgba(255,255,255,.16);pointer-events:none}
+.dhd{display:flex;align-items:center;gap:14px;padding:18px 28px 0;position:relative}
+.dnb{height:42px;padding:0 14px;border:0;border-radius:13px;background:transparent;color:#14141A;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.dnb.on{background:rgba(255,255,255,.6);font-weight:800}
+.dib{width:46px;height:46px;border-radius:15px;border:0;background:rgba(255,255,255,.5);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#14141A}
+.dhero{display:flex;align-items:flex-end;gap:44px;padding:24px 28px 34px;position:relative}
+.dsheet{flex:1;min-height:0;background:#FFFFFF;border-radius:30px 30px 0 0;box-shadow:0 -8px 24px rgba(20,20,26,.08);padding:20px 28px 22px;display:flex;flex-direction:column;gap:16px;position:relative}
+.wd{width:50px;height:56px;border:0;border-radius:15px;background:#F4F1EF;color:#14141A;font-size:12px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:inherit}
+.wd b{font-size:17px}
+.warr{width:44px;height:56px;border:0;border-radius:15px;background:transparent;font-size:20px;font-weight:700;cursor:pointer;color:#14141A;font-family:inherit}
+.pc{border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:4px;box-sizing:border-box;background:#F4F1EF;min-width:0}
+.pc .tt{font-size:13px;font-weight:700;color:#4B4B57;font-variant-numeric:tabular-nums}
+.pc b{font-size:16px;font-weight:800;line-height:1.2}
+.pc .mm{font-size:13px;color:#4B4B57}
+.db{border:1.5px solid #ECE6E2;border-radius:22px;padding:12px 16px;display:flex;flex-direction:column;min-width:0}
+.dbh{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.dbh b{font-size:16px}
+.dbh a{font-size:13px;color:#4B4B57;padding:10px 0}
+.dr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #ECE6E2;font-size:14px}
+.dr.f{border-top:0}
+.dw{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+
+</style>
+</helmet>
+<div style="--hero: {{hero}}; width: 1350px; height: 1000px; box-sizing: border-box; padding: 48px; display: flex; gap: 48px; align-items: flex-start; background: #E9E4E0; font-family: 'Inter Tight', system-ui, sans-serif; color: #14141A">
+
+<div>
+<div class="phone" style="background: {{hero}}">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="top" style="padding-bottom: 24px">
+    <div class="bar"><button type="button" class="bell" aria-label="Назад"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#14141A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg></button><b style="font-size: 15px">Новая заявка</b></div>
+    <div class="cap">Справка в военкомат</div>
+    <div style="font-size: 40px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; margin-top: 8px">Не отправилось</div>
+    <div class="meta" style="margin-top: 10px">Сервер деканата не ответил. Черновик сохранён — ничего вводить заново не нужно.</div>
+    <button type="button" class="cta" style="outline: 3px solid #14141A; outline-offset: 3px">Повторить отправку</button>
+  </div>
+  <div class="sheet">
+    <div role="alert" style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; background: #FDE3E0; font-size: 14px; line-height: 1.4"><span style="font-weight: 900; color: #B42318">!</span><span>Если не получится и со второй попытки — заявка уйдёт сама, когда сервер оживёт. Мы пришлём уведомление.</span></div>
+    <div class="row first" style="margin-top: 8px"><span style="flex: 1">Воронцова А. Д., ПИ-31</span><span class="st">из профиля</span></div>
+    <div class="row"><span style="flex: 1">Военный комиссариат (ф. 26)</span><span class="st">куда</span></div>
+    <div class="row"><span style="flex: 1">Бумажная + PDF с QR</span><span class="st">формат</span></div>
+  </div>
+</div>
+<div class="capt" style="font-size: 14px; line-height: 1.45; width: 390px; margin-top: 14px"><b>Не удалось отправить.</b> Честно говорим, что случилось, черновик не теряется, одна кнопка — повторить. Чёрная рамка — так виден фокус с клавиатуры.</div>
+</div>
+
+<div>
+<div class="phone" style="background: {{hero}}">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="top" style="padding-bottom: 26px">
+    <div style="font-size: 17px; font-weight: 700">деканат</div>
+    <div style="font-size: 40px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; margin-top: 40px">Сессия истекла</div>
+    <div class="meta" style="margin-top: 10px">Вы не заходили 12 часов — так мы защищаем данные. Войдите снова и вернётесь туда, где были.</div>
+  </div>
+  <form class="sheet" style="padding-top: 22px" onsubmit="return false">
+    <label style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 700; color: #4B4B57">Номер студенческого или почта</span><input type="text" value="st20230417" style="height: 52px; border-radius: 15px; border: 1.5px solid #D6D0CB; padding: 0 14px; font-size: 16px; font-family: inherit; color: #14141A"></label>
+    <label style="display: flex; flex-direction: column; gap: 6px; margin-top: 12px"><span style="font-size: 13px; font-weight: 700; color: #4B4B57">Пароль</span><input type="password" value="pass" aria-invalid="true" aria-describedby="perr" style="height: 52px; border-radius: 15px; border: 2px solid #B42318; padding: 0 14px; font-size: 16px; font-family: inherit; color: #14141A; outline: 3px solid #14141A; outline-offset: 3px"></label>
+    <div id="perr" style="display: flex; gap: 8px; align-items: center; margin-top: 8px; font-size: 13px; font-weight: 700; color: #B42318"><span>!</span>Неверный пароль. Осталось 4 попытки.</div>
+    <button type="submit" class="cta" style="margin-top: 18px">Войти</button>
+    <a href="#" style="text-align: center; font-size: 14px; padding: 13px 0">Забыли пароль?</a>
+  </form>
+</div>
+<div class="capt" style="font-size: 14px; line-height: 1.45; width: 390px; margin-top: 14px"><b>Сессия истекла и ошибка входа.</b> Объясняем зачем, подсвечиваем поле, говорим, сколько осталось попыток. Фокус — на поле с ошибкой.</div>
+</div>
+
+<div>
+<div class="phone" style="background: {{hero}}">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="top">
+    <div style="display: flex; align-items: center; gap: 8px"><b style="font-size: 17px; flex: 1">деканат</b><div style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">АВ</div></div>
+    <div role="status" style="margin-top: 14px; min-height: 48px; border-radius: 15px; background: rgba(255,255,255,.92); display: flex; align-items: center; gap: 10px; padding: 0 4px 0 14px"><span style="font-weight: 900; color: #B42318">!</span><span style="flex: 1; font-size: 14px; font-weight: 700">Не удалось обновить · данные на 10:20</span><button type="button" style="height: 44px; padding: 0 12px; border: 0; background: transparent; font-size: 13px; font-weight: 800; cursor: pointer; color: #14141A; font-family: inherit">Повторить</button></div>
+    <div class="cap">До следующей пары</div>
+    <div class="big">10<span>мин</span></div>
+    <div class="ttl">Машинное обучение</div>
+    <div class="meta">Б-214, 2 этаж · Козлов Д. С.</div>
+  </div>
+  <div class="sheet">
+    <div class="sh"><b>Сегодня</b><a href="#">Неделя →</a></div>
+    <div class="row first" style="color: #4B4B57"><b class="t">09:00</b><span style="flex: 1">Базы данных</span><span class="st">прошла</span></div>
+    <div class="row" style="background: #FFE2D4; border-radius: 12px; border-top-color: transparent; margin: 2px -10px; padding-left: 10px; padding-right: 10px; box-shadow: inset 4px 0 0 {{hero}}"><b class="t">10:45</b><span style="flex: 1; font-weight: 800">Машинное обучение</span><span class="st" style="color: #9E4317; font-weight: 800">через 10 мин</span></div>
+    <div class="row"><b class="t">13:00</b><span style="flex: 1">Английский</span><button type="button" class="join">Войти</button></div>
+  </div>
+  <nav class="tabs" aria-label="Навигация"><button type="button" class="tab on" aria-current="page"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></span>Сегодня</button><button type="button" class="tab" style="outline: 3px solid #14141A; outline-offset: 3px; border-radius: 14px"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>Неделя</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M3 20h18"></path></svg></span>Учёба</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"></path><path d="M14 3v5h5"></path></svg></span>Документы</button></nav>
+</div>
+<div class="capt" style="font-size: 14px; line-height: 1.45; width: 390px; margin-top: 14px"><b>Сервер не отвечает.</b> Кабинет не пустеет: показываем последние данные с временем и кнопкой «Повторить». Рамка на вкладке «Неделя» — фокус с клавиатуры.</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"hero":{"editor":"color","default":"#FF6A3D","options":["#FF6A3D","#C6F24E","#7CC4FF","#FF8FC7","#FFC93C"]},"$preview":{"width":1350,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { hero: this.props.hero ?? '#FF6A3D' };
+  }
+}
+</script>
+</body>
+</html>
