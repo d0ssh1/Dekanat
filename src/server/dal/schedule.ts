@@ -115,6 +115,11 @@ export const getLessons = cache(
   },
 );
 
+/** id группы студента — для подписки на изменения расписания группы. */
+export function myGroupId(viewer: StudentViewer) {
+  return groupOf(viewer);
+}
+
 export function getDay(viewer: StudentViewer, day: string) {
   return getLessons(viewer, day, addDays(day, 1));
 }

@@ -2,6 +2,7 @@ import { requireStudent } from '@/server/auth/guards';
 import { getShell } from '@/server/dal/me';
 import { DeskHeader } from '@/components/shell/DeskHeader';
 import { TabBar } from '@/components/shell/TabBar';
+import { LiveEvents } from '@/components/shell/LiveEvents';
 
 /**
  * Каркас кабинета студента. Проверка сессии — здесь и ещё раз в каждой функции DAL.
@@ -23,6 +24,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
         {children}
       </main>
       <TabBar className="lg:hidden" />
+      <LiveEvents />
     </div>
   );
 }

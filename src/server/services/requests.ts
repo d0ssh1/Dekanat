@@ -79,16 +79,14 @@ export async function createRequest(
       comment: input.source === 'assistant' ? 'через помощника' : null,
     });
     if (type.requirements.length)
-      await tx
-        .insert(requestRequirements)
-        .values(
-          type.requirements.map((title, i) => ({
-            requestId: r!.id,
-            studentId: viewer.userId,
-            title,
-            sort: i,
-          })),
-        );
+      await tx.insert(requestRequirements).values(
+        type.requirements.map((title, i) => ({
+          requestId: r!.id,
+          studentId: viewer.userId,
+          title,
+          sort: i,
+        })),
+      );
     await publish(tx, { kind: 'queue', requestId: r!.id });
     return r!;
   });
@@ -105,15 +103,13 @@ export async function cancelRequest(viewer: StudentViewer, id: string) {
     if (r.status !== 'sent' && r.status !== 'in_progress')
       throw new UserError('Эту заявку уже нельзя отменить');
     await tx.update(requests).set({ status: 'cancelled', updatedAt: new Date() }).where(eq(requests.id, id));
-    await tx
-      .insert(requestEvents)
-      .values({
-        requestId: id,
-        studentId: viewer.userId,
-        status: 'cancelled',
-        actorUserId: viewer.userId,
-        actorName: 'вы',
-      });
+    await tx.insert(requestEvents).values({
+      requestId: id,
+      studentId: viewer.userId,
+      status: 'cancelled',
+      actorUserId: viewer.userId,
+      actorName: 'вы',
+    });
     await publish(tx, { kind: 'queue', requestId: id });
   });
 }

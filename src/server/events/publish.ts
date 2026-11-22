@@ -3,7 +3,14 @@ import { sql } from 'drizzle-orm';
 import type { Tx } from '@/server/db';
 
 export type LiveEvent =
-  | { kind: 'notification'; userId: string }
+  | {
+      kind: 'notification';
+      userId: string;
+      title: string;
+      body?: string | null;
+      tone?: 'ok' | 'danger' | 'neutral';
+      link?: string | null;
+    }
   | { kind: 'request'; userId: string; requestId: string; status: string }
   | { kind: 'queue'; requestId: string }
   | { kind: 'schedule'; groupId: string };
