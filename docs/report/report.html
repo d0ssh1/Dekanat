@@ -18,15 +18,16 @@
   .cover { background: #ff6a3d; border-radius: 20pt; padding: 30pt 28pt; position: relative; overflow: hidden; min-height: 263mm; display: flex; flex-direction: column; }
   .cover::after { content: ''; position: absolute; right: -70pt; top: -70pt; width: 240pt; height: 240pt; border-radius: 50%; background: rgba(255,255,255,.2); }
   .cover .tag { font-weight: 900; font-size: 15pt; letter-spacing: -0.02em; }
-  .cover .lead { font-size: 13pt; font-weight: 600; margin-top: 16pt; max-width: 280pt; }
-  .cover h1 { max-width: 300pt; position: relative; z-index: 1; }
-  .cover .stats { position: relative; z-index: 1; margin-top: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8pt; }
+  .cover .lead { font-size: 13pt; font-weight: 600; margin-top: 16pt; }
+  .cover .top { position: relative; z-index: 1; margin-top: 40pt; display: grid; grid-template-columns: 1fr 172pt; gap: 22pt; align-items: stretch; }
+  .cover .left { display: flex; flex-direction: column; }
+  .cover .stats { margin-top: auto; padding-top: 16pt; display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; }
   .cover .stats div { background: rgba(255,255,255,.22); border-radius: 12pt; padding: 8pt 11pt; }
   .cover .stats b { display: block; font-size: 24pt; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
   .cover .stats span { font-size: 8.6pt; font-weight: 700; line-height: 1.25; display: block; margin-top: 3pt; }
-  .cover .meta { margin-top: 10pt; background: rgba(255,255,255,.92); border-radius: 14pt; padding: 14pt 16pt; display: grid; grid-template-columns: 110pt 1fr; gap: 6pt 12pt; font-size: 10pt; }
+  .cover .meta { margin-top: auto; background: rgba(255,255,255,.92); border-radius: 14pt; padding: 14pt 16pt; display: grid; grid-template-columns: 110pt 1fr; gap: 6pt 12pt; font-size: 10pt; }
   .cover .meta b { font-weight: 800; }
-  .cover img { position: absolute; right: 30pt; top: 96pt; width: 168pt; border-radius: 18pt; box-shadow: 0 18pt 40pt rgba(0,0,0,.18); }
+  .cover img { width: 172pt; align-self: start; border-radius: 18pt; box-shadow: 0 18pt 40pt rgba(0,0,0,.18); }
   table { width: 100%; border-collapse: collapse; margin: 4pt 0 10pt; font-size: 9.4pt; }
   th, td { text-align: left; vertical-align: top; padding: 5pt 7pt; border-top: 1px solid #ece6e2; }
   th { font-weight: 800; background: #f4f1ef; border-top: 0; }
@@ -65,15 +66,19 @@
 <!-- ======================= ОБЛОЖКА ======================= -->
 <section class="cover">
   <div class="tag">деканат*</div>
-  <h1 style="margin-top:46pt">Как я делал<br>цифровой деканат</h1>
-  <p class="lead">Описание процесса для конкурса «Цифровой деканат будущего»: от первых набросков до кабинета, который работает на телефоне и компьютере. Концепт, а не официальный сервис вуза. Все люди, оценки и номера в кабинете выдуманы.</p>
-  <div class="stats">
-    <div><b>9</b><span>раундов дизайна, 4 – в корзину</span></div>
-    <div><b>11</b><span>фаз разработки с критерием «готово»</span></div>
-    <div><b>6</b><span>ИИ-агентов с отдельными ролями</span></div>
-    <div><b>126</b><span>автотестов, из них 30+ про безопасность</span></div>
+  <div class="top">
+    <div class="left">
+      <h1>Как я делал<br>цифровой деканат</h1>
+      <p class="lead">Описание процесса для конкурса «Цифровой деканат будущего»: от первых набросков до кабинета, который работает на телефоне и компьютере. Концепт, а не официальный сервис вуза. Все люди, оценки и номера в кабинете выдуманы.</p>
+      <div class="stats">
+        <div><b>9</b><span>раундов дизайна, 4 – в корзину</span></div>
+        <div><b>11</b><span>фаз разработки с критерием «готово»</span></div>
+        <div><b>6</b><span>ИИ-агентов с отдельными ролями</span></div>
+        <div><b>126</b><span>автотестов, 30+ про безопасность</span></div>
+      </div>
+    </div>
+    <img src="img/screens/02-segodnya-telefon.jpg" alt="">
   </div>
-  <img src="img/screens/02-segodnya-telefon.jpg" alt="">
   <div class="meta">
     <b>Прототип</b><span>https://62-84-113-209.sslip.io</span>
     <b>Код</b><span>https://github.com/d0ssh1/Dekanat</span>
