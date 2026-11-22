@@ -1,5 +1,5 @@
 import { requireStudent } from '@/server/auth/guards';
-import { resolveNow } from '@/server/clock';
+import { nowFor } from '@/server/clock';
 import { getWeek } from '@/server/dal/schedule';
 import { getActiveRequests, getStudyAlerts } from '@/server/dal/todo';
 import { addDays, at, dayOf, isValidDay, mondayOf, wdShort } from '@/lib/time';
@@ -16,7 +16,7 @@ export default async function WeekPage({
 }) {
   const viewer = await requireStudent();
   const sp = await searchParams;
-  const now = resolveNow(sp.now);
+  const now = await nowFor(viewer, sp.now);
   const today = dayOf(now);
   const monday = mondayOf(isValidDay(sp.w) ? sp.w : today);
   const weekStart = at(monday, '00:00');

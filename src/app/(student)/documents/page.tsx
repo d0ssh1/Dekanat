@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { requireStudent } from '@/server/auth/guards';
-import { resolveNow } from '@/server/clock';
+import { nowFor } from '@/server/clock';
 import { listDocumentTypes, listMyRequests, type RequestListItem } from '@/server/dal/documents';
 import { listLine } from '@/lib/requests';
 import { dayMonth, dayOf } from '@/lib/time';
@@ -30,7 +30,7 @@ const twoLines = (t: string) => {
 /** Документы (макет B2DocFlow «Список»): сверху — то, что требует вас прямо сейчас. */
 export default async function DocumentsPage({ searchParams }: { searchParams: Promise<{ now?: string }> }) {
   const viewer = await requireStudent();
-  const now = resolveNow((await searchParams).now);
+  const now = await nowFor(viewer, (await searchParams).now);
   const today = dayOf(now);
   const [all, types] = await Promise.all([listMyRequests(viewer), listDocumentTypes(viewer)]);
   const active = all.filter((r) => (ACTIVE as readonly string[]).includes(r.status));

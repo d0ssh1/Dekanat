@@ -1,6 +1,8 @@
 import QRCode from 'qrcode';
 import { requireStudent } from '@/server/auth/guards';
 import { getMyProfile } from '@/server/dal/me';
+import { getPrefs } from '@/server/dal/prefs';
+import { PrefsControls } from './PrefsControls';
 import { HeroRing, PhoneSheet, PhoneSubTop } from '@/components/shell/PhoneTop';
 import { Disclaimer } from '@/components/ui/primitives';
 import { DeskCard } from '@/components/ui/desk';
@@ -25,7 +27,7 @@ const fmtLogin = (d: Date | null) =>
 /** Профиль (макет B2Core1 «Профиль»): ФИО, институт, направление, курс, группа — как требует ТЗ. */
 export default async function ProfilePage() {
   const viewer = await requireStudent();
-  const p = await getMyProfile(viewer);
+  const [p, prefs] = await Promise.all([getMyProfile(viewer), getPrefs(viewer)]);
   const fullName = [p.lastName, p.firstName, p.middleName].filter(Boolean).join(' ');
   const qr = await QRCode.toString(`деканат* · концепт · студенческий ${p.recordBook}`, {
     type: 'svg',
@@ -85,6 +87,9 @@ export default async function ProfilePage() {
                 </div>
               </StaggerItem>
             ))}
+            <StaggerItem>
+              <PrefsControls heroColor={prefs.heroColor} demoClock={prefs.demoClock} />
+            </StaggerItem>
             <StaggerItem>
               <div className="flex min-h-11 flex-col justify-center border-t border-line py-[11px] text-[15px]">
                 <span>Безопасность</span>
@@ -146,6 +151,7 @@ export default async function ProfilePage() {
                   <span className="text-[13px] text-ink-2">активных сеансов: {p.activeSessions}</span>
                 </span>
               </div>
+              <PrefsControls heroColor={prefs.heroColor} demoClock={prefs.demoClock} variant="desk" />
               <div className="mt-auto pt-2">
                 <LogoutButtons variant="desk" />
               </div>

@@ -27,17 +27,15 @@ export async function saveMessages(
   rows: { role: 'user' | 'assistant'; content: string; cards?: unknown[]; provider?: string }[],
 ) {
   await withDb(ctxOf(viewer), (tx) =>
-    tx
-      .insert(assistantMessages)
-      .values(
-        rows.map((r) => ({
-          userId: viewer.userId,
-          threadId,
-          role: r.role,
-          content: r.content,
-          cards: r.cards ?? [],
-          provider: r.provider,
-        })),
-      ),
+    tx.insert(assistantMessages).values(
+      rows.map((r) => ({
+        userId: viewer.userId,
+        threadId,
+        role: r.role,
+        content: r.content,
+        cards: r.cards ?? [],
+        provider: r.provider,
+      })),
+    ),
   );
 }

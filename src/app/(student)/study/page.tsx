@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { requireStudent } from '@/server/auth/guards';
-import { resolveNow } from '@/server/clock';
+import { nowFor } from '@/server/clock';
 import { getMyProfile } from '@/server/dal/me';
 import { getCurrentCourses, getFinalGrades, type CourseSummary } from '@/server/dal/study';
 import { admission, controlLabel, daysToSession, gpa } from '@/lib/grades';
@@ -20,7 +20,7 @@ export const metadata = { title: 'Учёба' };
 /** Учёба (макет B2Core2 «Учёба»): «как у меня дела» одним числом и одной фразой, ниже — предметы. */
 export default async function StudyPage({ searchParams }: { searchParams: Promise<{ now?: string }> }) {
   const viewer = await requireStudent();
-  const now = resolveNow((await searchParams).now);
+  const now = await nowFor(viewer, (await searchParams).now);
   const today = dayOf(now);
   const [profile, courses, finals] = await Promise.all([
     getMyProfile(viewer),

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { requireStudent } from '@/server/auth/guards';
-import { resolveNow } from '@/server/clock';
+import { nowFor } from '@/server/clock';
 import { getCourse } from '@/server/dal/study';
 import { getLessons } from '@/server/dal/schedule';
 import { admission, admissionAdvice, breakdown, controlLabel, pendingItems } from '@/lib/grades';
@@ -27,7 +27,7 @@ export default async function CoursePage({
 }) {
   const viewer = await requireStudent();
   const { courseId } = await params;
-  const now = resolveNow((await searchParams).now);
+  const now = await nowFor(viewer, (await searchParams).now);
   const c = await getCourse(viewer, courseId);
   // Чужой или несуществующий предмет — 404, без подсказки, существует ли он.
   if (!c) notFound();

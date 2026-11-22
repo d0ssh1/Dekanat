@@ -1,0 +1,1 @@
+ALTER TABLE "user_prefs" ADD COLUMN "hero_color" text DEFAULT '#ff6a3d' NOT NULL;

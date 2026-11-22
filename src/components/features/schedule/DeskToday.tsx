@@ -28,6 +28,24 @@ import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 import { spring } from '@/components/motion/tokens';
 import { FloorPlanButton, JoinLink } from './pieces';
 import { useNow } from './useNow';
+import { HomeGrid, useHomeEdit, type Block } from '@/components/features/home/HomeGrid';
+import { Icon as MoreIcon } from '@/components/ui/Icon';
+
+/** «···» в шапке блока — включает настройку главной. */
+function EditMore() {
+  const { start, editing } = useHomeEdit();
+  if (editing) return null;
+  return (
+    <button
+      type="button"
+      onClick={start}
+      aria-label="Настроить главную"
+      className="flex size-9 items-center justify-center rounded-[11px] bg-desk-chip text-ink-desk"
+    >
+      <MoreIcon name="more" size={18} />
+    </button>
+  );
+}
 
 export type DocLine = { id: string; title: string; text: string; tone: 'ok' | 'danger' | 'ink' | 'muted' };
 
@@ -40,6 +58,7 @@ export function DeskToday({
   study,
   after,
   serverNow,
+  layout,
 }: {
   day: string;
   today: string;
@@ -49,6 +68,7 @@ export function DeskToday({
   study: TodoItem[];
   after: { day: string; lessons: Lesson[] } | null;
   serverNow: number;
+  layout: Block[];
 }) {
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -114,77 +134,91 @@ export function DeskToday({
         </m.div>
       </AnimatePresence>
 
-      <Stagger className="grid grid-cols-3 gap-3.5" delay={0.1}>
-        <StaggerItem>
-          <DeskBlock title="Документы" link={{ href: '/documents', label: 'Все →' }} className="h-full">
-            {docs.length ? (
-              docs.slice(0, 2).map((d) => (
-                <DeskRow key={d.id}>
-                  <Link href={`/documents/${d.id}`} className="min-w-0 flex-1 truncate hover:underline">
-                    {d.title}
-                  </Link>
-                  <DeskValue tone={d.tone === 'danger' ? 'danger' : d.tone === 'muted' ? 'muted' : 'ink'}>
-                    {d.text}
-                  </DeskValue>
-                </DeskRow>
-              ))
-            ) : (
-              <DeskRow>
-                <span className="flex-1 text-ink-2">Заявок в работе нет</span>
-                <Link href="/documents" className="text-[13px] font-bold">
-                  Заказать →
-                </Link>
-              </DeskRow>
-            )}
-          </DeskBlock>
-        </StaggerItem>
-        <StaggerItem>
-          <DeskBlock title="Учёба" link={{ href: '/study', label: 'Все →' }} className="h-full">
-            {study.length ? (
-              study.slice(0, 2).map((t) => (
-                <DeskRow key={t.key}>
-                  <Link href={t.href} className="min-w-0 flex-1 truncate hover:underline">
-                    {t.title}
-                  </Link>
-                  <DeskValue tone={t.tone === 'danger' ? 'danger' : 'ink'}>{t.hint}</DeskValue>
-                </DeskRow>
-              ))
-            ) : (
-              <DeskRow>
-                <span className="flex-1 text-ink-2">Ближайших дедлайнов нет</span>
-              </DeskRow>
-            )}
-          </DeskBlock>
-        </StaggerItem>
-        <StaggerItem>
-          <DeskBlock
-            title={after ? (after.day === addDays(today, 1) ? 'Завтра' : cap(wdFull(after.day))) : 'Дальше'}
-            link={{ href: '/week', label: 'Неделя →' }}
-            className="h-full"
-          >
-            {after && after.lessons.length ? (
-              <>
+      <HomeGrid
+        initial={layout}
+        render={{
+          docs: (
+            <DeskBlock
+              more={<EditMore />}
+              title="Документы"
+              link={{ href: '/documents', label: 'Все →' }}
+              className="h-full"
+            >
+              {docs.length ? (
+                docs.slice(0, 2).map((d) => (
+                  <DeskRow key={d.id}>
+                    <Link href={`/documents/${d.id}`} className="min-w-0 flex-1 truncate hover:underline">
+                      {d.title}
+                    </Link>
+                    <DeskValue tone={d.tone === 'danger' ? 'danger' : d.tone === 'muted' ? 'muted' : 'ink'}>
+                      {d.text}
+                    </DeskValue>
+                  </DeskRow>
+                ))
+              ) : (
                 <DeskRow>
-                  <b className="w-11 tabular">{hhmm(after.lessons[0]!.startsAt)}</b>
-                  <span className="min-w-0 flex-1 truncate">{after.lessons[0]!.short}</span>
-                  <DeskValue>{after.lessons[0]!.online ? 'онлайн' : after.lessons[0]!.room}</DeskValue>
+                  <span className="flex-1 text-ink-2">Заявок в работе нет</span>
+                  <Link href="/documents" className="text-[13px] font-bold">
+                    Заказать →
+                  </Link>
                 </DeskRow>
+              )}
+            </DeskBlock>
+          ),
+          study: (
+            <DeskBlock
+              more={<EditMore />}
+              title="Учёба"
+              link={{ href: '/study', label: 'Все →' }}
+              className="h-full"
+            >
+              {study.length ? (
+                study.slice(0, 2).map((t) => (
+                  <DeskRow key={t.key}>
+                    <Link href={t.href} className="min-w-0 flex-1 truncate hover:underline">
+                      {t.title}
+                    </Link>
+                    <DeskValue tone={t.tone === 'danger' ? 'danger' : 'ink'}>{t.hint}</DeskValue>
+                  </DeskRow>
+                ))
+              ) : (
                 <DeskRow>
-                  <span className="flex-1 text-ink-2">
-                    {after.lessons.length > 1
-                      ? `ещё ${pairs(after.lessons.length - 1)} · до ${hhmm(after.lessons.at(-1)!.endsAt)}`
-                      : `одна пара · до ${hhmm(after.lessons[0]!.endsAt)}`}
-                  </span>
+                  <span className="flex-1 text-ink-2">Ближайших дедлайнов нет</span>
                 </DeskRow>
-              </>
-            ) : (
-              <DeskRow>
-                <span className="flex-1 text-ink-2">Пар нет</span>
-              </DeskRow>
-            )}
-          </DeskBlock>
-        </StaggerItem>
-      </Stagger>
+              )}
+            </DeskBlock>
+          ),
+          tomorrow: (
+            <DeskBlock
+              more={<EditMore />}
+              title={after ? (after.day === addDays(today, 1) ? 'Завтра' : cap(wdFull(after.day))) : 'Дальше'}
+              link={{ href: '/week', label: 'Неделя →' }}
+              className="h-full"
+            >
+              {after && after.lessons.length ? (
+                <>
+                  <DeskRow>
+                    <b className="w-11 tabular">{hhmm(after.lessons[0]!.startsAt)}</b>
+                    <span className="min-w-0 flex-1 truncate">{after.lessons[0]!.short}</span>
+                    <DeskValue>{after.lessons[0]!.online ? 'онлайн' : after.lessons[0]!.room}</DeskValue>
+                  </DeskRow>
+                  <DeskRow>
+                    <span className="flex-1 text-ink-2">
+                      {after.lessons.length > 1
+                        ? `ещё ${pairs(after.lessons.length - 1)} · до ${hhmm(after.lessons.at(-1)!.endsAt)}`
+                        : `одна пара · до ${hhmm(after.lessons[0]!.endsAt)}`}
+                    </span>
+                  </DeskRow>
+                </>
+              ) : (
+                <DeskRow>
+                  <span className="flex-1 text-ink-2">Пар нет</span>
+                </DeskRow>
+              )}
+            </DeskBlock>
+          ),
+        }}
+      />
     </div>
   );
 }

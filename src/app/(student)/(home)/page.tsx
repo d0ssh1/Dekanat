@@ -1,6 +1,7 @@
 import { requireStudent } from '@/server/auth/guards';
-import { resolveNow } from '@/server/clock';
+import { nowFor } from '@/server/clock';
 import { getShell } from '@/server/dal/me';
+import { getHomeLayout } from '@/server/dal/prefs';
 import { getDay, getNextLesson, getWeek } from '@/server/dal/schedule';
 import { getActiveRequests, getStudyAlerts } from '@/server/dal/todo';
 import { addDays, dayOf, isValidDay, mondayOf } from '@/lib/time';
@@ -22,18 +23,19 @@ export default async function TodayPage({
 }) {
   const viewer = await requireStudent();
   const sp = await searchParams;
-  const now = resolveNow(sp.now);
+  const now = await nowFor(viewer, sp.now);
   const today = dayOf(now);
   const day = isValidDay(sp.day) ? sp.day : today;
   const monday = mondayOf(day);
 
-  const [shell, todayLessons, weekLessons, next, requests, alerts] = await Promise.all([
+  const [shell, todayLessons, weekLessons, next, requests, alerts, layout] = await Promise.all([
     getShell(viewer),
     getDay(viewer, today),
     getWeek(viewer, monday),
     getNextLesson(viewer, now, today),
     getActiveRequests(viewer),
     getStudyAlerts(viewer, now, 7),
+    getHomeLayout(viewer),
   ]);
   const dayLessons = day === today ? todayLessons : weekLessons.filter((l) => dayOf(l.startsAt) === day);
 
@@ -80,6 +82,7 @@ export default async function TodayPage({
           study={study}
           after={after}
           serverNow={now.getTime()}
+          layout={layout}
         />
       </div>
     </>

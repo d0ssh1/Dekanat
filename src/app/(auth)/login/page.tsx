@@ -5,6 +5,7 @@ import { Disclaimer, Wordmark } from '@/components/ui/primitives';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 import { LoginForm } from './LoginForm';
 import { ForgotPassword } from './ForgotPassword';
+import { ServiceWorker } from '@/components/shell/ServiceWorker';
 
 export const metadata = { title: 'Вход' };
 
@@ -70,6 +71,8 @@ export default async function LoginPage({
           <LoginForm next={next} />
           <ForgotPassword />
           <Disclaimer className="mt-auto px-1 pt-6 text-center" />
+          {/* Выход или смена пользователя: сохранённые для офлайна страницы прошлого входа стираем. */}
+          <ServiceWorker clear />
         </section>
       </div>
     </main>

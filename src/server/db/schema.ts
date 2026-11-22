@@ -460,7 +460,7 @@ export const announcements = pgTable('announcements', {
 });
 
 // ---------- Персонализация ----------
-export type HomeBlock = { id: string; size: 'S' | 'M' | 'L'; hidden: boolean };
+export type HomeBlock = { id: 'docs' | 'study' | 'tomorrow'; size: 'S' | 'M' | 'L'; hidden: boolean };
 
 export const homeLayouts = pgTable('home_layouts', {
   userId: uuid('user_id')
@@ -476,6 +476,8 @@ export const userPrefs = pgTable('user_prefs', {
     .references(() => users.id, { onDelete: 'cascade' }),
   /** Демо-режим для жюри: «сейчас» сдвигается на ближайший учебный день. */
   demoClock: boolean('demo_clock').notNull().default(false),
+  /** Цвет оранжевого верха на телефоне («Цвет главной» в профиле). */
+  heroColor: text('hero_color').notNull().default('#ff6a3d'),
   updatedAt: tsz('updated_at').notNull().defaultNow(),
 });
 

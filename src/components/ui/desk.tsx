@@ -41,11 +41,14 @@ export function DeskBlock({
   link,
   children,
   className,
+  more,
 }: {
   title: string;
   link?: { href: string; label: string };
   children: React.ReactNode;
   className?: string;
+  /** Кнопка «···» (например, включает настройку главной). Без неё блок обходится без пустой кнопки. */
+  more?: React.ReactNode;
 }) {
   return (
     <section
@@ -71,13 +74,7 @@ export function DeskBlock({
             {link.label}
           </Link>
         )}
-        <button
-          type="button"
-          aria-label={`Настройки блока «${title}»`}
-          className="flex size-9 items-center justify-center rounded-[11px] bg-desk-chip text-ink-desk"
-        >
-          <Icon name="more" size={18} />
-        </button>
+        {more}
       </div>
       {children}
     </section>

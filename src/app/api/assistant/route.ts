@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { getViewer } from '@/server/auth/guards';
 import { getShell } from '@/server/dal/me';
 import { ask, saveExchange, underLimit } from '@/server/ai';
-import { resolveNow } from '@/server/clock';
+import { nowFor } from '@/server/clock';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
   const shell = await getShell(viewer);
   const { question, threadId, history } = parsed.data;
-  const now = resolveNow(parsed.data.now);
+  const now = await nowFor(viewer, parsed.data.now);
   const enc = new TextEncoder();
 
   const stream = new ReadableStream<Uint8Array>({
