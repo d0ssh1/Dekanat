@@ -242,25 +242,21 @@ export async function transition(viewer: StaffViewer, id: string, t: Transition)
       .update(requests)
       .set({ ...patch, status })
       .where(eq(requests.id, id));
-    await tx
-      .insert(requestEvents)
-      .values({
-        requestId: id,
-        studentId: r.studentId,
-        status,
-        actorUserId: viewer.userId,
-        actorName: who,
-        comment,
-      });
-    await tx
-      .insert(auditLog)
-      .values({
-        actorUserId: viewer.userId,
-        action: `request.${t.action}`,
-        entity: 'request',
-        entityId: id,
-        meta: { status },
-      });
+    await tx.insert(requestEvents).values({
+      requestId: id,
+      studentId: r.studentId,
+      status,
+      actorUserId: viewer.userId,
+      actorName: who,
+      comment,
+    });
+    await tx.insert(auditLog).values({
+      actorUserId: viewer.userId,
+      action: `request.${t.action}`,
+      entity: 'request',
+      entityId: id,
+      meta: { status },
+    });
     await publish(tx, { kind: 'request', userId: r.studentId, requestId: id, status });
     await publish(tx, { kind: 'queue', requestId: id });
     return status;
@@ -371,15 +367,13 @@ export async function changeLesson(
         link: '/week',
         tone: 'danger',
       });
-      await tx
-        .insert(auditLog)
-        .values({
-          actorUserId: viewer.userId,
-          action: 'lesson.move',
-          entity: 'lesson',
-          entityId: l.l.id,
-          meta: { to: created!.id },
-        });
+      await tx.insert(auditLog).values({
+        actorUserId: viewer.userId,
+        action: 'lesson.move',
+        entity: 'lesson',
+        entityId: l.l.id,
+        meta: { to: created!.id },
+      });
     } else if (input.room) {
       const room = input.room.trim().toUpperCase().slice(0, 20);
       await tx
@@ -393,15 +387,13 @@ export async function changeLesson(
         link: '/week',
         tone: 'danger',
       });
-      await tx
-        .insert(auditLog)
-        .values({
-          actorUserId: viewer.userId,
-          action: 'lesson.room',
-          entity: 'lesson',
-          entityId: l.l.id,
-          meta: { room },
-        });
+      await tx.insert(auditLog).values({
+        actorUserId: viewer.userId,
+        action: 'lesson.room',
+        entity: 'lesson',
+        entityId: l.l.id,
+        meta: { room },
+      });
     }
     await publish(tx, { kind: 'schedule', groupId: l.l.groupId });
     return ids.length;
@@ -417,14 +409,12 @@ export async function announce(
     const target = input.groupIds.length
       ? input.groupIds
       : (await tx.select({ id: groups.id }).from(groups)).map((g) => g.id);
-    await tx
-      .insert(announcements)
-      .values({
-        authorUserId: viewer.userId,
-        title: input.title,
-        body: input.body,
-        audience: { groupIds: target },
-      });
+    await tx.insert(announcements).values({
+      authorUserId: viewer.userId,
+      title: input.title,
+      body: input.body,
+      audience: { groupIds: target },
+    });
     const ids = await groupStudentIds(tx, target);
     const n = await notify(tx, ids, {
       kind: 'news',
@@ -433,14 +423,12 @@ export async function announce(
       link: '/notifications',
       tone: 'neutral',
     });
-    await tx
-      .insert(auditLog)
-      .values({
-        actorUserId: viewer.userId,
-        action: 'announce',
-        entity: 'announcement',
-        meta: { groups: target.length, students: n },
-      });
+    await tx.insert(auditLog).values({
+      actorUserId: viewer.userId,
+      action: 'announce',
+      entity: 'announcement',
+      meta: { groups: target.length, students: n },
+    });
     return n;
   });
 }

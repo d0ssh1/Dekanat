@@ -35,6 +35,8 @@ export function proxy(req: NextRequest) {
   const hasCookie = SESSION_COOKIES.some((c) => req.cookies.has(c));
 
   if (!isPublic && !hasCookie) {
+    // API не перенаправляем на страницу входа — отвечаем честным 401.
+    if (pathname.startsWith('/api/')) return NextResponse.json({ error: 'Нужен вход' }, { status: 401 });
     const url = req.nextUrl.clone();
     url.pathname = '/login';
     url.search = pathname === '/' ? '' : `?next=${encodeURIComponent(pathname + search)}`;
