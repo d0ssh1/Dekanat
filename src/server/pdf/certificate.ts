@@ -11,7 +11,7 @@ import QRCode from 'qrcode';
  * На каждой странице — водяной знак «концепт»: документ не выдаётся за настоящий.
  */
 type Fonts = { cyr: PDFFont; lat: PDFFont; cyrB: PDFFont; latB: PDFFont };
-const FONT_DIR = path.join(process.cwd(), 'src/server/pdf/fonts');
+const FONT_DIR = path.join(/* turbopackIgnore: true */ process.cwd(), 'src/server/pdf/fonts');
 
 async function loadFonts(doc: PDFDocument): Promise<Fonts> {
   doc.registerFontkit(fontkit);
