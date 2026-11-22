@@ -35,7 +35,7 @@ const fig = (f: string) => {
   const key = f.replace(/-(telefon|pk)\.png$/, '');
   return `<figure><img src="../process/screens/${f}"><figcaption>${NAMES[key] ?? key}</figcaption></figure>`;
 };
-const html = readFileSync('docs/report/report.html', 'utf8')
+const html = readFileSync('docs/report/report.html', 'utf8') // картинки — относительные пути из docs/report/img
   .replace(
     '<!--PHONE-->',
     files
