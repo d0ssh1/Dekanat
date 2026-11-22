@@ -358,6 +358,8 @@ export const requestEvents = pgTable(
       .references(() => students.userId, { onDelete: 'cascade' }),
     status: requestStatus('status').notNull(),
     actorUserId: uuid('actor_user_id').references(() => users.id),
+    /** Как подписать исполнителя в таймлайне («О. П. Иванова», «вы», «помощник»). Студент не читает таблицу сотрудников. */
+    actorName: text('actor_name'),
     comment: text('comment'),
     createdAt: createdAt(),
   },

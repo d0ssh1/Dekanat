@@ -13,7 +13,9 @@ export type DbContext =
   | { role: 'student'; userId: string }
   | { role: 'staff'; userId: string }
   | { role: 'auth' }
-  | { role: 'system' };
+  | { role: 'system' }
+  /** Без пользователя: личные строки не видны (публичная проверка справки). */
+  | { role: 'anon' };
 
 type Db = PostgresJsDatabase<typeof schema>;
 export type Tx = Parameters<Parameters<Db['transaction']>[0]>[0];

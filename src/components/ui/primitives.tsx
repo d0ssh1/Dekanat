@@ -24,7 +24,7 @@ export function IconTile({
 }: {
   icon: IconName;
   tone?: TileTone;
-  size?: 28 | 32 | 40;
+  size?: 28 | 32 | 36 | 40;
   className?: string;
 }) {
   return (

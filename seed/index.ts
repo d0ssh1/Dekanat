@@ -780,6 +780,7 @@ async function main() {
         studentId: opts.studentId,
         status,
         actorUserId: actor,
+        actorName: actor === uStaff ? 'О. П. Иванова' : 'вы',
         comment,
         createdAt: when,
       })),

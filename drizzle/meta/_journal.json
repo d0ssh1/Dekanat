@@ -15,6 +15,13 @@
       "when": 1795329487459,
       "tag": "0001_security",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795346357270,
+      "tag": "0002_event_actor_name",
+      "breakpoints": true
     }
   ]
 }

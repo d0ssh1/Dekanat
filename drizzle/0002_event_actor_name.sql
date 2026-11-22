@@ -1,0 +1,1 @@
+ALTER TABLE "request_events" ADD COLUMN "actor_name" text;
