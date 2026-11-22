@@ -50,7 +50,7 @@ export function AskBar({ variant = 'phone', className }: { variant?: 'phone' | '
         onChange={(e) => setQ(e.target.value)}
         enterKeyHint="send"
         autoComplete="off"
-        placeholder={desk ? 'Опишите, что нужно, — оформлю' : 'Что нужно?'}
+        placeholder={desk ? 'Как могу помочь? Например: нужна справка в военкомат' : 'Как могу помочь?'}
         className={cn(
           'min-w-0 flex-1 border-0 bg-transparent text-ink outline-none placeholder:text-ink-2',
           desk ? 'text-[14px]' : 'text-[15px]',
