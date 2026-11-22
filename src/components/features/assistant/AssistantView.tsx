@@ -48,7 +48,7 @@ const twoLines = (t: string) => {
 
 /**
  * Помощник (макет B2PhoneA «Помощник»): вопрос и результат — крупно вверху,
- * «что взяла и откуда» — на «простыне», внизу — «спросить ещё…». Ответ приходит потоком.
+ * «что взял и откуда» — на «простыне», внизу — «спросить ещё…». Ответ приходит потоком.
  */
 export function AssistantView({
   firstName,
@@ -345,7 +345,7 @@ function DraftHero({ card, meta }: { card: DraftCard; meta: string }) {
   const [draftId] = useState(() => crypto.randomUUID());
   return (
     <>
-      <div className="mt-4 text-[14px] font-bold">Собрала заявку</div>
+      <div className="mt-4 text-[14px] font-bold">Собрал заявку</div>
       <div className="mt-1.5 text-[36px] leading-none font-black tracking-[-0.04em]">
         {twoLines(card.title)}
       </div>
@@ -384,7 +384,7 @@ function DraftDetails({ card, q }: { card: DraftCard; q: string }) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h2 className="m-0 text-[18px] font-bold">Что взяла и откуда</h2>
+        <h2 className="m-0 text-[18px] font-bold">Что взял и откуда</h2>
         <Link
           href={`/documents/new?type=${card.typeCode}&q=${encodeURIComponent(q)}`}
           className="py-3 text-[13px] font-bold"

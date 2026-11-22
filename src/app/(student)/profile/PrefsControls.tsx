@@ -36,8 +36,12 @@ export function PrefsControls({
     start(async () => {
       set(p);
       // Цвет меняем сразу у всей страницы — не дожидаясь сервера.
-      if (p.heroColor)
-        document.querySelector<HTMLElement>('[style*="--hero"]')?.style.setProperty('--hero', p.heroColor);
+      if (p.heroColor) {
+        // Оранжевый верх телефона и акцентные карточки компьютера — один цвет.
+        const root = document.querySelector<HTMLElement>('[style*="--hero"]');
+        root?.style.setProperty('--hero', p.heroColor);
+        root?.style.setProperty('--accent-desk', p.heroColor);
+      }
       const r = await savePrefsAction(p);
       if (r.ok && p.demoClock !== undefined)
         toast.show({

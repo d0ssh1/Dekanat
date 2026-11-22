@@ -131,6 +131,7 @@ export async function getStaffRequest(viewer: StaffViewer, id: string) {
         group: row.g.code,
         course: row.g.course,
         recordBook: row.s.recordBook,
+        email: row.s.email,
       },
       events: events.map((e) => ({
         status: e.status,

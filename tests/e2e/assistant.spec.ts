@@ -14,8 +14,8 @@ test.describe('ИИ-помощник', () => {
   test('фраза из строки «Помощник» → собранная заявка → отправка кнопкой', async ({ page }) => {
     await login(page, 'student1');
     await page.goto('/assistant?q=' + encodeURIComponent('Нужна справка в военкомат'));
-    await expect(page.getByText('Собрала заявку').filter(visible).first()).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByText('Что взяла и откуда').filter(visible).first()).toBeVisible();
+    await expect(page.getByText('Собрал заявку').filter(visible).first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText('Что взял и откуда').filter(visible).first()).toBeVisible();
     await expect(page.getByText('из профиля').filter(visible).first()).toBeVisible();
     await page.getByRole('button', { name: 'Отправить в деканат' }).filter(visible).first().click();
     await expect(page).toHaveURL(/\/documents\/[0-9a-f-]{36}$/, { timeout: 10_000 });

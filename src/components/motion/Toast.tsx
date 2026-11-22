@@ -63,10 +63,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.6}
               onDragEnd={(_, info) => Math.abs(info.offset.x) > 80 && dismiss(t.id)}
-              className="pointer-events-auto flex w-full max-w-[380px] items-start gap-3 rounded-[18px] bg-ink px-4 py-3 text-surface shadow-[0_18px_40px_rgba(20,20,26,.28)]"
+              className={`pointer-events-auto flex w-full max-w-[380px] ${t.body ? 'items-start' : 'items-center'} gap-3 rounded-[18px] bg-ink px-4 py-3 text-surface shadow-[0_18px_40px_rgba(20,20,26,.28)]`}
               role="status"
             >
-              <span className={`mt-1.5 size-2.5 shrink-0 rounded-full ${DOT[t.tone]}`} aria-hidden />
+              <span
+                className={`${t.body ? 'mt-1.5' : ''} size-2.5 shrink-0 rounded-full ${DOT[t.tone]}`}
+                aria-hidden
+              />
               <div className="min-w-0 flex-1">
                 <div className="text-[15px] font-extrabold leading-snug">{t.title}</div>
                 {t.body && <div className="mt-0.5 text-[13px] font-medium text-surface/75">{t.body}</div>}
@@ -78,7 +81,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                     t.action!.onClick();
                     dismiss(t.id);
                   }}
-                  className="-my-1 min-h-11 shrink-0 rounded-[12px] px-3 text-[13px] font-extrabold text-hero"
+                  className="-my-2 min-h-11 shrink-0 rounded-[12px] px-3 text-[13px] font-extrabold text-hero"
                 >
                   {t.action.label}
                 </button>

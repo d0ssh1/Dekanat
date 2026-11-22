@@ -189,6 +189,7 @@ export default async function CoursePage({
                 value={c.points}
                 max={c.semMax}
                 danger={!a.ok}
+                accent
                 mark={c.control === 'exam' ? a.need : undefined}
                 className="relative mt-4"
               />

@@ -26,7 +26,7 @@ import { DayStrip, type DayItem } from '@/components/shell/DayStrip';
 import { Odometer } from '@/components/motion/Odometer';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 import { spring } from '@/components/motion/tokens';
-import { FloorPlanButton, JoinLink } from './pieces';
+import { JoinLink, LessonOpener } from './pieces';
 import { useNow } from './useNow';
 import { HomeGrid, useHomeEdit, type Block } from '@/components/features/home/HomeGrid';
 import { Icon as MoreIcon } from '@/components/ui/Icon';
@@ -345,7 +345,7 @@ function Cards({
       <Stagger className="grid min-h-[340px] gap-3.5" style={{ gridTemplateColumns: cols }}>
         {models.map((c, i) => (
           <StaggerItem key={i} className="flex min-w-0">
-            <CardView c={c} now={now} className="flex-1" />
+            <CardView c={c} now={now} className="flex-1" compact={models.length >= 5} />
           </StaggerItem>
         ))}
       </Stagger>
@@ -433,10 +433,29 @@ function ScrollEdge({ side, show, onClick }: { side: 'start' | 'end'; show: bool
   );
 }
 
-function CardView({ c, now, className }: { c: CardModel; now: number; className?: string }) {
-  if (c.kind === 'past') return <PastCard lessons={c.lessons} className={className ?? ''} />;
-  if (c.kind === 'focus') return <FocusCard c={c} now={now} className={className ?? ''} />;
-  return <LessonCard l={c.lesson} className={className ?? ''} />;
+function CardView({
+  c,
+  now,
+  className,
+  compact,
+}: {
+  c: CardModel;
+  now: number;
+  className?: string;
+  compact?: boolean;
+}) {
+  const lesson = c.kind === 'past' ? c.lessons[0]! : c.lesson;
+  return (
+    <LessonOpener lesson={lesson} className={className}>
+      {c.kind === 'past' ? (
+        <PastCard lessons={c.lessons} className="flex-1" />
+      ) : c.kind === 'focus' ? (
+        <FocusCard c={c} now={now} className="flex-1" compact={compact} />
+      ) : (
+        <LessonCard l={c.lesson} className="flex-1" />
+      )}
+    </LessonOpener>
+  );
 }
 
 function PastCard({ lessons, className }: { lessons: Lesson[]; className: string }) {
@@ -455,10 +474,12 @@ function FocusCard({
   c,
   now,
   className,
+  compact,
 }: {
   c: Extract<CardModel, { kind: 'focus' }>;
   now: number;
   className: string;
+  compact?: boolean;
 }) {
   const l = c.lesson;
   const minutes = c.mode === 'next' ? Math.ceil((Date.parse(l.startsAt) - now) / 60000) : null;
@@ -477,27 +498,32 @@ function FocusCard({
           c.label
         )}
       </div>
-      <div className="relative text-[88px] leading-[.9] font-black tracking-[-0.05em] tabular">
+      <div
+        className={cn(
+          'relative leading-[.9] font-black tracking-[-0.05em] tabular',
+          compact ? 'text-[64px]' : 'text-[88px]',
+        )}
+      >
         {hhmm(l.startsAt)}
       </div>
       <div className="relative mt-auto">
-        <div className="text-[clamp(24px,2.6vw,34px)] leading-[1.05] font-black tracking-[-0.02em] [overflow-wrap:anywhere] hyphens-auto">
+        <div
+          className={cn(
+            compact ? 'text-[24px]' : 'text-[clamp(24px,2.6vw,34px)]',
+            'leading-[1.05] font-black tracking-[-0.02em] [overflow-wrap:anywhere] hyphens-auto',
+          )}
+        >
           {l.subject}
         </div>
         <div className="mt-2 text-[14px] font-semibold">
           {cap(l.kindLabel)} · <b>{l.online ? 'онлайн' : placeLabel(l.room)}</b> · {l.teacher}
           {l.previousRoom && <> · была {l.previousRoom}</>}
         </div>
-        <div className="mt-3.5 flex items-center gap-4">
-          {l.online ? (
+        {l.online && (
+          <div className="mt-3.5">
             <JoinLink lesson={l} size="lg" className="w-auto bg-ink-desk px-5" />
-          ) : (
-            l.room && <FloorPlanButton room={l.room} size="md" className="h-[46px] px-5" />
-          )}
-          <Link href={`/study/${l.courseId}`} className="text-[14px] font-bold hover:underline">
-            Материалы →
-          </Link>
-        </div>
+          </div>
+        )}
       </div>
     </DeskCard>
   );
@@ -539,7 +565,9 @@ function LessonCard({ l, className }: { l: Lesson; className: string }) {
   return (
     <DeskCard tone="white" className={className}>
       <span className="text-[13px] font-bold text-ink-2 tabular">{hhmm(l.startsAt)}</span>
-      <b className="text-[19px] leading-tight font-extrabold tracking-[-0.02em]">{l.subject}</b>
+      <b className="text-[19px] leading-tight font-extrabold tracking-[-0.02em] hyphens-auto [overflow-wrap:anywhere]">
+        {l.subject}
+      </b>
       <span className="text-[13px] text-ink-2">{l.kindLabel}</span>
       <span className="text-[13px] whitespace-nowrap text-ink-2">{l.teacher}</span>
       <div className="mt-auto flex flex-col items-start gap-2 pt-2">
@@ -553,9 +581,6 @@ function LessonCard({ l, className }: { l: Lesson; className: string }) {
         <span className="rounded-[11px] bg-desk-chip px-2.5 py-1.5 text-[13px] font-bold">
           {placeLabel(l.room)}
         </span>
-        <Link href={`/study/${l.courseId}`} className="text-[13px] font-bold hover:underline">
-          Материалы →
-        </Link>
       </div>
     </DeskCard>
   );

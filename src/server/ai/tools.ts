@@ -250,7 +250,7 @@ export async function toolDraft(viewer: StudentViewer, typeCode: string) {
       .map((x) => ({ code: x.code, title: x.title })),
   };
   return {
-    text: `Собрала заявку «${t.title}»: данные из профиля, формат — ${DELIVERY[delivery]?.toLowerCase()}. ${t.etaText.charAt(0).toUpperCase() + t.etaText.slice(1)}. Проверьте и нажмите «Отправить в деканат».`,
+    text: `Собрал заявку «${t.title}»: данные из профиля, формат — ${DELIVERY[delivery]?.toLowerCase()}. ${t.etaText.charAt(0).toUpperCase() + t.etaText.slice(1)}. Проверьте и нажмите «Отправить в деканат».`,
     card,
   };
 }

@@ -12,12 +12,15 @@ export function Bar({
   value,
   max,
   danger,
+  accent,
   className,
   mark,
 }: {
   value: number;
   max: number;
   danger?: boolean;
+  /** Цвет главной (из профиля) вместо чёрного — для акцента на белой карточке. */
+  accent?: boolean;
   className?: string;
   mark?: number;
 }) {
@@ -25,7 +28,10 @@ export function Bar({
   return (
     <div className={cn('relative h-[5px] rounded-full bg-line', className)} role="presentation">
       <m.i
-        className={cn('block h-full origin-left rounded-full', danger ? 'bg-danger' : 'bg-ink')}
+        className={cn(
+          'block h-full origin-left rounded-full',
+          danger ? 'bg-danger' : accent ? 'bg-hero' : 'bg-ink',
+        )}
         style={{ width: `${pct}%` }}
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}

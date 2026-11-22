@@ -14,7 +14,7 @@
 | Папка проекта | `/opt/dekanat` (владелец `deploy`) |
 | Оплата | грант Yandex Cloud 4 000 ₽ до 21.01.2027, ≈ 1 814 ₽/мес |
 
-**Порт SSH — 2222.** Порт 22 тоже открыт, но VPN на компьютере разработчика его режет.
+**Порт SSH – 2222.** Порт 22 тоже открыт, но VPN на компьютере разработчика его режет.
 
 ## Что установлено
 
@@ -34,7 +34,7 @@
 - Ключ `GIGACHAT_AUTH_KEY` уже лежит в `.env` локально и в `/opt/dekanat/.env` на сервере (права 600). В git его нет.
 - Токен: `POST https://ngw.devices.sberbank.ru:9443/api/v2/oauth`, scope `GIGACHAT_API_PERS`, действует 30 мин. Запросы к API идут на `https://api.giga.chat/v1/...`.
 - Проверено 22.11.2026 с сервера: токен выдаётся, `/v1/models` отвечает (GigaChat-2, -2-Pro, -2-Max, GigaChat-3-Lightning/Pro/Ultra), `chat/completions` работает.
-- **У `ngw.devices.sberbank.ru` сертификат НУЦ Минцифры.** На хосте сертификат установлен в системное хранилище. Node внутри контейнера его не видит. Публичные сертификаты лежат в `docker/certs/`: в образ или контейнер нужно передать `NODE_EXTRA_CA_CERTS=/app/certs/russian_trusted_ca_bundle.pem`. Для локальной разработки — то же самое с путём `docker/certs/russian_trusted_ca_bundle.pem`. Отключать проверку TLS (`NODE_TLS_REJECT_UNAUTHORIZED=0`) нельзя.
+- **У `ngw.devices.sberbank.ru` сертификат НУЦ Минцифры.** На хосте сертификат установлен в системное хранилище. Node внутри контейнера его не видит. Публичные сертификаты лежат в `docker/certs/`: в образ или контейнер нужно передать `NODE_EXTRA_CA_CERTS=/app/certs/russian_trusted_ca_bundle.pem`. Для локальной разработки – то же самое с путём `docker/certs/russian_trusted_ca_bundle.pem`. Отключать проверку TLS (`NODE_TLS_REJECT_UNAUTHORIZED=0`) нельзя.
 
 ## После конкурса
 

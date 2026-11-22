@@ -7,5 +7,5 @@
 | 0001 | [Next.js + Postgres вместо статического сайта](0001-server-not-static.md) |
 | 0002 | [Два слоя защиты: DAL + Row-Level Security](0002-dal-plus-rls.md) |
 | 0003 | [Drizzle вместо Prisma](0003-drizzle.md) |
-| 0004 | [Шрифт и ассеты — только с нашего сервера](0004-self-hosted-assets.md) |
+| 0004 | [Шрифт и ассеты – только с нашего сервера](0004-self-hosted-assets.md) |
 | 0005 | [Реалии ДВФУ и живой сид относительно «сейчас»](0005-dvfu-live-seed.md) |

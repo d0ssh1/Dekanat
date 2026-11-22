@@ -14,7 +14,7 @@ import { DeskCard } from '@/components/ui/desk';
 import { CountUp } from '@/components/motion/CountUp';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 import { Bar } from '@/components/features/study/Bar';
-import { GradeBook } from '@/components/features/study/GradeBook';
+import { GradeBook, SemesterTrend } from '@/components/features/study/GradeBook';
 
 export const metadata = { title: 'Учёба' };
 
@@ -115,6 +115,10 @@ export default async function StudyPage({ searchParams }: { searchParams: Promis
                   </ButtonLink>
                 </div>
               )}
+              {/* Динамика по семестрам — внизу карточки, вместо пустоты. */}
+              <div className="relative mt-auto pt-6">
+                <SemesterTrend finals={finals} />
+              </div>
             </DeskCard>
           </StaggerItem>
           <StaggerItem>

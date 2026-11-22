@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
-import type { Lesson } from '@/lib/day';
+import { movedToLabel, placeLabel, type Lesson } from '@/lib/day';
+import { cap, dayOf, hhmm, longDate } from '@/lib/time';
 import type { TodoItem } from '@/lib/todo';
 import { Button } from '@/components/ui/Button';
 import { IconTile } from '@/components/ui/primitives';
@@ -148,5 +149,102 @@ export function TodoList({ items, onNavigate }: { items: TodoItem[]; onNavigate?
         </StaggerItem>
       ))}
     </Stagger>
+  );
+}
+
+/**
+ * Окно «О занятии»: всё про пару в одном месте — время, аудитория со схемой этажа, преподаватель,
+ * изменения, подключение к онлайн-паре и материалы курса. Открывается по нажатию на карточку пары.
+ */
+export function LessonSheet({
+  lesson: l,
+  open,
+  onOpenChange,
+}: {
+  lesson: Lesson;
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
+  const off = l.status === 'moved' || l.status === 'cancelled';
+  const rows: [string, React.ReactNode][] = [
+    ['Когда', `${cap(longDate(dayOf(l.startsAt)))}, ${hhmm(l.startsAt)}–${hhmm(l.endsAt)}`],
+    ['Занятие', cap(l.kindLabel)],
+    ['Где', l.online ? 'онлайн' : placeLabel(l.room)],
+    ['Преподаватель', l.teacher],
+  ];
+  if (l.status === 'moved' && l.movedTo) rows.push(['Перенесена', movedToLabel(l)]);
+  if (l.status === 'cancelled') rows.push(['Отменена', l.changeNote ?? 'пары не будет']);
+  if (l.movedFrom) rows.push(['Перенос', 'перенесена с другого дня']);
+  if (l.previousRoom) rows.push(['Аудитория', `поменяли, была ${l.previousRoom}`]);
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange} title={l.subject}>
+      <div className="flex flex-col">
+        {rows.map(([k, v], i) => (
+          <div
+            key={k}
+            className={cn('flex items-baseline gap-4 py-2.5 text-[15px]', i > 0 && 'border-t border-line')}
+          >
+            <span className="w-32 shrink-0 text-[13px] font-semibold text-ink-2">{k}</span>
+            <span
+              className={cn('min-w-0', (k === 'Перенесена' || k === 'Отменена') && 'font-bold text-danger')}
+            >
+              {v}
+            </span>
+          </div>
+        ))}
+        {!off && l.online && <JoinLink lesson={l} size="lg" className="mt-3" />}
+        {!off && !l.online && l.room && (
+          <div className="mt-3">
+            <FloorPlan room={l.room} />
+          </div>
+        )}
+        <Link
+          href={`/study/${l.courseId}`}
+          className="mt-3 flex min-h-12 items-center gap-2.5 rounded-[14px] bg-surface-2 px-4 text-[15px] font-bold"
+        >
+          <span className="flex-1">Материалы и баллы по предмету</span>
+          <span aria-hidden>→</span>
+        </Link>
+      </div>
+    </Sheet>
+  );
+}
+
+/** Карточка пары, которая открывает «О занятии». Ссылки и кнопки внутри работают как обычно. */
+export function LessonOpener({
+  lesson,
+  className,
+  children,
+}: {
+  lesson: Lesson;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label={`${lesson.subject}, ${hhmm(lesson.startsAt)} — подробнее`}
+      onClick={(e) => {
+        // Клики из окна (оно в портале) и по ссылкам внутри карточки окно не открывают.
+        if (!e.currentTarget.contains(e.target as Node) || (e.target as Element).closest('a,button')) return;
+        setOpen(true);
+      }}
+      onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          setOpen(true);
+        }
+      }}
+      className={cn(
+        'flex min-w-0 cursor-pointer rounded-[28px] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink',
+        className,
+      )}
+    >
+      {children}
+      <LessonSheet lesson={lesson} open={open} onOpenChange={setOpen} />
+    </div>
   );
 }

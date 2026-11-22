@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { requireStudent } from '@/server/auth/guards';
 import { getMyRequest } from '@/server/dal/documents';
+import { DEAN_OFFICE } from '@/lib/university';
 import { DELIVERY, STATUS_WORD, canCancel, statusExplain, steps } from '@/lib/requests';
 import { dayMonth, dayOf } from '@/lib/time';
 import { cn } from '@/lib/cn';
@@ -136,6 +137,38 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
     </section>
   );
 
+  // «Как получить» — для готовой и выданной справки: что скачать, куда идти, как проверят подлинность.
+  const paper = r.delivery !== 'pdf';
+  const howTo = (r.status === 'ready' || r.status === 'issued') && (
+    <section>
+      <h2 className="m-0 mb-1 text-[18px] font-bold">Как получить</h2>
+      {[
+        ...(r.delivery !== 'paper'
+          ? [['PDF с QR-кодом', 'кнопка «Скачать PDF» — файл можно отправить куда нужно'] as const]
+          : []),
+        ...(paper
+          ? [
+              [
+                'Бумажная',
+                `ауд. ${r.type.pickupPlace ?? DEAN_OFFICE.room}, ${DEAN_OFFICE.hours}, с паспортом или студенческим`,
+              ] as const,
+            ]
+          : []),
+        [
+          'Подлинность',
+          r.issued
+            ? `по QR-коду или на странице проверки, код ${r.issued.verifyCode}`
+            : 'по QR-коду на справке',
+        ] as const,
+      ].map(([k, v], i) => (
+        <div key={k} className={cn('flex gap-3 py-2.5 text-[14px]', i > 0 && 'border-t border-line')}>
+          <b className="w-32 shrink-0">{k}</b>
+          <span className="text-ink-2">{v}</span>
+        </div>
+      ))}
+    </section>
+  );
+
   const actions = (
     <>
       {need && (
@@ -175,6 +208,7 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
             <>
               <div className="mt-2.5">{contents}</div>
               {reqs && <div className="mt-4">{reqs}</div>}
+              {howTo && <div className="mt-4">{howTo}</div>}
               {actions}
             </>
           )}
@@ -215,9 +249,10 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
             <section className="h-full rounded-[24px] bg-surface px-6 py-5">{contents}</section>
           </StaggerItem>
           <StaggerItem>
-            <section className="h-full rounded-[24px] bg-surface px-6 py-5">
+            <section className="flex h-full flex-col rounded-[24px] bg-surface px-6 py-5">
               {reqs}
-              {actions}
+              {howTo}
+              <div className="mt-auto pt-2">{actions}</div>
             </section>
           </StaggerItem>
         </Stagger>

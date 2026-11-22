@@ -61,7 +61,9 @@ export function DeskBlock({
       <div className="mb-1 flex items-center gap-1.5">
         <span
           aria-hidden
-          className="-ml-2 flex size-8 cursor-grab items-center justify-center rounded-[10px] text-ink-3"
+          data-grip
+          title="Потяните, чтобы переставить блок"
+          className="-ml-2 flex size-8 cursor-grab touch-none items-center justify-center rounded-[10px] text-ink-3 hover:bg-desk-chip hover:text-ink-desk active:cursor-grabbing"
         >
           <Icon name="grip" size={18} />
         </span>

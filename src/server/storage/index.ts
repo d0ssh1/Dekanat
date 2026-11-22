@@ -37,7 +37,9 @@ export function storage(): Storage {
   if (!instance) {
     const driver = process.env.STORAGE_DRIVER ?? 'disk';
     if (driver !== 'disk') throw new Error(`Драйвер хранилища «${driver}» не подключён в прототипе`);
-    instance = new DiskStorage(path.resolve(/* turbopackIgnore: true */ process.env.STORAGE_DIR ?? './storage'));
+    instance = new DiskStorage(
+      path.resolve(/* turbopackIgnore: true */ process.env.STORAGE_DIR ?? './storage'),
+    );
   }
   return instance;
 }

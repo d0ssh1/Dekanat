@@ -28,8 +28,8 @@ export function AskBar({ variant = 'phone', className }: { variant?: 'phone' | '
         router.push(text ? `/assistant?q=${encodeURIComponent(text)}` : '/assistant');
       }}
       className={cn(
-        'flex h-12 items-center gap-2.5 pr-3 pl-1.5',
-        desk ? 'rounded-[16px] bg-surface pr-3.5' : 'rounded-[15px] bg-glass-92',
+        'flex h-12 items-center gap-2.5 pr-1.5 pl-1.5',
+        desk ? 'rounded-[16px] bg-surface' : 'rounded-[15px] bg-glass-92',
         className,
       )}
     >
@@ -56,6 +56,18 @@ export function AskBar({ variant = 'phone', className }: { variant?: 'phone' | '
           desk ? 'text-[14px]' : 'text-[15px]',
         )}
       />
+      {/* Кнопка отправки — не только Enter. */}
+      <button
+        type="submit"
+        aria-label="Спросить помощника"
+        className={cn(
+          'flex shrink-0 items-center justify-center transition-[transform,opacity] active:scale-95',
+          desk ? 'size-9 rounded-[11px] bg-desk-chip' : 'size-9 rounded-[11px] bg-surface',
+          !q.trim() && 'opacity-60',
+        )}
+      >
+        <Icon name="arrowRight" size={18} stroke={2.2} />
+      </button>
     </m.form>
   );
 }

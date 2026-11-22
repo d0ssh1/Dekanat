@@ -44,11 +44,12 @@ test.describe('Успеваемость', () => {
     await expect(page.getByText('неудовлетворительно').filter(visible).first()).toBeVisible();
   });
 
-  test('зачётная книжка раскрывается по семестрам', async ({ page }) => {
+  test('зачётная книжка: семестры видны (на телефоне раскрываются)', async ({ page, isMobile }) => {
     await login(page, 'student1');
     await page.goto('/study');
     const book = page.getByRole('region', { name: 'Зачётная книжка' }).filter(visible).first();
-    await book.getByRole('button', { name: /Осень 2024/ }).click();
+    // На компьютере все семестры открыты карточками, на телефоне — раскрываются по нажатию.
+    if (isMobile) await book.getByRole('button', { name: /Осень 2024/ }).click();
     await expect(book.getByText('Математический анализ')).toBeVisible();
   });
 

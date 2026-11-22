@@ -8,12 +8,12 @@ import { bigCountdown, focusOf, isActive, phaseOf, placeLabel, statusOf, type Le
 import { dayOf, diffDays, hhmm, longDate, pairs, shortDate } from '@/lib/time';
 import type { TodoItem } from '@/lib/todo';
 import { Row, SectionHead, StatusText } from '@/components/ui/primitives';
-import { ButtonLink } from '@/components/ui/Button';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import { HeroRing, PhoneSheet, PhoneTop } from '@/components/shell/PhoneTop';
 import { Odometer } from '@/components/motion/Odometer';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 import { spring } from '@/components/motion/tokens';
-import { FloorPlanButton, JoinLink, TodoLink, TodoList } from './pieces';
+import { JoinLink, LessonSheet, TodoLink, TodoList } from './pieces';
 import { useNow } from './useNow';
 
 /** Больше стольки пар — «насыщенный день»: прошедшие сворачиваются (макет B2Busy). */
@@ -104,7 +104,7 @@ function FocusHero({
         {lesson.online ? (
           <JoinLink lesson={lesson} size="lg" className="h-12 rounded-[15px] bg-ink text-[15px]" />
         ) : (
-          lesson.room && <FloorPlanButton room={lesson.room} block />
+          <LessonDetailsButton lesson={lesson} />
         )}
       </StaggerItem>
     </Stagger>
@@ -302,6 +302,19 @@ function FreeSheet({ todos }: { todos: TodoItem[] }) {
         <b>Заказать</b>
         <span aria-hidden>→</span>
       </Link>
+    </>
+  );
+}
+
+/** «Подробнее о паре» в оранжевом верху: открывает окно занятия. */
+function LessonDetailsButton({ lesson }: { lesson: Lesson }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button block onClick={() => setOpen(true)}>
+        Подробнее о паре
+      </Button>
+      <LessonSheet lesson={lesson} open={open} onOpenChange={setOpen} />
     </>
   );
 }

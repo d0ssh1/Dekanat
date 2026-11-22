@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { AnimatePresence, m } from 'motion/react';
 import { useState, useTransition } from 'react';
 import { cn } from '@/lib/cn';
-import { addDays, dayOf, hhmm, shortDate } from '@/lib/time';
+import { addDays, cap, dayOf, hhmm, longDate, pairs } from '@/lib/time';
 import { SLOTS } from '@/lib/university';
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/components/motion/Toast';
@@ -26,22 +26,43 @@ export function LessonEditor({ lessons }: { lessons: L[] }) {
   const [open, setOpen] = useState<string | null>(null);
   const days = [...new Set(lessons.map((l) => dayOf(l.startsAt)))];
   return (
-    <section className="mt-3.5 rounded-[24px] bg-surface px-5 py-3">
-      {days.map((d) => (
-        <div key={d}>
-          <h2 className="m-0 mt-3 text-[14px] font-extrabold">{shortDate(d)}</h2>
-          {lessons
-            .filter((l) => dayOf(l.startsAt) === d)
-            .map((l) => (
+    // Дни — карточками в две колонки (CSS columns: плотно, без пустот), сверху вниз по порядку дней.
+    <div className="mt-3.5 gap-3.5 lg:columns-2">
+      {days.map((d) => {
+        const ls = lessons.filter((l) => dayOf(l.startsAt) === d);
+        const active = ls.filter((l) => l.status === 'scheduled').length;
+        const changed = ls.length - active;
+        return (
+          <section key={d} className="mb-3.5 break-inside-avoid rounded-[24px] bg-surface px-5 pt-4 pb-2">
+            <div className="flex items-baseline gap-2 pb-2">
+              <h2 className="m-0 flex-1 text-[17px] font-extrabold">{cap(longDate(d))}</h2>
+              <span className="text-[13px] font-semibold text-ink-2">
+                {pairs(active)}
+                {changed > 0 && <span className="text-danger"> · изменений: {changed}</span>}
+              </span>
+            </div>
+            {ls.map((l) => (
               <div key={l.id} className="border-t border-desk-line">
-                <div className="flex flex-wrap items-center gap-3 py-2.5 text-[15px]">
-                  <b className={cn('w-12 tabular', l.status !== 'scheduled' && 'line-through')}>
+                <div className="flex items-center gap-3 py-2.5">
+                  <b
+                    className={cn(
+                      'w-12 shrink-0 text-[15px] tabular',
+                      l.status !== 'scheduled' && 'text-ink-3 line-through',
+                    )}
+                  >
                     {hhmm(l.startsAt)}
                   </b>
-                  <span className="min-w-[160px] flex-1">
-                    {l.subject}{' '}
-                    <span className="text-[13px] text-ink-2">
-                      · {l.format === 'online' ? 'онлайн' : l.room}
+                  <span className="min-w-0 flex-1">
+                    <span
+                      className={cn(
+                        'block text-[15px] leading-snug',
+                        l.status !== 'scheduled' && 'text-ink-2',
+                      )}
+                    >
+                      {l.subject}
+                    </span>
+                    <span className="text-[12px] font-semibold text-ink-2">
+                      {KIND[l.kind] ?? l.kind} · {l.format === 'online' ? 'онлайн' : `ауд. ${l.room}`}
                     </span>
                   </span>
                   {l.status === 'scheduled' ? (
@@ -54,7 +75,7 @@ export function LessonEditor({ lessons }: { lessons: L[] }) {
                       Изменить
                     </Button>
                   ) : (
-                    <span className="text-[13px] font-bold text-danger">
+                    <span className="rounded-[9px] bg-danger-wash px-2.5 py-1 text-[12px] font-bold text-danger">
                       {l.status === 'moved' ? 'перенесена' : 'отменена'}
                     </span>
                   )}
@@ -64,11 +85,21 @@ export function LessonEditor({ lessons }: { lessons: L[] }) {
                 </AnimatePresence>
               </div>
             ))}
-        </div>
-      ))}
-    </section>
+          </section>
+        );
+      })}
+    </div>
   );
 }
+
+const KIND: Record<string, string> = {
+  lecture: 'лекция',
+  practice: 'практика',
+  lab: 'лабораторная',
+  seminar: 'семинар',
+  consult: 'консультация',
+  exam: 'экзамен',
+};
 
 function Editor({ l, onDone }: { l: L; onDone: () => void }) {
   const [room, setRoom] = useState('');
