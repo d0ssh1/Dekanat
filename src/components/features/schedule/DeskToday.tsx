@@ -571,16 +571,20 @@ function LessonCard({ l, className }: { l: Lesson; className: string }) {
       <span className="text-[13px] text-ink-2">{l.kindLabel}</span>
       <span className="text-[13px] whitespace-nowrap text-ink-2">{l.teacher}</span>
       <div className="mt-auto flex flex-col items-start gap-2 pt-2">
-        {(l.movedFrom || l.previousRoom) && (
-          <span className="text-[13px] leading-snug font-bold text-danger">
-            {l.movedFrom
-              ? `перенесена с ${wdGen(dayOf(l.movedFrom))}`
-              : `аудиторию поменяли — была ${l.previousRoom}`}
+        {l.movedFrom || l.previousRoom ? (
+          // Тот же блок, что у перенесённой пары: что изменилось — сверху, как теперь — крупно.
+          <div className="w-full rounded-[14px] bg-desk-chip p-3">
+            <div className="text-[12px] font-semibold text-danger">
+              {l.movedFrom ? `Перенесена с ${wdGen(dayOf(l.movedFrom))}` : 'Новая аудитория'}
+            </div>
+            <b className="text-[15px]">{placeLabel(l.room)}</b>
+            {l.previousRoom && <div className="text-[13px] text-ink-2">была {l.previousRoom}</div>}
+          </div>
+        ) : (
+          <span className="rounded-[11px] bg-desk-chip px-2.5 py-1.5 text-[13px] font-bold">
+            {placeLabel(l.room)}
           </span>
         )}
-        <span className="rounded-[11px] bg-desk-chip px-2.5 py-1.5 text-[13px] font-bold">
-          {placeLabel(l.room)}
-        </span>
       </div>
     </DeskCard>
   );

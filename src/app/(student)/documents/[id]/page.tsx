@@ -32,6 +32,31 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
     [...r.events].reverse().find((e) => e.actorName && e.actorName !== 'вы')?.actorName ??
     'методист дирекции';
   const title = `${r.title} · №${r.number}`;
+  // Документ, который вид справки требует сразу (например, справка 095/у), можно приложить до решения дирекции.
+  const canUpload =
+    !['need_action', 'ready', 'issued', 'cancelled', 'rejected'].includes(r.status) && missing.length > 0;
+  const stepIndex = Math.max(
+    0,
+    st.findIndex((x) => x.state === 'current' || x.state === 'alert'),
+  );
+  const progress = (
+    <div className="mt-auto pt-6" aria-hidden>
+      <div className="flex gap-1.5">
+        {st.map((x, i) => (
+          <span
+            key={x.key}
+            className={cn(
+              'h-1.5 flex-1 rounded-full',
+              i <= stepIndex || x.state === 'done' ? 'bg-ink' : 'bg-glass-50',
+            )}
+          />
+        ))}
+      </div>
+      <div className="mt-2 text-[13px] font-bold">
+        Шаг {Math.min(stepIndex + 1, st.length)} из {st.length} · {st[stepIndex]?.title}
+      </div>
+    </div>
+  );
 
   const heroBody = need ? (
     <>
@@ -63,6 +88,13 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
       <StaggerItem className="mt-2.5 text-[14px] leading-[1.45] font-semibold">
         {statusExplain(r)}
       </StaggerItem>
+      {canUpload && (
+        <StaggerItem className="mt-4">
+          <div className="mb-2 text-[14px] font-bold">Приложите: {missing[0]!.title.toLowerCase()}</div>
+          <UploadButton requestId={r.id} requirementId={missing[0]!.id} />
+          <div className="mt-2 text-[13px] font-semibold opacity-75">PDF или фото, до 10 МБ</div>
+        </StaggerItem>
+      )}
       {(r.status === 'ready' || r.status === 'issued') && (
         <StaggerItem className="mt-4">
           <a
@@ -169,6 +201,27 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
     </section>
   );
 
+  const next = !need && !howTo && !['cancelled', 'rejected'].includes(r.status) && (
+    <section>
+      <h2 className="m-0 mb-1 text-[18px] font-bold">Что дальше</h2>
+      {[
+        ['Проверка', 'методист проверит данные; если чего-то не хватит, придёт уведомление'],
+        ['Готовность', r.etaTo ? `по правилам до ${dayMonth(r.etaTo)}` : r.type.etaText],
+        [
+          'Получение',
+          r.delivery === 'pdf'
+            ? 'PDF с QR-кодом здесь же'
+            : `PDF здесь, бумажная – ауд. ${r.type.pickupPlace ?? DEAN_OFFICE.room}`,
+        ],
+      ].map(([k, v], i) => (
+        <div key={k} className={cn('flex gap-3 py-2.5 text-[14px]', i > 0 && 'border-t border-line')}>
+          <b className="w-32 shrink-0">{k}</b>
+          <span className="text-ink-2">{v}</span>
+        </div>
+      ))}
+    </section>
+  );
+
   const actions = (
     <>
       {need && (
@@ -234,8 +287,9 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
                   className="absolute top-[-90px] right-[-80px] size-60 animate-breathe rounded-full bg-glass-20"
                 />
               )}
-              <div className="relative [&>div]:max-w-[520px]">
+              <div className="relative flex flex-1 flex-col [&>div]:max-w-[520px]">
                 <Stagger>{heroBody}</Stagger>
+                {!need && r.status !== 'ready' && r.status !== 'issued' && progress}
               </div>
             </DeskCard>
           </StaggerItem>
@@ -252,7 +306,8 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
             <section className="flex h-full flex-col rounded-[24px] bg-surface px-6 py-5">
               {reqs}
               {howTo}
-              <div className="mt-auto pt-2">{actions}</div>
+              {next && <div className={reqs ? 'mt-4' : ''}>{next}</div>}
+              <div className="mt-auto pt-3">{actions}</div>
             </section>
           </StaggerItem>
         </Stagger>

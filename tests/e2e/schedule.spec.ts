@@ -35,7 +35,7 @@ test.describe('Расписание', () => {
     // Перенесённая пара подписана словами, куда перенесли.
     await expect(
       page
-        .getByText(/перенесена|→ чт/)
+        .getByText(/[Пп]еренесена|→ чт/)
         .filter(visible)
         .first(),
     ).toBeVisible();

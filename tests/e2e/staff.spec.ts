@@ -75,9 +75,9 @@ test.describe('Кабинет сотрудника и реальное врем�
   test('уведомления: прочитать все снимает отметки «Новое»', async ({ page }) => {
     await login(page, 'student1');
     await page.goto('/notifications');
-    await expect(page.getByLabel('Новое').first()).toBeAttached();
+    await expect(page.getByText('новое', { exact: true }).first()).toBeAttached();
     await page.getByRole('button', { name: 'Прочитать все' }).filter(visible).first().click();
-    await expect(page.getByLabel('Новое')).toHaveCount(0, { timeout: 10_000 });
+    await expect(page.getByText('новое', { exact: true })).toHaveCount(0, { timeout: 10_000 });
   });
 
   test('студент не может вызвать действия сотрудника', async ({ page }) => {

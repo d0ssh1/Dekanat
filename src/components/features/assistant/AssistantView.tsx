@@ -219,7 +219,7 @@ export function AssistantView({
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 aria-label="Сообщение помощнику"
-                placeholder={last ? 'спросить ещё…' : 'например: нужна справка в военкомат'}
+                placeholder={last ? 'Спросить ещё…' : 'Например: нужна справка в военкомат'}
                 maxLength={500}
                 enterKeyHint="send"
                 className="min-w-0 flex-1 border-0 bg-transparent text-[15px] outline-none placeholder:text-ink-2"

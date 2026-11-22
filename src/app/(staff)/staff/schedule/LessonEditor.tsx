@@ -138,7 +138,7 @@ function Editor({ l, onDone }: { l: L; onDone: () => void }) {
           <b className="text-[14px]">Замена аудитории</b>
           <input
             aria-label="Новая аудитория"
-            placeholder="например, D734"
+            placeholder="Например, D734"
             value={room}
             onChange={(e) => setRoom(e.target.value)}
             className={field}

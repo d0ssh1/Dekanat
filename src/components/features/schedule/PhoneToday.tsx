@@ -4,7 +4,16 @@ import Link from 'next/link';
 import { AnimatePresence, m } from 'motion/react';
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
-import { bigCountdown, focusOf, isActive, phaseOf, placeLabel, statusOf, type Lesson } from '@/lib/day';
+import {
+  bigCountdown,
+  focusOf,
+  isActive,
+  movedToLabel,
+  phaseOf,
+  placeLabel,
+  statusOf,
+  type Lesson,
+} from '@/lib/day';
 import { dayOf, diffDays, hhmm, longDate, pairs, shortDate } from '@/lib/time';
 import type { TodoItem } from '@/lib/todo';
 import { Row, SectionHead, StatusText } from '@/components/ui/primitives';
@@ -176,6 +185,23 @@ function LessonRow({
   const st = statusOf(l, phase, now);
   const focus = phase === 'current' || phase === 'next';
   const dim = phase === 'past' || l.status !== 'scheduled';
+  const off = l.status === 'moved' || l.status === 'cancelled';
+  // Перенос и отмена — отдельной заметной строкой: тонкое зачёркивание легко не заметить.
+  if (off)
+    return (
+      <Row first={first} className="-mx-2.5 my-0.5 rounded-[12px] border-t-transparent bg-danger-wash px-2.5">
+        <b className="w-[46px] text-ink-2 line-through">{hhmm(l.startsAt)}</b>
+        <span className="min-w-0 flex-1">
+          <span className="block text-ink-2">{l.subject}</span>
+          <span className="block text-[12px] font-bold text-danger">
+            {l.status === 'moved' && l.movedTo ? `Перенесена на ${movedToLabel(l)}` : 'Пары не будет'}
+          </span>
+        </span>
+        <span className="rounded-[8px] bg-danger px-2 py-0.5 text-[11px] font-extrabold text-surface">
+          {l.status === 'moved' ? 'перенос' : 'отмена'}
+        </span>
+      </Row>
+    );
   return (
     <Row current={focus} first={first} className={cn(dim && 'text-ink-2')}>
       <b className={cn('w-[46px]', l.status !== 'scheduled' && 'line-through')}>{hhmm(l.startsAt)}</b>

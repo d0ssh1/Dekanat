@@ -122,10 +122,10 @@ export function NoticeList({
                       )}
                     >
                       <span
-                        aria-label={n.read ? undefined : 'Новое'}
+                        aria-hidden
                         className={cn(
-                          'size-2 shrink-0 rounded-full transition-opacity',
-                          n.read ? 'opacity-0' : 'bg-hero outline-[1.5px] outline-ink outline-solid',
+                          'h-9 w-1 shrink-0 rounded-full transition-colors',
+                          n.read ? 'bg-transparent' : 'bg-hero',
                         )}
                       />
                       <IconTile icon={lk.icon} tone={lk.tone} size={36} />
@@ -137,8 +137,15 @@ export function NoticeList({
                           </div>
                         )}
                       </div>
-                      <span className="text-[13px] font-bold whitespace-nowrap text-ink-2 tabular">
-                        {hhmm(n.createdAt)}
+                      <span className="flex flex-col items-end gap-1">
+                        <span className="text-[13px] font-bold whitespace-nowrap text-ink-2 tabular">
+                          {hhmm(n.createdAt)}
+                        </span>
+                        {!n.read && (
+                          <span className="rounded-[7px] bg-hero px-1.5 py-px text-[11px] font-extrabold">
+                            новое
+                          </span>
+                        )}
                       </span>
                     </Link>
                   );

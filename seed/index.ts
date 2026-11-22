@@ -296,6 +296,21 @@ const DOC_TYPES: (typeof s.documentTypes.$inferInsert)[] = [
     pickupPlace: 'D210',
   },
   {
+    code: 'sick_note',
+    title: 'Справка о болезни',
+    sort: 3,
+    description:
+      'Сдать в дирекцию справку 095/у или выписку из больницы, чтобы пропуски засчитали как уважительные.',
+    etaText: 'проверка — 1–2 рабочих дня',
+    etaDaysMin: 1,
+    etaDaysMax: 2,
+    fields: [],
+    deliveries: ['pdf'],
+    requirements: ['Справка 095/у или выписка'],
+    legalBasis: 'Положение о текущем контроле успеваемости',
+    keywords: ['болел', 'болез', 'заболел', 'больнич', '095', 'простуд', 'грипп', 'пропуст'],
+  },
+  {
     code: 'material_aid',
     title: 'Материальная помощь',
     sort: 4,
@@ -443,27 +458,12 @@ async function main() {
   const uAlina = randomUUID();
   const uKim = randomUUID();
   const uStaff = randomUUID();
-  // Служебный вход для быстрой проверки: копия учёбы Алины в той же группе (без заявок и уведомлений).
-  const uAdmin = randomUUID();
-  const hAdmin = await hash('admin', ARGON2_OPTIONS);
-  const withAdmin = (studentId: string) => (studentId === uAlina ? [studentId, uAdmin] : [studentId]);
   await db.insert(s.users).values([
-    { id: uAdmin, login: 'admin', passwordHash: hAdmin, role: 'student' },
     { id: uAlina, login: 'alina.vorontsova', passwordHash: h1, role: 'student' },
     { id: uKim, login: 'daniil.kim', passwordHash: h2, role: 'student' },
     { id: uStaff, login: 'metodist.ivanova', passwordHash: h3, role: 'staff' },
   ]);
   await db.insert(s.students).values([
-    {
-      userId: uAdmin,
-      lastName: 'Воронцова',
-      firstName: 'Алина',
-      middleName: 'Дмитриевна',
-      groupId: gPI,
-      recordBook: '2024-ПИ-0001',
-      email: 'admin@students.dekanat.test',
-      avatarColor: '#FFC21A',
-    },
     {
       userId: uAlina,
       lastName: 'Воронцова',
@@ -631,14 +631,9 @@ async function main() {
         .insert(s.assessments)
         .values({ id, courseId, title, kind, maxPoints: max, dueAt: at(due, '23:59'), sort: sort++ });
       if (score !== null)
-        await db.insert(s.scores).values(
-          withAdmin(studentId).map((sid) => ({
-            assessmentId: id,
-            studentId: sid,
-            points: score,
-            gradedAt: at(due, '18:00'),
-          })),
-        );
+        await db
+          .insert(s.scores)
+          .values({ assessmentId: id, studentId, points: score, gradedAt: at(due, '18:00') });
     }
   }
   const wed = addDays(A, 2);
@@ -747,11 +742,7 @@ async function main() {
         semester,
         controlType: control,
       });
-      await db
-        .insert(s.finalGrades)
-        .values(
-          withAdmin(studentId).map((sid) => ({ studentId: sid, courseId, grade, points, gradedOn: on })),
-        );
+      await db.insert(s.finalGrades).values({ studentId, courseId, grade, points, gradedOn: on });
     }
   }
   await history(gPI, uAlina, [

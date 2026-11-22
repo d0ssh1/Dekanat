@@ -63,7 +63,8 @@ export async function toolSchedule(viewer: StudentViewer, day: string, now: Date
   const card: AnswerCard = {
     kind: 'answer',
     cap: `${label} · ${act.length ? pairs(act.length) : 'пар нет'}`,
-    headline: act.length ? `${hhmm(act[0]!.startsAt)} — ${act[0]!.short}` : 'Пар нет',
+    // Заголовок — весь день целиком, а не одна первая пара: список пар ниже, в «Подробнее».
+    headline: act.length ? `${hhmm(act[0]!.startsAt)}–${hhmm(act.at(-1)!.endsAt)}` : 'Пар нет',
     rows: lessons.map(lessonRow),
     links: [{ href: '/week', label: 'Вся неделя' }],
   };

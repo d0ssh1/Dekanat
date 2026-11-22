@@ -153,7 +153,7 @@ export function TodoList({ items, onNavigate }: { items: TodoItem[]; onNavigate?
 }
 
 /**
- * Окно «О занятии»: всё про пару в одном месте — время, аудитория со схемой этажа, преподаватель,
+ * Окно «О паре»: всё про пару в одном месте — предмет, время, аудитория, преподаватель,
  * изменения, подключение к онлайн-паре и материалы курса. Открывается по нажатию на карточку пары.
  */
 export function LessonSheet({
@@ -167,6 +167,7 @@ export function LessonSheet({
 }) {
   const off = l.status === 'moved' || l.status === 'cancelled';
   const rows: [string, React.ReactNode][] = [
+    ['Предмет', <b key="s">{l.subject}</b>],
     ['Когда', `${cap(longDate(dayOf(l.startsAt)))}, ${hhmm(l.startsAt)}–${hhmm(l.endsAt)}`],
     ['Занятие', cap(l.kindLabel)],
     ['Где', l.online ? 'онлайн' : placeLabel(l.room)],
@@ -177,7 +178,7 @@ export function LessonSheet({
   if (l.movedFrom) rows.push(['Перенос', 'перенесена с другого дня']);
   if (l.previousRoom) rows.push(['Аудитория', `поменяли, была ${l.previousRoom}`]);
   return (
-    <Sheet open={open} onOpenChange={onOpenChange} title={l.subject}>
+    <Sheet open={open} onOpenChange={onOpenChange} title="О паре">
       <div className="flex flex-col">
         {rows.map(([k, v], i) => (
           <div
@@ -193,11 +194,6 @@ export function LessonSheet({
           </div>
         ))}
         {!off && l.online && <JoinLink lesson={l} size="lg" className="mt-3" />}
-        {!off && !l.online && l.room && (
-          <div className="mt-3">
-            <FloorPlan room={l.room} />
-          </div>
-        )}
         <Link
           href={`/study/${l.courseId}`}
           className="mt-3 flex min-h-12 items-center gap-2.5 rounded-[14px] bg-surface-2 px-4 text-[15px] font-bold"
