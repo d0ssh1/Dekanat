@@ -21,6 +21,10 @@ jobs:
       DATABASE_OWNER_URL: postgres://dekanat_owner:ci_owner_pw@127.0.0.1:54329/dekanat
       APP_DB_PASSWORD: ci_app_pw
       UNIVERSITY_TZ: Asia/Vladivostok
+      PUBLIC_URL: http://localhost:3000
+      SEED_PASSWORD_STUDENT1: ci-student1-pass
+      SEED_PASSWORD_STUDENT2: ci-student2-pass
+      SEED_PASSWORD_STAFF: ci-staff-pass
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -37,6 +41,10 @@ jobs:
       - run: npm run db:seed
       - run: npm test
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Сценарии в браузере (360 px и компьютер)
+        run: npm run test:e2e
+        env: { CI: '1' }
       - name: В клиентском бандле нет секретов
         run: |
           ! grep -rE "ci_app_pw|ci_owner_pw|GIGACHAT_AUTH_KEY|DATABASE_URL" .next/static

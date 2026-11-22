@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { cn } from '@/lib/cn';
+import { Icon } from '@/components/ui/Icon';
 import { Avatar, Wordmark } from '@/components/ui/primitives';
 import { BellButton } from './BellButton';
 import { AskBar } from './AskBar';
@@ -59,5 +61,37 @@ export function PhoneSheet({ children, className }: { children: React.ReactNode;
     >
       {children}
     </section>
+  );
+}
+
+/** Верх внутренней страницы телефона: «назад», заголовок и действие справа (Профиль, Уведомления). */
+export function PhoneSubTop({
+  title,
+  backHref = '/',
+  action,
+  children,
+  className,
+}: {
+  title: string;
+  backHref?: string;
+  action?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('relative px-[18px] pt-[calc(var(--safe-top)+14px)] pb-[22px]', className)}>
+      <div className="flex items-center gap-2">
+        <Link
+          href={backHref}
+          aria-label="Назад"
+          className="flex size-11 shrink-0 items-center justify-center rounded-[15px] bg-glass-50"
+        >
+          <Icon name="back" stroke={2.4} />
+        </Link>
+        <h1 className="m-0 flex-1 text-[15px] font-bold">{title}</h1>
+        {action}
+      </div>
+      {children}
+    </div>
   );
 }

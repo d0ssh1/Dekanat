@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { connection } from 'next/server';
 import { UNIVERSITY } from '@/lib/university';
 import { MotionProvider } from '@/components/motion/MotionProvider';
 import { ToastProvider } from '@/components/motion/Toast';
@@ -17,7 +18,9 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // CSP с nonce требует рендера на каждый запрос: статическая страница не получила бы nonce для скриптов.
+  await connection();
   return (
     <html lang="ru">
       <head>
