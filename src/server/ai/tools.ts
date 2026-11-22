@@ -196,10 +196,13 @@ export async function toolRequests(viewer: StudentViewer, now: Date) {
     links: [{ href: '/documents', label: 'Все документы' }],
   };
   return {
+    // Количество — явно в начале: иначе модель пересчитывала сама и ошибалась («три» при четырёх).
     text: active.length
-      ? active
+      ? `Заявок в работе: ${active.length}. ` +
+        active
           .map((r) => `${r.title} №${r.number} — ${listLine(r, today).text.replace(/^! /, '').toLowerCase()}`)
-          .join('; ') + '.'
+          .join('; ') +
+        '.'
       : 'Сейчас заявок в работе нет.',
     card,
   };
