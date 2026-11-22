@@ -6,11 +6,12 @@ import { cn } from '@/lib/cn';
 import type { FinalGrade } from '@/server/dal/study';
 import { spring } from '@/components/motion/tokens';
 
-const SEM_LABEL: Record<string, string> = { осень: 'осенний', весна: 'весенний' };
 const label = (code: string) => {
-  const [y, s] = code.split('-');
-  return `${SEM_LABEL[s ?? ''] ?? s} семестр ${s === 'весна' ? Number(y) : `${y}/${String(Number(y) + 1).slice(2)}`}`;
+  const [y, sem] = code.split('-');
+  return sem === 'весна' ? `Весна ${y}` : `Осень ${y}`;
 };
+const subjects = (n: number) =>
+  `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'предмет' : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? 'предмета' : 'предметов'}`;
 const tone = (g: string) =>
   g === 'отлично' ? 'text-ok' : g === 'неудовлетворительно' ? 'text-danger' : 'text-ink';
 
@@ -25,7 +26,9 @@ export function GradeBook({
   className?: string;
 }) {
   const semesters = [...new Set(finals.map((f) => f.semester))].reverse();
-  const [open, setOpen] = useState<string | null>(semesters[0] ?? null);
+  const [openSet, setOpenSet] = useState<string[]>(
+    variant === 'desk' ? semesters.slice(0, 2) : semesters.slice(0, 1),
+  );
   const line = variant === 'phone' ? 'border-line' : 'border-desk-line';
   return (
     <section className={className} aria-label="Зачётная книжка">
@@ -37,52 +40,54 @@ export function GradeBook({
       >
         Зачётная книжка
       </h2>
-      {semesters.map((s, si) => {
-        const rows = finals.filter((f) => f.semester === s);
-        const isOpen = open === s;
-        return (
-          <div key={s} className={cn(si > 0 && 'border-t', line)}>
-            <button
-              type="button"
-              aria-expanded={isOpen}
-              onClick={() => setOpen(isOpen ? null : s)}
-              className="flex min-h-12 w-full items-center gap-3 py-2 text-left"
-            >
-              <span className="flex-1 text-[15px] font-bold">{label(s)}</span>
-              <span className="text-[13px] font-semibold text-ink-2">{rows.length} предм.</span>
-              <m.span
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={spring.snappy}
-                aria-hidden
-                className="text-ink-2"
+      <div className={cn(variant === 'desk' && 'grid grid-cols-2 gap-x-10')}>
+        {semesters.map((s, si) => {
+          const rows = finals.filter((f) => f.semester === s);
+          const isOpen = openSet.includes(s);
+          return (
+            <div key={s} className={cn((variant === 'desk' ? si > 1 : si > 0) && 'border-t', line)}>
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                onClick={() => setOpenSet((xs) => (isOpen ? xs.filter((x) => x !== s) : [...xs, s]))}
+                className="flex min-h-12 w-full items-center gap-3 py-2 text-left"
               >
-                ▾
-              </m.span>
-            </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <m.ul
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={spring.soft}
-                  className="m-0 list-none overflow-hidden p-0 pb-2"
+                <span className="flex-1 text-[15px] font-bold">{label(s)}</span>
+                <span className="text-[13px] font-semibold text-ink-2">{subjects(rows.length)}</span>
+                <m.span
+                  animate={{ rotate: isOpen ? 180 : 0 }}
+                  transition={spring.snappy}
+                  aria-hidden
+                  className="text-ink-2"
                 >
-                  {rows.map((r) => (
-                    <li key={r.subject} className="flex items-baseline gap-3 py-1.5 text-[14px]">
-                      <span className="min-w-0 flex-1">{r.subject}</span>
-                      {r.points !== null && (
-                        <span className="text-[12px] font-semibold text-ink-2 tabular">{r.points}</span>
-                      )}
-                      <b className={cn('w-[110px] text-right text-[13px]', tone(r.grade))}>{r.grade}</b>
-                    </li>
-                  ))}
-                </m.ul>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
+                  ▾
+                </m.span>
+              </button>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <m.ul
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={spring.soft}
+                    className="m-0 list-none overflow-hidden p-0 pb-2"
+                  >
+                    {rows.map((r) => (
+                      <li key={r.subject} className="flex items-baseline gap-3 py-1.5 text-[14px]">
+                        <span className="min-w-0 flex-1">{r.subject}</span>
+                        {r.points !== null && (
+                          <span className="text-[12px] font-semibold text-ink-2 tabular">{r.points}</span>
+                        )}
+                        <b className={cn('w-[110px] text-right text-[13px]', tone(r.grade))}>{r.grade}</b>
+                      </li>
+                    ))}
+                  </m.ul>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }

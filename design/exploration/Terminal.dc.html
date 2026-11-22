@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>01 — Командная строка</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#111111}a:hover{color:#C81E14}
+button{font-family:inherit}
+.dots{color:transparent;-webkit-background-clip:text;background-clip:text;background-size:6px 6px;font-weight:800;letter-spacing:-0.02em}
+</style>
+</helmet>
+<div style="width: 1620px; height: 940px; box-sizing: border-box; padding: 48px; display: flex; gap: 48px; align-items: center; background: #D6D5D0; font-family: 'JetBrains Mono', ui-monospace, monospace; color: #111111">
+
+<!-- ===== DESKTOP ===== -->
+<div style="width: 1086px; height: 844px; flex-shrink: 0; background: #EDECE8; display: flex; flex-direction: column; overflow: hidden; border-radius: 6px; box-shadow: 0 30px 60px rgba(0,0,0,0.18)">
+  <header style="display: flex; align-items: center; gap: 16px; padding: 14px 24px; border-bottom: 1px solid #111111; font-size: 13px">
+    <span style="font-weight: 800">ДЕКАНАТ://</span>
+    <span style="color: #555555">alina.vorontsova · ПИ-31 · 3 курс</span>
+    <span style="flex: 1"></span>
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 4px; background: {{accent}}"></span>ЗАЩИЩЁННЫЙ СЕАНС</span>
+    <span>ПН 23.11 · 10:20</span>
+  </header>
+
+  <div style="flex: 1; min-height: 0; display: flex">
+    <!-- main column -->
+    <main style="flex: 1; min-width: 0; padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; border-right: 1px solid #111111">
+      <div style="font-size: 13px; color: #555555">// напишите, что случилось или что нужно. я соберу документы сам.</div>
+      <div style="font-size: 30px; font-weight: 700; line-height: 1.25; letter-spacing: -0.02em"><span style="color: {{accent}}">&gt;</span> заболела, до пятницы не приду<span style="display: inline-block; width: 16px; height: 30px; background: #111111; vertical-align: -5px; margin-left: 4px"></span></div>
+
+      <!-- printout -->
+      <section style="background: #FFFFFF; border-top: 2px dashed #111111; border-bottom: 2px dashed #111111; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #555555"><span>РАСПОЗНАНО · 0,8 с</span><span>ЗАЯВКА-ПАКЕТ №2231</span></div>
+        <div style="font-size: 20px; font-weight: 800">СИТУАЦИЯ: «БОЛЕЗНЬ» → 4 ДЕЙСТВИЯ</div>
+        <div style="height: 1px; background: #111111"></div>
+        <div style="display: flex; gap: 12px"><span style="font-weight: 700">[01]</span><span style="flex: 1">оправдать пропуски</span><span style="color: #555555">9 пар · пн–пт</span><span style="font-weight: 700; color: #1C7C3A">ГОТОВО К ОТПРАВКЕ</span></div>
+        <div style="display: flex; gap: 12px"><span style="font-weight: 700">[02]</span><span style="flex: 1">письмо преподавателям</span><span style="color: #555555">5 адресатов</span><span style="font-weight: 700; color: #1C7C3A">ЧЕРНОВИК ГОТОВ</span></div>
+        <div style="display: flex; gap: 12px"><span style="font-weight: 700">[03]</span><span style="flex: 1">перенос КТ по матстату</span><span style="color: #555555">ср 25.11</span><span style="font-weight: 700; color: #1C7C3A">ЗАПРОС ГОТОВ</span></div>
+        <div style="display: flex; gap: 12px"><span style="font-weight: 700">[04]</span><span style="flex: 1">справка из поликлиники</span><span style="color: #555555">после выздоровления</span><span style="font-weight: 700; color: {{accent}}">НАПОМНЮ</span></div>
+        <div style="height: 1px; background: #111111"></div>
+        <div style="font-size: 12px; line-height: 1.5; color: #333333">ИСТОЧНИК: <a href="#">Положение о текущем контроле, п. 4.2</a> — справку нужно сдать в течение 3 дней после выздоровления.</div>
+        <div style="display: flex; gap: 10px; margin-top: 6px">
+          <button type="button" style="height: 46px; padding: 0 20px; border: 0; background: #111111; color: #EDECE8; font-size: 14px; font-weight: 700; cursor: pointer">ЗАПУСТИТЬ ВСЁ ↵</button>
+          <button type="button" style="height: 46px; padding: 0 20px; border: 1px solid #111111; background: transparent; color: #111111; font-size: 14px; font-weight: 700; cursor: pointer">ПРОСМОТРЕТЬ ПИСЬМО</button>
+        </div>
+      </section>
+
+      <div style="flex: 1"></div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px">
+        <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #111111; background: transparent; color: #111111; cursor: pointer">/расписание</button>
+        <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #111111; background: transparent; color: #111111; cursor: pointer">/баллы</button>
+        <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #111111; background: transparent; color: #111111; cursor: pointer">/справка</button>
+        <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #111111; background: transparent; color: #111111; cursor: pointer">/мои-заявки</button>
+        <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #111111; background: transparent; color: #111111; cursor: pointer">/кто-видел-мои-данные</button>
+      </div>
+    </main>
+
+    <!-- side: system log -->
+    <aside style="width: 320px; flex-shrink: 0; display: flex; flex-direction: column">
+      <div style="padding: 22px 24px; border-bottom: 1px solid #111111">
+        <div style="font-size: 12px; color: #555555">СЛЕДУЮЩАЯ ПАРА ЧЕРЕЗ</div>
+        <div class="dots" style="font-size: 96px; line-height: 1; background-image: radial-gradient(circle, #111111 1.8px, transparent 2.1px)">25′</div>
+        <div style="font-size: 14px; font-weight: 700; margin-top: 6px">МАШИННОЕ ОБУЧЕНИЕ</div>
+        <div style="font-size: 13px; margin-top: 2px"><s style="color: #555555">412</s> → <b style="color: {{accent}}">214 КОРП. Б</b></div>
+      </div>
+      <div style="padding: 18px 24px; border-bottom: 1px solid #111111; display: flex; gap: 20px">
+        <div><div style="font-size: 12px; color: #555555">СРЕДНИЙ</div><div class="dots" style="font-size: 48px; line-height: 1.1; background-image: radial-gradient(circle, #111111 1.4px, transparent 1.7px); background-size: 5px 5px">4.62</div></div>
+        <div><div style="font-size: 12px; color: #555555">ДО СЕССИИ</div><div class="dots" style="font-size: 48px; line-height: 1.1; background-image: radial-gradient(circle, #111111 1.4px, transparent 1.7px); background-size: 5px 5px">28д</div></div>
+      </div>
+      <div style="padding: 18px 24px; display: flex; flex-direction: column; gap: 14px; font-size: 13px; line-height: 1.45">
+        <div style="font-size: 12px; color: #555555">СИСТЕМА ПИШЕТ ПЕРВОЙ</div>
+        <div><span style="color: #555555">10:02</span> <b>ML переехало</b> в ауд. 214 Б. Маршрут от корп. А — 6 мин.</div>
+        <div><span style="color: #555555">09:40</span> <b style="color: {{accent}}">ML: до допуска −2 балла.</b> Лаба №5 закроет. Срок 04.12.</div>
+        <div><span style="color: #555555">вчера</span> <b>Справка №1047 готова.</b> PDF с QR-проверкой.</div>
+        <div><span style="color: #555555">пт</span> Запись на элективы до 01.12 — займёт 2 мин.</div>
+      </div>
+      <div style="flex: 1"></div>
+      <div style="padding: 14px 24px; border-top: 1px solid #111111; font-size: 11px; color: #555555">КОНЦЕПТ ДЛЯ КОНКУРСА · НЕ ОФИЦИАЛЬНЫЙ СЕРВИС · ДАННЫЕ ВЫМЫШЛЕНЫ</div>
+    </aside>
+  </div>
+</div>
+
+<!-- ===== PHONE ===== -->
+<div style="width: 390px; height: 844px; flex-shrink: 0; border-radius: 44px; background: #EDECE8; box-shadow: 0 0 0 10px #111111; overflow: hidden; position: relative; display: flex; flex-direction: column">
+  <div style="padding: 52px 20px 0; display: flex; flex-direction: column; gap: 14px; flex: 1">
+    <div style="display: flex; justify-content: space-between; font-size: 12px"><b>ДЕКАНАТ://</b><span>ПН 23.11</span></div>
+    <div style="display: flex; align-items: flex-end; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid #111111">
+      <div class="dots" style="font-size: 76px; line-height: 0.95; background-image: radial-gradient(circle, #111111 1.7px, transparent 2px)">10:45</div>
+      <div style="font-size: 12px; line-height: 1.4; padding-bottom: 4px"><b>ML</b><br><b style="color: {{accent}}">214 Б</b></div>
+    </div>
+    <div style="font-size: 12px; color: #555555">// система пишет первой</div>
+    <div style="font-size: 14px; line-height: 1.45"><span style="color: {{accent}}; font-weight: 700">!</span> ML: до допуска −2 балла. Лаба №5 до 04.12.</div>
+    <div style="font-size: 18px; font-weight: 700; line-height: 1.3; margin-top: 4px"><span style="color: {{accent}}">&gt;</span> заболела, до пятницы не приду</div>
+    <section style="background: #FFFFFF; border-top: 2px dashed #111111; border-bottom: 2px dashed #111111; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; font-size: 13px">
+      <div style="font-weight: 800; font-size: 15px">«БОЛЕЗНЬ» → 4 ДЕЙСТВИЯ</div>
+      <div>[01] оправдать 9 пропусков</div>
+      <div>[02] письмо 5 преподавателям</div>
+      <div>[03] перенос КТ по матстату</div>
+      <div style="color: {{accent}}">[04] справка — напомню</div>
+      <div style="font-size: 11px; color: #555555">ИСТОЧНИК: Положение о тек. контроле, п. 4.2</div>
+      <button type="button" style="height: 44px; border: 0; background: #111111; color: #EDECE8; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 4px">ЗАПУСТИТЬ ВСЁ ↵</button>
+    </section>
+  </div>
+  <div style="padding: 12px 16px 30px; border-top: 1px solid #111111">
+    <label style="display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 6px 0 14px; background: #FFFFFF; border: 1px solid #111111">
+      <span style="color: {{accent}}; font-weight: 800">&gt;</span>
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Команда или вопрос</span>
+      <input type="text" placeholder="что нужно?" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 15px; color: #111111">
+      <button type="button" aria-label="Голосовой ввод" style="width: 40px; height: 40px; border: 0; background: #111111; color: #EDECE8; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></button>
+    </label>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#D7261E","options":["#D7261E","#1D4ED8","#C2410C","#15803D"]},"$preview":{"width":1620,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#D7261E' };
+  }
+}
+</script>
+</body>
+</html>

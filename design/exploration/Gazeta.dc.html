@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>02 — Газета дня</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=PT+Serif:ital,wght@0,400;0,700;1,400&amp;family=PT+Sans+Narrow:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#141414}a:hover{color:#B3122B}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1620px; height: 940px; box-sizing: border-box; padding: 48px; display: flex; gap: 48px; align-items: center; background: #3B3A37; font-family: 'PT Serif', Georgia, serif; color: #141414">
+
+<!-- ===== DESKTOP ===== -->
+<div style="width: 1086px; height: 844px; flex-shrink: 0; background: #ECEAE4; padding: 22px 30px; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden">
+  <!-- masthead -->
+  <div style="display: flex; justify-content: space-between; font-family: 'PT Sans Narrow', sans-serif; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase">
+    <span>Выпуск № 84 · неделя 12</span>
+    <nav aria-label="Разделы" style="display: flex; gap: 16px">
+      <a href="#">Расписание</a><a href="#">Успеваемость</a><a href="#">Документы</a><a href="#">Архив выпусков</a>
+    </nav>
+    <span>Концепт для конкурса</span>
+  </div>
+  <div style="font-family: 'Playfair Display', serif; font-weight: 900; font-size: 74px; line-height: 1; text-align: center; letter-spacing: -0.02em; margin-top: 8px">Ведомости Алины</div>
+  <div style="display: flex; justify-content: space-between; border-top: 3px solid #141414; border-bottom: 1px solid #141414; padding: 5px 0; margin-top: 8px; font-family: 'PT Sans Narrow', sans-serif; font-size: 14px">
+    <span>Понедельник, 23 ноября 2026</span>
+    <span>Выпуск собран ИИ-редактором в 07:00 только из ваших данных</span>
+    <span>ПИ-31 · 3 курс</span>
+  </div>
+
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 14px">
+    <!-- lead story -->
+    <article style="grid-column: span 2; padding-right: 20px; border-right: 1px solid #141414; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-family: 'PT Sans Narrow', sans-serif; font-size: 13px; font-weight: 700; color: {{accent}}; letter-spacing: 0.06em">ГЛАВНОЕ · ЧЕРЕЗ 25 МИНУТ</div>
+      <h1 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 40px; line-height: 1.05; letter-spacing: -0.01em">Машинное обучение переезжает в 214-ю аудиторию</h1>
+      <p style="margin: 0; font-size: 16px; line-height: 1.5"><b>Корпус Б, 10:45.</b> Практика у Козлова Д. С. пройдёт не в 412-й, как обычно. Дорога от корпуса А займёт шесть минут — выходите не позже 10:35.</p>
+      <div style="display: flex; gap: 16px; align-items: stretch; margin-top: 4px">
+        <div style="font-family: 'Playfair Display', serif; font-weight: 900; font-size: 88px; line-height: 0.9; color: {{accent}}">−2</div>
+        <p style="margin: 0; font-size: 15px; line-height: 1.5; border-left: 1px solid #141414; padding-left: 14px"><b>Столько баллов не хватает до допуска по ML.</b> Редакция выяснила: лабораторная №5 закрывает разрыв целиком. Срок — 4 декабря. <a href="#">Добавить в план →</a></p>
+      </div>
+    </article>
+
+    <!-- program -->
+    <section style="padding: 0 18px; border-right: 1px solid #141414">
+      <h2 style="margin: 0 0 8px; font-family: 'PT Sans Narrow', sans-serif; font-size: 17px; letter-spacing: 0.06em; border-bottom: 2px solid #141414; padding-bottom: 4px">ПРОГРАММА ДНЯ</h2>
+      <div style="font-size: 14px; line-height: 1.4; display: flex; flex-direction: column; gap: 10px">
+        <div><b>09:00</b> Базы данных<br><i>лекция, ауд. 305</i></div>
+        <div style="color: {{accent}}"><b>10:45</b> Машинное обучение<br><i>практика, ауд. 214 Б — изменено</i></div>
+        <div><b>13:00</b> Английский язык<br><i>практика, ауд. 118</i></div>
+        <div style="color: #5A5852"><b>14:50</b> <s>Веб-разработка</s><br><i>перенесено на четверг</i></div>
+      </div>
+      <h2 style="margin: 18px 0 8px; font-family: 'PT Sans Narrow', sans-serif; font-size: 17px; letter-spacing: 0.06em; border-bottom: 2px solid #141414; padding-bottom: 4px">СВОДКА</h2>
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 14px">Средний балл</span><span style="font-family: 'Playfair Display', serif; font-weight: 900; font-size: 30px">4,62</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 14px">До сессии</span><span style="font-family: 'Playfair Display', serif; font-weight: 900; font-size: 30px">28 дн.</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 14px">Допуск</span><span style="font-family: 'Playfair Display', serif; font-weight: 900; font-size: 30px">5 / 6</span></div>
+    </section>
+
+    <!-- classifieds -->
+    <section style="padding-left: 18px; display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-family: 'PT Sans Narrow', sans-serif; font-size: 17px; letter-spacing: 0.06em; border-bottom: 2px solid #141414; padding-bottom: 4px">ОБЪЯВЛЕНИЯ</h2>
+      <div style="border: 1px solid #141414; padding: 10px; font-size: 14px; line-height: 1.4"><b>Справка № 1047 готова.</b> Бумажная — каб. 210, электронная — PDF с QR-проверкой. <a href="#">Скачать</a></div>
+      <div style="border: 1px solid #141414; padding: 10px; font-size: 14px; line-height: 1.4"><b>Элективы:</b> запись закрывается 1 декабря. Редакция подобрала три курса под ваш профиль.</div>
+      <div style="border: 1px solid #141414; padding: 10px; font-size: 14px; line-height: 1.4"><b>Курсовая по БД</b> — сдать до 30 ноября. Готово 7 из 10 разделов.</div>
+    </section>
+
+    <!-- letter to the editor (AI) -->
+    <section style="grid-column: span 4; margin-top: 14px; border-top: 3px double #141414; padding-top: 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0">
+      <div style="grid-column: span 1; padding-right: 18px; border-right: 1px solid #141414">
+        <div style="font-family: 'PT Sans Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em">ПИСЬМО В РЕДАКЦИЮ</div>
+        <p style="margin: 8px 0 0; font-size: 20px; font-style: italic; line-height: 1.3">«Заболела, до пятницы не приду»</p>
+        <div style="font-size: 12px; color: #5A5852; margin-top: 6px">— Алина, 10:20</div>
+      </div>
+      <div style="grid-column: span 3; padding-left: 18px; display: flex; flex-direction: column; gap: 8px">
+        <h3 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 24px">Редакция уже подготовила четыре документа</h3>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; font-size: 14px; line-height: 1.4">
+          <div><b>I.</b> Заявление об уважительной причине — 9 пар, пн–пт</div>
+          <div><b>II.</b> Письма пяти преподавателям — черновик</div>
+          <div><b>III.</b> Запрос на перенос КТ по матстату</div>
+          <div><b>IV.</b> Напоминание принести справку¹</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: 4px">
+          <button type="button" style="height: 42px; padding: 0 18px; border: 0; background: #141414; color: #ECEAE4; font-family: 'PT Sans Narrow', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer">ПОДПИСАТЬ И ОТПРАВИТЬ</button>
+          <span style="font-size: 12px; color: #5A5852; line-height: 1.35">¹ Положение о текущем контроле, п. 4.2: справку сдают в течение 3 дней после выздоровления. Правила вымышлены.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <label style="display: flex; align-items: center; gap: 12px; margin-top: 12px; border-top: 1px solid #141414; padding-top: 10px">
+    <span style="font-family: 'PT Sans Narrow', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.04em">НАПИСАТЬ РЕДАКЦИИ:</span>
+    <input type="text" placeholder="что случилось или что нужно…" style="flex: 1; height: 40px; border: 0; border-bottom: 1px solid #141414; background: transparent; font: inherit; font-size: 16px; font-style: italic; color: #141414; outline: 0">
+  </label>
+</div>
+
+<!-- ===== PHONE ===== -->
+<div style="width: 390px; height: 844px; flex-shrink: 0; border-radius: 44px; background: #ECEAE4; box-shadow: 0 0 0 10px #141414; overflow: hidden; position: relative">
+  <div style="padding: 52px 20px 0">
+    <div style="font-family: 'Playfair Display', serif; font-weight: 900; font-size: 38px; line-height: 1; text-align: center">Ведомости Алины</div>
+    <div style="display: flex; justify-content: space-between; border-top: 3px solid #141414; border-bottom: 1px solid #141414; padding: 4px 0; margin-top: 6px; font-family: 'PT Sans Narrow', sans-serif; font-size: 13px"><span>Пн, 23 ноября</span><span>Выпуск № 84</span></div>
+    <div style="font-family: 'PT Sans Narrow', sans-serif; font-size: 12px; font-weight: 700; color: {{accent}}; letter-spacing: 0.06em; margin-top: 14px">ГЛАВНОЕ · ЧЕРЕЗ 25 МИНУТ</div>
+    <h1 style="margin: 4px 0 0; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 28px; line-height: 1.08">ML переезжает в 214-ю, корпус Б</h1>
+    <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.45">Выходите не позже 10:35 — дорога от корпуса А займёт шесть минут.</p>
+    <h2 style="margin: 16px 0 6px; font-family: 'PT Sans Narrow', sans-serif; font-size: 15px; letter-spacing: 0.06em; border-bottom: 2px solid #141414; padding-bottom: 3px">ПРОГРАММА ДНЯ</h2>
+    <div style="font-size: 14px; line-height: 1.6"><b>09:00</b> Базы данных · 305<br><b style="color: {{accent}}">10:45</b> <span style="color: {{accent}}">ML · 214 Б</span><br><b>13:00</b> Английский · 118<br><span style="color: #5A5852"><b>14:50</b> <s>Веб-разработка</s> → чт</span></div>
+    <div style="margin-top: 14px; border-top: 3px double #141414; padding-top: 10px">
+      <div style="font-family: 'PT Sans Narrow', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.06em">ОТВЕТ НА ВАШЕ ПИСЬМО</div>
+      <div style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 20px; line-height: 1.2; margin-top: 4px">Заболели? Четыре документа уже готовы</div>
+      <div style="font-size: 13px; color: #5A5852; margin-top: 4px">пропуски · письма · перенос КТ · справка</div>
+    </div>
+  </div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 20px 30px; background: #ECEAE4; border-top: 1px solid #141414; display: flex; gap: 10px">
+    <label style="flex: 1; display: flex; align-items: center">
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Написать редакции</span>
+      <input type="text" placeholder="Написать редакции…" style="width: 100%; height: 46px; border: 1px solid #141414; padding: 0 12px; box-sizing: border-box; background: #FFFFFF; font: inherit; font-size: 15px; font-style: italic; color: #141414">
+    </label>
+    <button type="button" style="height: 46px; padding: 0 16px; border: 0; background: #141414; color: #ECEAE4; font-family: 'PT Sans Narrow', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer">ОТПРАВИТЬ</button>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#B3122B","options":["#B3122B","#1F3FBF","#14532D","#141414"]},"$preview":{"width":1620,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#B3122B' };
+  }
+}
+</script>
+</body>
+</html>

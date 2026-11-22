@@ -1,8 +1,11 @@
 import { defineConfig } from 'vitest/config';
 import { config } from 'dotenv';
 import path from 'node:path';
+import { switchToTestDb } from './tests/support/test-db';
 
 config();
+// Тесты пересоздают данные — только в своей базе, не в базе разработки.
+switchToTestDb();
 
 export default defineConfig({
   resolve: {
@@ -18,5 +21,6 @@ export default defineConfig({
     testTimeout: 20_000,
     // Тесты безопасности ходят в настоящую БД ролью app_user
     fileParallelism: false,
+    globalSetup: './tests/support/global-setup.ts',
   },
 });

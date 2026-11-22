@@ -40,7 +40,7 @@ export default async function CoursePage({
   const upcoming = (await getLessons(viewer, today, addDays(today, 21)))
     .filter((l) => l.courseId === c.id && isActive(l) && Date.parse(l.endsAt) > now.getTime())
     .slice(0, 4);
-  const titleLine = `${c.short} · ${controlLabel(c.control)}`;
+  const titleLine = `${c.subject} · ${controlLabel(c.control)}`;
   const finalLine = c.finalOn
     ? `${controlLabel(c.control)} ${dayMonth(dayOf(c.finalOn))}`
     : controlLabel(c.control);
@@ -100,11 +100,12 @@ export default async function CoursePage({
           key={l.id}
           className={cn('flex items-center gap-3 py-2.5 text-[14px]', i > 0 && 'border-t border-line')}
         >
-          <b className="w-[86px] tabular">
-            {shortDate(dayOf(l.startsAt))}
-            <span className="block text-[12px] font-semibold text-ink-2">{hhmm(l.startsAt)}</span>
-          </b>
-          <span className="flex-1">{l.kindLabel}</span>
+          <span className="flex-1">
+            <b className="tabular">
+              {shortDate(dayOf(l.startsAt))} · {hhmm(l.startsAt)}
+            </b>
+            <span className="block text-[12px] font-semibold text-ink-2">{l.kindLabel}</span>
+          </span>
           <span className="text-[12px] font-bold text-ink-2">{l.online ? 'онлайн' : l.room}</span>
         </div>
       ))}
@@ -168,7 +169,7 @@ export default async function CoursePage({
         <h1 className="m-0 mt-2 mb-[18px] text-[36px] font-black tracking-[-0.03em]">{c.subject}</h1>
         <Stagger className="grid grid-cols-[1.1fr_1fr] gap-3.5">
           <StaggerItem>
-            <DeskCard tone={a.ok ? 'white' : 'accent'} className="h-full min-h-[320px] p-[26px]">
+            <DeskCard tone={a.ok ? 'white' : 'accent'} className="h-full p-[26px]">
               {!a.ok && (
                 <span
                   aria-hidden
@@ -191,17 +192,44 @@ export default async function CoursePage({
                 mark={c.control === 'exam' ? a.need : undefined}
                 className="relative mt-4"
               />
-              <p className="relative m-0 mt-auto pt-4 text-[15px] leading-[1.45] font-semibold">
+              <p className="relative m-0 mt-4 text-[15px] leading-[1.45] font-semibold">
                 {advice ??
                   `Допуск ${c.control === 'exam' ? `от ${a.need} — есть` : 'к зачёту набирается'}. Ниже — сколько нужно на ${c.control === 'exam' ? 'экзамене' : 'итоговой'} для каждой оценки.`}
               </p>
             </DeskCard>
           </StaggerItem>
           <StaggerItem>
-            <section className="h-full rounded-[24px] bg-surface px-6 py-4">{breakdownList}</section>
+            <section className="flex h-full flex-col rounded-[24px] bg-surface px-6 py-4">
+              {breakdownList}
+              {/* Шкала итоговой оценки — внизу карточки: колонка не пустеет, если пунктов мало. */}
+              <div className="mt-auto pt-4">
+                <div className="text-[13px] font-bold text-ink-2">
+                  Итог = семестр + {c.control === 'exam' ? 'экзамен' : 'итоговая'}, из 100
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {(c.control === 'credit'
+                    ? [
+                        ['0–60', 'не зачтено'],
+                        ['61–100', 'зачтено'],
+                      ]
+                    : [
+                        ['61–75', 'удовл.'],
+                        ['76–85', 'хорошо'],
+                        ['86–100', 'отлично'],
+                      ]
+                  ).map(([r, w]) => (
+                    <span key={r} className="rounded-[11px] bg-desk-chip px-2.5 py-1.5 text-[13px]">
+                      <b className="tabular">{r}</b> · {w}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </section>
           </StaggerItem>
           <StaggerItem>
-            <section className="h-full rounded-[24px] bg-surface p-4">{calc}</section>
+            <section className="h-full [&>div]:h-full [&_.calc-box]:h-full [&_.calc-box]:rounded-[24px] [&_.calc-box]:bg-surface [&_.calc-box]:p-6">
+              {calc}
+            </section>
           </StaggerItem>
           <StaggerItem>
             <section className="h-full rounded-[24px] bg-surface px-6 py-4">

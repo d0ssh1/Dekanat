@@ -1,5 +1,7 @@
 node_modules/
 .next/
+.next-e2e/
+storage-e2e/
 out/
 coverage/
 playwright-report/
@@ -15,3 +17,4 @@ storage/
 *.local.md
 *.local.txt
 .pgdata/
+docs/report/.report-built.html

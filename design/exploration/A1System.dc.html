@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R1 v3 — загрузка, нет сети, пусто</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;box-shadow:0 0 0 10px #14141A;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.sk{border-radius:14px;background:rgba(20,20,26,.14)}
+.skw{border-radius:14px;background:#E6E6EC}
+.cap{font-size:14px;line-height:1.45;color:#3A3A46;width:390px;margin-top:14px}
+.cap b{color:#14141A}
+.navt{width:72px;border:0;background:transparent;color:#4B4B57;font-size:12px;font-weight:600;cursor:pointer}
+.nav{height:84px;padding:8px 10px 24px;box-sizing:border-box;background:#FFFFFF;border-top:1px solid #ECECF0;display:flex;justify-content:space-around}
+.sheet{flex:1;background:#FFFFFF;border-radius:28px 28px 0 0;padding:16px;display:flex;flex-direction:column;gap:10px}
+</style>
+</helmet>
+<div style="width: 1350px; height: 960px; box-sizing: border-box; padding: 40px; display: flex; gap: 50px; background: #E2E2E8; font-family: 'Inter Tight', system-ui, sans-serif; color: #14141A">
+
+<div>
+  <div class="phone" style="background: #FF6A3D">
+    <div style="padding: 52px 18px 26px; display: flex; flex-direction: column; gap: 12px" aria-busy="true" aria-label="Загрузка">
+      <div style="display: flex; align-items: center; gap: 8px"><b style="font-size: 17px; flex: 1">деканат</b><div class="sk" style="width: 44px; height: 44px; border-radius: 22px"></div></div>
+      <div class="sk" style="height: 46px"></div>
+      <div class="sk" style="width: 150px; height: 16px; margin-top: 8px"></div>
+      <div class="sk" style="width: 200px; height: 80px; border-radius: 18px"></div>
+      <div class="sk" style="width: 260px; height: 24px"></div>
+      <div style="display: flex; gap: 8px"><div class="sk" style="flex: 1; height: 44px"></div><div class="sk" style="width: 110px; height: 44px"></div></div>
+    </div>
+    <div class="sheet">
+      <div class="skw" style="height: 38px"></div>
+      <div style="display: flex; gap: 5px"><div class="skw" style="flex: 1; height: 46px"></div><div class="skw" style="flex: 1; height: 46px"></div><div class="skw" style="flex: 1; height: 46px"></div><div class="skw" style="flex: 1; height: 46px"></div><div class="skw" style="flex: 1; height: 46px"></div><div class="skw" style="flex: 1; height: 46px"></div></div>
+      <div class="skw" style="height: 32px"></div><div class="skw" style="height: 32px"></div><div class="skw" style="height: 32px"></div>
+      <div style="font-size: 13px; color: #4B4B57; text-align: center">Загружаем расписание…</div>
+    </div>
+    <nav class="nav" aria-label="Навигация"><button type="button" class="navt" style="border-radius: 14px; background: #14141A; color: #FFFFFF; font-weight: 800">Сегодня</button><button type="button" class="navt">Неделя</button><button type="button" class="navt">Учёба</button><button type="button" class="navt" style="width: 84px">Документы</button></nav>
+  </div>
+  <div class="cap"><b>Загрузка</b> — каркас экрана в цвете главной, навигация работает сразу.</div>
+</div>
+
+<div>
+  <div class="phone" style="background: #FF6A3D">
+    <div style="padding: 52px 18px 24px">
+      <div style="display: flex; align-items: center; gap: 8px"><b style="font-size: 17px; flex: 1">деканат</b><div style="width: 44px; height: 44px; border-radius: 22px; background: #14141A; color: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">АВ</div></div>
+      <div role="status" style="margin-top: 12px; padding: 12px 14px; border-radius: 16px; background: #14141A; color: #FFFFFF; display: flex; align-items: center; gap: 10px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"></path><path d="M3 3l18 18"></path></svg>
+        <div style="flex: 1; font-size: 13px; line-height: 1.35"><b>Нет интернета</b><br>Данные на 08:12</div>
+        <button type="button" style="height: 40px; padding: 0 12px; border: 0; border-radius: 12px; background: #FF6A3D; color: #14141A; font-size: 13px; font-weight: 800; cursor: pointer">Обновить</button>
+      </div>
+      <div style="font-size: 14px; font-weight: 700; margin-top: 14px">До следующей пары</div>
+      <div style="font-size: 88px; font-weight: 900; letter-spacing: -0.06em; line-height: .9">10<span style="font-size: 32px; margin-left: 8px">мин</span></div>
+      <div style="font-size: 21px; font-weight: 800; margin-top: 8px">Машинное обучение</div>
+      <div style="font-size: 14px; font-weight: 600; margin-top: 4px">Б-214 · Козлов Д. С. · схема этажа сохранена</div>
+    </div>
+    <div class="sheet">
+      <div style="padding: 12px 14px; border-radius: 16px; background: #F2F2F5; font-size: 13px; line-height: 1.45"><b>Английский, 13:00 — онлайн.</b> Кнопка «Войти» появится, когда вернётся сеть.</div>
+      <div style="padding: 12px 14px; border-radius: 16px; background: #F2F2F5; font-size: 13px; line-height: 1.45"><b>Помощник без сети недоступен.</b> Черновик заявки сохранится и уйдёт, как только будет связь.</div>
+    </div>
+    <nav class="nav" aria-label="Навигация"><button type="button" class="navt" style="border-radius: 14px; background: #14141A; color: #FFFFFF; font-weight: 800">Сегодня</button><button type="button" class="navt">Неделя</button><button type="button" class="navt">Учёба</button><button type="button" class="navt" style="width: 84px">Документы</button></nav>
+  </div>
+  <div class="cap"><b>Нет сети</b> — отсчёт, аудитория и схема этажа работают по сохранённым данным.</div>
+</div>
+
+<div>
+  <div class="phone" style="background: #FFFFFF">
+    <div style="padding: 52px 18px 0"><div style="font-size: 30px; font-weight: 900; letter-spacing: -0.03em">Документы</div></div>
+    <div style="flex: 1; padding: 20px 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="border-radius: 26px; background: #FF6A3D; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 13px; font-weight: 800">ПОКА ПУСТО</div>
+        <div style="font-size: 30px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.05">Заявок ещё нет</div>
+        <div style="font-size: 14px; font-weight: 600; line-height: 1.45">Напишите помощнику, что нужно — «справка для стипендии», «перенести пересдачу» — он соберёт заявку сам.</div>
+        <button type="button" style="height: 48px; border: 0; border-radius: 15px; background: #14141A; color: #FFFFFF; font-size: 15px; font-weight: 800; cursor: pointer">Спросить помощника</button>
+      </div>
+      <div style="font-size: 15px; font-weight: 900">Чаще всего заказывают</div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <button type="button" style="height: 54px; border: 0; border-radius: 16px; background: #F2F2F5; font-size: 14px; font-weight: 700; text-align: left; padding: 0 14px; cursor: pointer; color: #14141A">Справка об обучении</button>
+        <button type="button" style="height: 54px; border: 0; border-radius: 16px; background: #F2F2F5; font-size: 14px; font-weight: 700; text-align: left; padding: 0 14px; cursor: pointer; color: #14141A">Пересдача</button>
+        <button type="button" style="height: 54px; border: 0; border-radius: 16px; background: #F2F2F5; font-size: 14px; font-weight: 700; text-align: left; padding: 0 14px; cursor: pointer; color: #14141A">Справка о стипендии</button>
+        <button type="button" style="height: 54px; border: 0; border-radius: 16px; background: #F2F2F5; font-size: 14px; font-weight: 700; text-align: left; padding: 0 14px; cursor: pointer; color: #14141A">Академ. отпуск</button>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Навигация"><button type="button" class="navt">Сегодня</button><button type="button" class="navt">Неделя</button><button type="button" class="navt">Учёба</button><button type="button" class="navt" style="width: 84px; border-radius: 14px; background: #14141A; color: #FFFFFF; font-weight: 800">Документы</button></nav>
+  </div>
+  <div class="cap"><b>Пусто</b> — вместо пустого экрана — подсказка, что можно сделать, и частые документы.</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1350,"height":960}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

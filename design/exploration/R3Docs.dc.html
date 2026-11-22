@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R3 — документы и помощник</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#4B3BF5;font-weight:700;text-decoration:none}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;background:#F6F6FA;box-shadow:0 0 0 10px #15172A;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.step{display:flex;gap:12px;align-items:flex-start}
+.dot{width:22px;height:22px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.card{background:#FFFFFF;border-radius:20px;padding:16px;box-shadow:0 1px 2px rgba(21,23,42,.04),0 8px 24px rgba(21,23,42,.06)}
+</style>
+</helmet>
+<div style="width: 910px; height: 924px; box-sizing: border-box; padding: 40px; display: flex; gap: 50px; background: #E3E4EC; font-family: 'Manrope', system-ui, sans-serif; color: #15172A">
+
+<div class="phone">
+  <div style="padding: 54px 18px 12px; display: flex; align-items: center; gap: 12px; background: #FFFFFF; border-bottom: 1px solid #ECEDF3">
+    <div style="width: 40px; height: 40px; border-radius: 12px; background: #4B3BF5; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg></div>
+    <div><div style="font-size: 17px; font-weight: 800">Помощник</div><div style="font-size: 12px; color: #6B7085">видит только ваши данные</div></div>
+  </div>
+  <div style="flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: flex-end; max-width: 80%; padding: 12px 14px; border-radius: 18px 18px 6px 18px; background: #4B3BF5; color: #FFFFFF; font-size: 15px">Нужна справка в военкомат</div>
+    <div style="font-size: 15px; line-height: 1.45">Сделаю. Вот что я заполнила — проверьте и отправьте:</div>
+    <div class="card">
+      <div style="font-size: 12px; font-weight: 800; color: #4B3BF5">СПРАВКА ОБ ОБУЧЕНИИ · В ВОЕНКОМАТ</div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; font-size: 13px">
+        <div><div style="color: #6B7085">Студент</div><b>Воронцова А. Д.</b></div>
+        <div><div style="color: #6B7085">Группа</div><b>ПИ-31, 3 курс</b></div>
+        <div><div style="color: #6B7085">Формат</div><b>Бумага + PDF</b></div>
+        <div><div style="color: #6B7085">Готова</div><b>24 ноября</b></div>
+      </div>
+      <button type="button" style="width: 100%; height: 46px; margin-top: 14px; border: 0; border-radius: 14px; background: #4B3BF5; color: #FFFFFF; font-size: 15px; font-weight: 700; cursor: pointer">Отправить в деканат</button>
+    </div>
+    <div style="align-self: flex-start; padding: 10px 12px; border-radius: 14px; background: #EAF7EE; color: #157A4A; font-size: 13px; font-weight: 700">✓ Заявка №1052 отправлена · напомню, когда будет готова</div>
+  </div>
+  <div style="padding: 10px 14px 28px">
+    <label style="height: 54px; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px; box-shadow: 0 8px 24px rgba(21,23,42,.1)">
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Сообщение помощнику</span>
+      <input type="text" placeholder="Спросить ещё…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 15px; color: #15172A">
+      <button type="button" aria-label="Отправить" style="width: 42px; height: 42px; border-radius: 14px; border: 0; background: #4B3BF5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+    </label>
+  </div>
+</div>
+
+<div class="phone">
+  <div style="padding: 54px 18px 0">
+    <div style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em">Документы</div>
+    <div style="display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: #ECECF3; margin-top: 12px">
+      <button type="button" style="flex: 1; height: 36px; border: 0; border-radius: 10px; background: #FFFFFF; font-size: 13px; font-weight: 800; cursor: pointer">Мои заявки · 3</button>
+      <button type="button" style="flex: 1; height: 36px; border: 0; border-radius: 10px; background: transparent; color: #4A4F63; font-size: 13px; font-weight: 600; cursor: pointer">Заказать</button>
+    </div>
+  </div>
+  <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 12px">
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #6B7085; font-weight: 700"><span>№1052 · сегодня</span><span style="color: #9A6200">В РАБОТЕ</span></div>
+      <div style="font-size: 17px; font-weight: 800; margin-top: 4px">Справка в военкомат</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px">
+        <div class="step"><span class="dot" style="background: #1E9E61; color: #FFFFFF">✓</span><div style="font-size: 13px"><b>Отправлена</b> · 10:31</div></div>
+        <div class="step"><span class="dot" style="background: #1E9E61; color: #FFFFFF">✓</span><div style="font-size: 13px"><b>Принята</b> · О. П. Иванова</div></div>
+        <div class="step"><span class="dot" style="background: #FFFFFF; border: 5px solid #4B3BF5; box-sizing: border-box"></span><div style="font-size: 13px; color: #4B3BF5"><b>Готовится</b> · будет 24 ноября</div></div>
+        <div class="step"><span class="dot" style="border: 2px solid #D6D8E3; box-sizing: border-box"></span><div style="font-size: 13px; color: #8A8FA3">Можно забрать · каб. 210</div></div>
+      </div>
+    </div>
+    <div class="card" style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 42px; height: 42px; border-radius: 12px; background: #EAF7EE; color: #157A4A; display: flex; align-items: center; justify-content: center; font-weight: 800">✓</div>
+      <div style="flex: 1"><div style="font-size: 15px; font-weight: 800">Справка об обучении</div><div style="font-size: 12px; color: #6B7085">№1047 · готова · PDF с QR</div></div>
+      <a href="#" style="font-size: 13px">PDF</a>
+    </div>
+    <div class="card" style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 42px; height: 42px; border-radius: 12px; background: #F3F3F8; color: #6B7085; display: flex; align-items: center; justify-content: center; font-weight: 800">2/4</div>
+      <div style="flex: 1"><div style="font-size: 15px; font-weight: 800">Материальная помощь</div><div style="font-size: 12px; color: #6B7085">№1031 · комиссия 26 ноября</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":910,"height":924}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

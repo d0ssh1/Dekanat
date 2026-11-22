@@ -286,7 +286,7 @@ export async function groupLessons(viewer: StaffViewer, groupId: string, fromDay
         slot: lessons.slot,
         room: lessons.room,
         status: lessons.status,
-        subject: subjects.short,
+        subject: subjects.name,
         kind: lessons.kind,
         format: lessons.format,
       })
@@ -362,7 +362,7 @@ export async function changeLesson(
         .where(eq(lessons.id, l.l.id));
       await notify(tx, ids, {
         kind: 'change',
-        title: `${l.subject} перенесена`,
+        title: `Пара «${l.subject}» перенесена`,
         body: `с ${wdShort(day)} ${shortDate(day).slice(3)} ${hhmm(l.l.startsAt)} на ${shortDate(input.moveTo.day)}, ${s.start}`,
         link: '/week',
         tone: 'danger',

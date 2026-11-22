@@ -27,16 +27,27 @@ export const controlLabel = (c: CourseSummary['control']) =>
   c === 'exam' ? 'экзамен' : c === 'diff_credit' ? 'дифф. зачёт' : 'зачёт';
 
 /**
- * Допуск. Экзамен — порог курса по баллам семестра.
- * Зачёт — «под угрозой», только если даже со всеми оставшимися работами не набрать 61.
+ * Одна шкала для экрана — без противоречий «48 из 50» против «48 из 60».
+ * Экзамен: баллы семестра из максимума семестра, допуск — от порога курса.
+ * Зачёт: все работы курса из 100, зачёт — от 61; «под угрозой», только если даже со всеми
+ * оставшимися работами 61 уже не набрать.
  */
 export function admission(c: CourseSummary) {
   if (c.control === 'exam') {
     const left = Math.max(0, c.threshold - c.points);
-    return { need: c.threshold, left, ok: left === 0 };
+    return { value: c.points, max: c.semMax, need: c.threshold, left, ok: left === 0, reached: left === 0 };
   }
-  const possible = c.points + c.items.filter((i) => i.points === null).reduce((a, i) => a + i.max, 0);
-  return { need: 61, left: Math.max(0, 61 - c.points), ok: possible >= 61 };
+  const value = c.items.reduce((a, i) => a + (i.points ?? 0), 0);
+  const max = c.items.reduce((a, i) => a + i.max, 0);
+  const possible = value + c.items.filter((i) => i.points === null).reduce((a, i) => a + i.max, 0);
+  const need = Math.min(61, max);
+  return { value, max, need, left: Math.max(0, need - value), ok: possible >= need, reached: value >= need };
+}
+
+/** «48 из 60 · допуск от 50», «52 из 100 · зачёт от 61». */
+export function scaleLine(c: CourseSummary) {
+  const a = admission(c);
+  return `${a.value} из ${a.max} · ${c.control === 'exam' ? 'допуск' : 'зачёт'} от ${a.need}`;
 }
 
 export const pendingItems = (c: CourseSummary, now: number) =>

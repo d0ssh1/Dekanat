@@ -64,4 +64,9 @@ npm run test:e2e     # сценарии в браузере на 360 px и на 
 
 Код, дизайн, тесты и документацию писали ИИ-ассистенты под постановку задач автора. Процесс, промпты, ошибки ИИ и как их ловили — [docs/process/log.md](docs/process/log.md), итоговое описание — [docs/report](docs/report). Правила для агентов — [CLAUDE.md](CLAUDE.md) и [.claude/agents](.claude/agents).
 
-Шрифт Inter Tight — SIL Open Font License 1.1. Иконки — собственные контуры.
+## Сторонние материалы и лицензии
+
+- Шрифт Inter Tight — SIL Open Font License 1.1 (текст лицензии — `public/fonts/OFL-InterTight.txt`).
+- Иконки — собственные контуры в `src/components/ui/Icon.tsx`; логотипа вуза нет, слово-знак «деканат*» набран шрифтом.
+- Библиотеки: MIT (Next.js, React, Motion, Radix UI, dnd-kit, zod, pdf-lib, qrcode, date-fns, Tailwind CSS, argon2 и др.), Apache-2.0 (Drizzle ORM, TypeScript, Playwright), ISC, BSD-2-Clause (dotenv), Unlicense (postgres). Все разрешают использование в таком проекте.
+- Изображений из сторонних источников нет; все данные (ФИО, оценки, номера зачёток) вымышлены.

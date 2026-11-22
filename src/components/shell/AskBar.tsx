@@ -8,8 +8,9 @@ import { Icon } from '@/components/ui/Icon';
 import { spring } from '@/components/motion/tokens';
 
 /**
- * Строка «Помощник» — главный вход в ИИ. Общий элемент `layoutId="ask"`:
- * при переходе к помощнику строка «разворачивается» в панель (фаза 8).
+ * Строка «Помощник» — главный вход в ИИ.
+ * У телефонной и компьютерной строки разные layoutId: обе есть в разметке одной страницы,
+ * и с общим id Motion считал их одним элементом и прятал строку в шапке.
  */
 export function AskBar({ variant = 'phone', className }: { variant?: 'phone' | 'desk'; className?: string }) {
   const router = useRouter();
@@ -18,7 +19,7 @@ export function AskBar({ variant = 'phone', className }: { variant?: 'phone' | '
 
   return (
     <m.form
-      layoutId="ask"
+      layoutId={`ask-${variant}`}
       transition={spring.soft}
       role="search"
       onSubmit={(e) => {

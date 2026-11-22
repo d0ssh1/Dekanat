@@ -214,8 +214,8 @@ export async function toolDraft(viewer: StudentViewer, typeCode: string) {
         value: '',
         src: 'из профиля',
       },
-      ...(dest ? [{ label: dest, value: '', src: 'куда — обычно так' }] : []),
-      { label: DELIVERY[delivery] ?? delivery, value: '', src: 'формат — обычно так' },
+      ...(dest ? [{ label: dest, value: '', src: 'куда — по умолчанию' }] : []),
+      { label: DELIVERY[delivery] ?? delivery, value: '', src: 'формат — по умолчанию' },
       {
         label: 'Основание',
         value: t.legalBasis,

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>N4 — Сочная лента</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&amp;family=Unbounded:wght@600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#17171F;text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.h{font-family:'Unbounded',sans-serif}
+.blk{position:absolute;top:36px;height:212px;border-radius:22px;padding:14px;box-sizing:border-box;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.tick{position:absolute;top:0;bottom:0;width:1px;background:#EBEBF0}
+.tl{position:absolute;top:6px;font-size:12px;font-weight:700;color:#8A8A98;transform:translateX(-50%)}
+.box{background:#FFFFFF;border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.row{display:flex;gap:10px;align-items:center;font-size:14px}
+.sbtn{height:32px;padding:0 12px;border-radius:10px;border:0;font-size:12px;font-weight:800;cursor:pointer;align-self:flex-start}
+</style>
+</helmet>
+<div style="width: 1620px; height: 940px; box-sizing: border-box; padding: 48px; display: flex; gap: 48px; align-items: center; background: #E4E4EA; font-family: 'Onest', system-ui, sans-serif; color: #17171F">
+
+<!-- ===== DESKTOP ===== -->
+<div style="width: 1086px; height: 844px; flex-shrink: 0; border-radius: 26px; background: #F2F2F6; box-shadow: 0 24px 60px rgba(23,23,31,.14); overflow: hidden; padding: 20px 26px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+  <header style="display: flex; align-items: center; gap: 14px">
+    <div class="h" style="font-size: 18px; font-weight: 800">деканат</div>
+    <nav aria-label="Разделы" style="display: flex; gap: 16px; font-size: 14px; margin-left: 8px"><a href="#">Сегодня</a><a href="#" style="font-weight: 500; color: #5A5A68">Неделя</a><a href="#" style="font-weight: 500; color: #5A5A68">Учёба</a><a href="#" style="font-weight: 500; color: #5A5A68">Документы</a></nav>
+    <label style="flex: 1; height: 46px; border-radius: 16px; background: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px; margin-left: 10px">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#17171F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Спросить помощника</span>
+      <input type="text" placeholder="Спроси что угодно…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 14px; color: #17171F">
+      <button type="button" style="height: 34px; padding: 0 14px; border: 0; border-radius: 11px; background: #17171F; color: #FFFFFF; font-size: 13px; font-weight: 700; cursor: pointer">Спросить</button>
+    </label>
+    <div style="width: 44px; height: 44px; border-radius: 22px; background: #FFD23F; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">АВ</div>
+  </header>
+
+  <!-- countdown band -->
+  <section style="border-radius: 28px; background: #FFD23F; padding: 22px 28px; display: flex; align-items: center; gap: 32px; position: relative; overflow: hidden">
+    <div aria-hidden="true" style="position: absolute; right: -60px; bottom: -120px; width: 300px; height: 300px; border-radius: 50%; border: 50px solid rgba(255,255,255,.35)"></div>
+    <div>
+      <div style="font-size: 14px; font-weight: 700">До следующей пары</div>
+      <div class="h" style="font-size: 92px; font-weight: 800; letter-spacing: -0.05em; line-height: .95">25<span style="font-size: 30px; margin-left: 8px">мин</span></div>
+    </div>
+    <div style="flex: 1; position: relative">
+      <div class="h" style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em">Машинное обучение</div>
+      <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center">
+        <span style="padding: 6px 11px; border-radius: 11px; background: #17171F; color: #FFFFFF; font-size: 14px; font-weight: 700">Корпус Б · 2 этаж · 214</span>
+        <span style="padding: 6px 11px; border-radius: 11px; background: rgba(23,23,31,.1); font-size: 14px; font-weight: 600">10:45–12:20</span>
+        <span style="font-size: 13px; font-weight: 700">была 412</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px; position: relative">
+      <button type="button" style="height: 46px; padding: 0 18px; border: 0; border-radius: 15px; background: #17171F; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">Схема этажа</button>
+      <button type="button" style="height: 46px; padding: 0 18px; border: 1.5px solid rgba(23,23,31,.35); border-radius: 15px; background: transparent; color: #17171F; font-size: 14px; font-weight: 600; cursor: pointer">Материалы</button>
+    </div>
+  </section>
+
+  <!-- timeline -->
+  <section style="background: #FFFFFF; border-radius: 26px; padding: 16px 20px 20px">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <b style="font-size: 17px">Понедельник, 23 ноября</b><span style="font-size: 14px; color: #5A5A68">4 пары</span><span style="flex: 1"></span>
+      <div style="display: flex; gap: 4px"><button type="button" style="height: 34px; padding: 0 12px; border: 0; border-radius: 11px; background: #17171F; color: #FFFFFF; font-size: 13px; font-weight: 700; cursor: pointer">Пн</button><button type="button" style="height: 34px; padding: 0 12px; border: 0; border-radius: 11px; background: #F2F2F6; font-size: 13px; font-weight: 600; cursor: pointer">Вт</button><button type="button" style="height: 34px; padding: 0 12px; border: 0; border-radius: 11px; background: #F2F2F6; font-size: 13px; font-weight: 600; cursor: pointer">Ср</button><button type="button" style="height: 34px; padding: 0 12px; border: 0; border-radius: 11px; background: #F2F2F6; font-size: 13px; font-weight: 600; cursor: pointer">Чт</button><button type="button" style="height: 34px; padding: 0 12px; border: 0; border-radius: 11px; background: #F2F2F6; font-size: 13px; font-weight: 600; cursor: pointer">Пт</button></div>
+    </div>
+    <div style="position: relative; height: 256px; margin-top: 10px">
+      <div class="tick" style="left: 0%"></div><div class="tl" style="left: 0%; transform: none">08</div>
+      <div class="tick" style="left: 11.11%"></div><div class="tl" style="left: 11.11%">09</div>
+      <div class="tick" style="left: 22.22%"></div><div class="tl" style="left: 22.22%">10</div>
+      <div class="tick" style="left: 33.33%"></div><div class="tl" style="left: 33.33%">11</div>
+      <div class="tick" style="left: 44.44%"></div><div class="tl" style="left: 44.44%">12</div>
+      <div class="tick" style="left: 55.56%"></div><div class="tl" style="left: 55.56%">13</div>
+      <div class="tick" style="left: 66.67%"></div><div class="tl" style="left: 66.67%">14</div>
+      <div class="tick" style="left: 77.78%"></div><div class="tl" style="left: 77.78%">15</div>
+      <div class="tick" style="left: 88.89%"></div><div class="tl" style="left: 88.89%">16</div>
+      <div class="blk" style="left: 11.11%; width: 16.2%; background: #E4E4EA; color: #5A5A68"><span style="font-size: 12px; font-weight: 700">09:00 · прошла</span><b style="font-size: 15px; color: #3A3A45">Базы данных</b><span style="font-size: 12px; margin-top: auto">ауд. 305</span></div>
+      <div class="blk" style="left: 30.56%; width: 17.2%; background: #FF6B2C; color: #17171F; box-shadow: 0 14px 30px rgba(255,107,44,.35)"><span style="font-size: 12px; font-weight: 800">10:45 · через 25 мин</span><b class="h" style="font-size: 14px; line-height: 1.2">Машинное обучение</b><span style="font-size: 12px; font-weight: 800; margin-top: auto">Б-214 · изменено</span></div>
+      <div class="blk" style="left: 55.56%; width: 17.2%; background: #3D6BFF; color: #FFFFFF"><span style="font-size: 12px; font-weight: 800">13:00 · онлайн</span><b class="h" style="font-size: 14px; line-height: 1.2">Английский язык</b><span style="font-size: 12px; opacity: .9">Петрова Е. В.</span><button type="button" class="sbtn" style="background: #FFFFFF; color: #2347C9; margin-top: auto">Подключиться</button></div>
+      <div class="blk" style="left: 75.93%; width: 17.2%; background: #FFFFFF; border: 2px dashed #FFB49A; color: #8A8A98"><span style="font-size: 12px; font-weight: 800; color: #B33F10">14:50 · перенос</span><b style="font-size: 15px; text-decoration: line-through">Веб-разработка</b><span style="font-size: 12px; color: #17171F; margin-top: auto">на чт, 26.11</span></div>
+      <div style="position: absolute; left: 25.93%; top: 26px; bottom: 0; width: 2px; background: #17171F"></div>
+      <div style="position: absolute; left: 25.93%; top: 18px; transform: translateX(-50%); padding: 2px 8px; border-radius: 8px; background: #17171F; color: #FFFFFF; font-size: 11px; font-weight: 800">10:20</div>
+    </div>
+  </section>
+
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+    <section class="box"><div style="display: flex; justify-content: space-between"><b>Документы</b><a href="#" style="font-size: 13px">Все →</a></div><div class="row"><span style="width: 10px; height: 10px; border-radius: 5px; background: #12A76A"></span><span style="flex: 1">Справка №1047</span><b style="font-size: 13px; color: #0B7A4B">готова</b></div><div class="row"><span style="width: 10px; height: 10px; border-radius: 5px; background: #FFB800"></span><span style="flex: 1">В военкомат</span><b style="font-size: 13px; color: #8A5A00">завтра</b></div><div class="row"><span style="width: 10px; height: 10px; border-radius: 5px; background: #C9C9D3"></span><span style="flex: 1">Матпомощь</span><span style="font-size: 13px; color: #5A5A68">2 из 4</span></div></section>
+    <section class="box" style="background: #FFE3D6"><b>Скоро сдавать</b><div class="row"><b class="h" style="width: 60px; font-size: 16px; white-space: nowrap">7 дн</b><span>Курсовая по БД</span></div><div class="row"><b class="h" style="width: 60px; font-size: 16px; white-space: nowrap">11 дн</b><span>Лаба №5 · допуск ML</span></div><div class="row"><b class="h" style="width: 60px; font-size: 16px; white-space: nowrap">8 дн</b><span>Запись на элективы</span></div></section>
+    <section class="box"><div style="display: flex; justify-content: space-between"><b>Учёба</b><a href="#" style="font-size: 13px">Зачётка →</a></div><div style="display: flex; gap: 10px"><div style="flex: 1"><div class="h" style="font-size: 22px; font-weight: 800">4,62</div><div style="font-size: 12px; color: #5A5A68">средний</div></div><div style="flex: 1"><div class="h" style="font-size: 22px; font-weight: 800">28</div><div style="font-size: 12px; color: #5A5A68">дн. до сессии</div></div></div><div style="font-size: 13px; padding: 8px 10px; border-radius: 10px; background: #FFF1CC; color: #6E4A00"><b>ML:</b> 2 балла до допуска</div></section>
+  </div>
+</div>
+
+<!-- ===== PHONE ===== -->
+<div style="width: 390px; height: 844px; flex-shrink: 0; border-radius: 48px; background: #F2F2F6; box-shadow: 0 0 0 10px #17171F; overflow: hidden; position: relative">
+  <div style="padding: 54px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; align-items: center; justify-content: space-between"><div class="h" style="font-size: 17px; font-weight: 800">деканат</div><div style="width: 40px; height: 40px; border-radius: 20px; background: #FFD23F; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">АВ</div></div>
+    <section style="border-radius: 26px; background: #FFD23F; padding: 18px; position: relative; overflow: hidden">
+      <div aria-hidden="true" style="position: absolute; right: -50px; bottom: -90px; width: 200px; height: 200px; border-radius: 50%; border: 36px solid rgba(255,255,255,.35)"></div>
+      <div style="font-size: 13px; font-weight: 700">До следующей пары</div>
+      <div class="h" style="font-size: 64px; font-weight: 800; letter-spacing: -0.05em; line-height: 1">25<span style="font-size: 22px; margin-left: 6px">мин</span></div>
+      <div class="h" style="font-size: 18px; font-weight: 800; margin-top: 8px">Машинное обучение</div>
+      <div style="display: flex; gap: 8px; margin-top: 10px; position: relative"><span style="padding: 6px 10px; border-radius: 10px; background: #17171F; color: #FFFFFF; font-size: 13px; font-weight: 700">Б · 2 эт. · 214</span><button type="button" style="height: 32px; padding: 0 12px; border: 1.5px solid rgba(23,23,31,.35); border-radius: 10px; background: transparent; font-size: 13px; font-weight: 700; cursor: pointer">Схема</button></div>
+    </section>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; gap: 10px; align-items: stretch"><b style="width: 42px; font-size: 13px; padding-top: 12px; color: #8A8A98">09:00</b><div style="flex: 1; padding: 12px 14px; border-radius: 18px; background: #E4E4EA; color: #5A5A68"><b>Базы данных</b> · прошла</div></div>
+      <div style="display: flex; gap: 10px; align-items: stretch"><b style="width: 42px; font-size: 13px; padding-top: 12px">10:45</b><div style="flex: 1; padding: 12px 14px; border-radius: 18px; background: #FF6B2C"><b>Машинное обучение</b><div style="font-size: 12px; font-weight: 700">Б-214 · через 25 мин</div></div></div>
+      <div style="display: flex; gap: 10px; align-items: stretch"><b style="width: 42px; font-size: 13px; padding-top: 12px">13:00</b><div style="flex: 1; padding: 12px 14px; border-radius: 18px; background: #3D6BFF; color: #FFFFFF; display: flex; align-items: center"><div style="flex: 1"><b>Английский</b><div style="font-size: 12px">онлайн</div></div><button type="button" class="sbtn" style="background: #FFFFFF; color: #2347C9; align-self: center">Войти</button></div></div>
+      <div style="display: flex; gap: 10px; align-items: stretch"><b style="width: 42px; font-size: 13px; padding-top: 12px; color: #8A8A98">14:50</b><div style="flex: 1; padding: 12px 14px; border-radius: 18px; border: 2px dashed #FFB49A; color: #8A8A98"><b style="text-decoration: line-through">Веб-разработка</b><div style="font-size: 12px; color: #B33F10; font-weight: 700">на четверг</div></div></div>
+    </div>
+  </div>
+  <div style="position: absolute; left: 14px; right: 14px; bottom: 26px">
+    <label style="height: 54px; border-radius: 18px; background: #17171F; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px">
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Спросить помощника</span>
+      <input type="text" placeholder="Спроси что угодно" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 15px; color: #FFFFFF">
+      <button type="button" aria-label="Отправить" style="width: 42px; height: 42px; border-radius: 14px; border: 0; background: #FFD23F; color: #17171F; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+    </label>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1620,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

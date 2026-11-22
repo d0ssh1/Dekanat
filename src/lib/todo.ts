@@ -57,8 +57,8 @@ export function buildTodos(requests: ActiveRequest[], alerts: StudyAlert[], toda
       icon: 'alert',
       tone: 'danger',
       urgent: true,
-      title: `${r.title}: нужен документ`,
-      short: `документ к №${r.number}`,
+      title: `${r.title} — нужен документ`,
+      short: `${r.title.toLowerCase()} — нужен документ`,
       hint: r.actionDueOn ? `до ${ddmm(r.actionDueOn)}` : 'загрузите в заявку',
       href: `/documents/${r.id}`,
     });
@@ -70,8 +70,8 @@ export function buildTodos(requests: ActiveRequest[], alerts: StudyAlert[], toda
       icon: 'alert',
       tone: 'danger',
       urgent: true,
-      title: `Допуск по ${a.short}`,
-      short: `допуск по ${a.short}`,
+      title: `${a.subject}: нет допуска`,
+      short: `${a.subject.toLowerCase()} — нет допуска`,
       hint: `не хватает ${n} ${plural(n, 'балла', 'баллов', 'баллов')}`,
       href: `/study/${a.courseId}`,
     });
@@ -87,7 +87,7 @@ export function buildTodos(requests: ActiveRequest[], alerts: StudyAlert[], toda
       tone: 'hero',
       urgent: diffDays(today, day) <= 2,
       // Склонять названия предметов не пытаемся: «Матстат · КТ 2» читается однозначно.
-      title: `${a.short} · ${a.title}`,
+      title: `${a.short} · ${a.title.split(':')[0]}`,
       short: `${t} ${when}`,
       hint: when,
       href: `/study/${a.courseId}`,

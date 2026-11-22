@@ -2,7 +2,19 @@ import { requireStudent } from '@/server/auth/guards';
 import { nowFor } from '@/server/clock';
 import { getWeek } from '@/server/dal/schedule';
 import { getActiveRequests, getStudyAlerts } from '@/server/dal/todo';
-import { addDays, at, dayOf, isValidDay, mondayOf, wdShort } from '@/lib/time';
+import { addDays, at, dayOf, isValidDay, mondayOf, plural, wdShort, weekday } from '@/lib/time';
+
+const IN = [
+  '',
+  'в понедельник',
+  'во вторник',
+  'в среду',
+  'в четверг',
+  'в пятницу',
+  'в субботу',
+  'в воскресенье',
+];
+const wdIn = (d: string) => IN[weekday(d)]!;
 import { changeNotes, weekLabel, weekNumber, weekSummary, type WeekNote } from '@/lib/week';
 import { PhoneWeek, DeskWeek } from '@/components/features/schedule/WeekViews';
 
@@ -39,7 +51,7 @@ export default async function WeekPage({
         tone: 'hero',
         mark: '◷',
         strong: `${a.short} · ${a.title}`,
-        text: ` — ${wdShort(dayOf(a.dueAt))}`,
+        text: ` — ${wdShort(dayOf(a.dueAt))}, ${dayOf(a.dueAt).slice(8)}.${dayOf(a.dueAt).slice(5, 7)}`,
         href: `/study/${a.courseId}`,
       });
   for (const a of alerts)
@@ -48,8 +60,8 @@ export default async function WeekPage({
         key: `a${a.courseId}`,
         tone: 'danger',
         mark: '!',
-        strong: `Допуск по ${a.short}`,
-        text: ` — не хватает ${a.threshold - a.points}`,
+        strong: a.subject,
+        text: `: до допуска не хватает ${a.threshold - a.points} ${plural(a.threshold - a.points, 'балл', 'балла', 'баллов')}`,
         href: `/study/${a.courseId}`,
       });
   for (const r of requests) {
@@ -77,9 +89,14 @@ export default async function WeekPage({
   const summary = weekSummary(
     lessons,
     monday,
-    kt && kt.kind === 'due' ? [`КТ (${kt.short}) — ${wdShort(dayOf(kt.dueAt))}`] : [],
+    kt && kt.kind === 'due' ? [`${wdIn(dayOf(kt.dueAt))} КТ · ${kt.short}`] : [],
+  );
+  // Контрольные этой недели — чтобы отметить «КТ» прямо в строке пары.
+  const marks = dues.flatMap((a) =>
+    a.kind === 'due' && /КТ|Контрольная/.test(a.title) ? [{ courseId: a.courseId, day: dayOf(a.dueAt) }] : [],
   );
   const common = {
+    marks,
     monday,
     today,
     label: weekLabel(monday),

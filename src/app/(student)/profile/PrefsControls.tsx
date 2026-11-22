@@ -95,7 +95,7 @@ export function PrefsControls({
           onClick={() => save({ demoClock: !state.demoClock })}
           className={cn(
             'relative h-8 w-[52px] shrink-0 rounded-full transition-colors',
-            state.demoClock ? 'bg-ink' : 'bg-line',
+            state.demoClock ? 'bg-ink' : 'bg-line-strong',
           )}
         >
           <m.span

@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import { expect, test } from '@playwright/test';
-import { login } from './helpers';
+import { login, baseOrigin } from './helpers';
 import { idOf } from './db';
 
 const visible = { visible: true } as const;
@@ -93,7 +93,7 @@ test.describe('Заявки и справки', () => {
     expect((await page.goto(`/documents/${kimReq}`))?.status()).toBe(404);
     expect((await page.request.get(`/api/documents/${kimReq}/pdf`)).status()).toBe(404);
     const up = await page.request.post(`/api/documents/${kimReq}/attachments`, {
-      headers: { origin: 'http://localhost:3000' },
+      headers: { origin: baseOrigin() },
       multipart: { file: { name: 'x.pdf', mimeType: 'application/pdf', buffer: PDF } },
     });
     expect(up.status()).toBe(422);

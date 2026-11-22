@@ -39,7 +39,7 @@ export default async function ProfilePage() {
     ['Зачётная книжка', `№ ${p.recordBook}`],
     ['Направление', `${p.directionCode} ${p.directionName}`],
     ['Профиль', p.profile],
-    ['Группа', p.groupCode],
+    ['Группа', p.groupShort === p.groupCode ? p.groupCode : `${p.groupShort} · ${p.groupCode}`],
     ['Форма обучения', `${cap(p.studyForm)} · ${p.funding}`],
     ['Почта', p.email],
   ];
@@ -92,8 +92,8 @@ export default async function ProfilePage() {
             </StaggerItem>
             <StaggerItem>
               <div className="flex min-h-11 flex-col justify-center border-t border-line py-[11px] text-[15px]">
-                <span>Безопасность</span>
-                <span className="mt-0.5 text-[13px] leading-snug font-semibold text-ink-2">
+                <span className="text-[13px] font-semibold text-ink-2">Безопасность</span>
+                <span>
                   Последний вход {fmtLogin(p.lastLoginAt)} · активных сеансов: {p.activeSessions}
                 </span>
               </div>
@@ -110,8 +110,8 @@ export default async function ProfilePage() {
       <div className="hidden lg:block">
         <h1 className="m-0 mb-[18px] text-[36px] font-black tracking-[-0.03em]">Профиль</h1>
         <Stagger className="grid grid-cols-[1.1fr_1fr] gap-3.5">
-          <StaggerItem>
-            <DeskCard tone="accent" className="min-h-[420px] p-[26px]">
+          <StaggerItem className="flex flex-col gap-3.5">
+            <DeskCard tone="accent" className="p-[26px]">
               <span
                 aria-hidden
                 className="absolute top-[-90px] right-[-80px] size-60 animate-breathe rounded-full bg-glass-20"
@@ -129,30 +129,32 @@ export default async function ProfilePage() {
                 <br />
                 {p.directionName} · {p.course} курс · {p.groupShort}
               </div>
-              <div className="relative mt-auto max-w-[320px] pt-6">{card}</div>
+              <div className="relative max-w-[320px] pt-6">{card}</div>
             </DeskCard>
+            <section className="flex-1 rounded-[24px] bg-surface px-6 pt-2 pb-4">
+              <h2 className="m-0 pt-3 pb-1 text-[18px] font-bold">Настройки</h2>
+              <PrefsControls heroColor={prefs.heroColor} demoClock={prefs.demoClock} variant="desk" />
+            </section>
           </StaggerItem>
           <StaggerItem>
-            <section className="flex h-full flex-col rounded-[24px] bg-surface px-6 py-4">
-              {items.map(([k, v], i) => (
-                <div
-                  key={k}
-                  className={`flex items-baseline gap-4 py-3 ${i ? 'border-t border-desk-line' : ''}`}
-                >
-                  <span className="w-40 shrink-0 text-[13px] font-bold text-ink-2">{k}</span>
-                  <span className="min-w-0 text-[15px] break-words">{v}</span>
+            <section className="flex h-full flex-col rounded-[24px] bg-surface px-6 py-2">
+              <h2 className="m-0 pt-3 pb-1 text-[18px] font-bold">Данные из деканата</h2>
+              {items.map(([k, v]) => (
+                <div key={k} className="flex flex-col justify-center border-t border-desk-line py-[11px]">
+                  <span className="text-[13px] font-semibold text-ink-2">{k}</span>
+                  <span className="text-[15px] break-words">{v}</span>
                 </div>
               ))}
-              <div className="flex items-baseline gap-4 border-t border-desk-line py-3">
-                <span className="w-40 shrink-0 text-[13px] font-bold text-ink-2">Безопасность</span>
-                <span className="text-[15px]">
-                  Последний вход {fmtLogin(p.lastLoginAt)}
-                  <br />
-                  <span className="text-[13px] text-ink-2">активных сеансов: {p.activeSessions}</span>
-                </span>
-              </div>
-              <PrefsControls heroColor={prefs.heroColor} demoClock={prefs.demoClock} variant="desk" />
-              <div className="mt-auto pt-2">
+              <p className="m-0 border-t border-desk-line py-3 text-[13px] leading-snug font-semibold text-ink-2">
+                Данные ведёт дирекция института. Если что-то неверно — обратитесь к методисту вашей группы.
+              </p>
+              <div className="mt-auto">
+                <div className="flex min-h-11 flex-col justify-center border-t border-desk-line py-[11px] text-[15px]">
+                  <span className="text-[13px] font-semibold text-ink-2">Безопасность</span>
+                  <span>
+                    Последний вход {fmtLogin(p.lastLoginAt)} · активных сеансов: {p.activeSessions}
+                  </span>
+                </div>
                 <LogoutButtons variant="desk" />
               </div>
             </section>

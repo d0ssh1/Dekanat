@@ -4,7 +4,10 @@ import { m } from 'motion/react';
 import { cn } from '@/lib/cn';
 import { ease } from '@/components/motion/tokens';
 
-/** Полоса прогресса баллов: заполняется слева направо при появлении. */
+/**
+ * Полоса прогресса баллов: заполняется слева направо при загрузке.
+ * При «меньше движения» MotionConfig (reducedMotion="user") сразу показывает её заполненной.
+ */
 export function Bar({
   value,
   max,
@@ -25,8 +28,7 @@ export function Bar({
         className={cn('block h-full origin-left rounded-full', danger ? 'bg-danger' : 'bg-ink')}
         style={{ width: `${pct}%` }}
         initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
+        animate={{ scaleX: 1 }}
         transition={{ duration: 0.8, ease: ease.out, delay: 0.1 }}
       />
       {mark !== undefined && max > 0 && (

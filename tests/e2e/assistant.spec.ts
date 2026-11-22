@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 import { expect, test } from '@playwright/test';
 import { anchorMonday } from '../../seed/calendar';
-import { login } from './helpers';
+import { login, baseOrigin } from './helpers';
 
 const visible = { visible: true } as const;
 const MON_10 = encodeURIComponent(`${anchorMonday()}T10:00:00+10:00`);
@@ -73,9 +73,7 @@ test.describe('ИИ-помощник', () => {
   }) => {
     const body = { question: 'привет', threadId: crypto.randomUUID(), history: [] };
     expect(
-      (
-        await request.post('/api/assistant', { data: body, headers: { origin: 'http://localhost:3000' } })
-      ).status(),
+      (await request.post('/api/assistant', { data: body, headers: { origin: baseOrigin() } })).status(),
     ).toBe(401);
     await login(page, 'student1');
     expect(
@@ -89,7 +87,7 @@ test.describe('ИИ-помощник', () => {
       (
         await staff.request.post('/api/assistant', {
           data: body,
-          headers: { origin: 'http://localhost:3000' },
+          headers: { origin: baseOrigin() },
         })
       ).status(),
     ).toBe(401);

@@ -50,6 +50,7 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
       </StaggerItem>
       <StaggerItem className="mt-4">
         <UploadButton requestId={r.id} requirementId={missing[0]?.id} />
+        <div className="mt-2 text-[13px] font-semibold opacity-75">PDF или фото, до 10 МБ</div>
       </StaggerItem>
     </>
   ) : (
@@ -132,7 +133,6 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
             )}
           </div>
         ))}
-      <div className="mt-1.5 text-[12px] font-semibold text-ink-2">PDF или фото, до 10 МБ</div>
     </section>
   );
 

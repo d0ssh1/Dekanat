@@ -10,6 +10,7 @@
   --surface: #ffffff;
   --surface-2: #f4f1ef;
   --line: #ece6e2;
+  --line-strong: #d9d3cf;
   --canvas: #e9e4e0;
   --join: #e8eeff;
   --field-line: #d6d6de;
@@ -42,7 +43,7 @@
 
   /* Тени */
   --shadow-sheet: 0 -8px 24px rgba(20, 20, 26, 0.08);
-  --shadow-accent: 0 22px 44px rgba(255, 107, 44, 0.3);
+  --shadow-accent: 0 16px 32px -14px rgba(255, 107, 44, 0.35);
   --shadow-frame: 0 24px 60px rgba(22, 22, 29, 0.14);
 
   /* Белая полупрозрачность на оранжевом */

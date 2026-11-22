@@ -134,9 +134,12 @@ export function AssistantView({
       <div className="lg:hidden">
         <HeroRing />
       </div>
-      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-3.5">
+      <h1 className="sr-only lg:not-sr-only lg:m-0 lg:mb-[18px] lg:block lg:text-[36px] lg:font-black lg:tracking-[-0.03em]">
+        Помощник
+      </h1>
+      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-stretch lg:gap-3.5">
         {/* ---------- Оранжевый верх / карточка ---------- */}
-        <section className="relative px-[18px] pt-[calc(var(--safe-top)+14px)] pb-6 lg:min-h-[420px] lg:overflow-hidden lg:rounded-[28px] lg:bg-accent-desk lg:p-[26px] lg:shadow-accent">
+        <section className="relative px-[18px] pt-[calc(var(--safe-top)+14px)] pb-6 lg:flex lg:min-h-[440px] lg:flex-col lg:overflow-hidden lg:rounded-[28px] lg:bg-accent-desk lg:p-[26px] lg:shadow-accent">
           <span
             aria-hidden
             className="absolute top-[-90px] right-[-80px] hidden size-60 animate-breathe rounded-full bg-glass-20 lg:block"
@@ -149,21 +152,24 @@ export function AssistantView({
             >
               <Icon name="back" stroke={2.4} />
             </Link>
-            <div className="flex-1">
-              <h1 className="m-0 text-[17px] font-bold">Помощник</h1>
-              <div className="text-[13px] font-semibold">видит только ваши данные</div>
+            <div className="flex-1 lg:flex lg:items-baseline lg:gap-2">
+              <div className="text-[17px] font-bold">Помощник</div>
+              <div className="text-[13px] font-semibold lg:opacity-80">
+                <span className="hidden lg:inline">· </span>видит только ваши данные
+              </div>
             </div>
           </div>
-          <div className="relative" aria-live="polite">
+          <div className="relative lg:flex lg:flex-1 lg:flex-col" aria-live="polite">
             <AnimatePresence mode="wait" initial={false}>
               <m.div
+                className="lg:flex lg:flex-1 lg:flex-col"
                 key={last?.id ?? 'empty'}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={spring.soft}
               >
-                {last ? <Hero turn={last} /> : <Welcome firstName={firstName} onPick={send} />}
+                {last ? <Hero turn={last} onAsk={send} /> : <Welcome firstName={firstName} onPick={send} />}
               </m.div>
             </AnimatePresence>
           </div>
@@ -204,6 +210,10 @@ export function AssistantView({
               if (!busy) void send(input);
             }}
           >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 -top-6 h-6 bg-gradient-to-t from-surface to-transparent"
+            />
             <label className="flex h-[52px] items-center gap-2.5 rounded-[16px] bg-surface-2 pr-1 pl-4">
               <input
                 value={input}
@@ -232,13 +242,13 @@ export function AssistantView({
 
 function Welcome({ firstName, onPick }: { firstName: string; onPick: (q: string) => void }) {
   return (
-    <Stagger delay={0.05}>
+    <Stagger delay={0.05} className="lg:flex lg:flex-1 lg:flex-col">
       <StaggerItem className="mt-[18px] text-[14px] font-bold">Спросите что угодно</StaggerItem>
       <StaggerItem className="mt-1.5 text-[36px] leading-none font-black tracking-[-0.04em]">
         Чем помочь, {firstName}?
       </StaggerItem>
       <StaggerItem className="mt-2.5 text-[14px] leading-[1.45] font-semibold">
-        Расписание, баллы, справки — отвечаю по вашим данным и собираю заявки сама.
+        Расписание, баллы, справки — отвечаю по вашим данным и сам собираю заявки.
       </StaggerItem>
       <StaggerItem className="mt-4">
         <button
@@ -249,21 +259,43 @@ function Welcome({ firstName, onPick }: { firstName: string; onPick: (q: string)
           Попробовать: «{SUGGEST[0]}»
         </button>
       </StaggerItem>
+      <StaggerItem className="mt-8 hidden lg:mt-auto lg:block lg:pt-8">
+        <div className="text-[13px] font-bold">Что я вижу</div>
+        <div className="mt-2 grid grid-cols-3 gap-2">
+          {[
+            ['Расписание', 'пары, замены, аудитории'],
+            ['Учёба', 'баллы, КТ, допуски'],
+            ['Документы', 'заявки и справки'],
+          ].map(([t, d]) => (
+            <div key={t} className="rounded-[16px] bg-glass-50 px-3.5 py-3">
+              <div className="text-[15px] font-extrabold">{t}</div>
+              <div className="mt-0.5 text-[13px] leading-snug font-semibold">{d}</div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 text-[13px] font-semibold">
+          Только ваши данные. Заявку отправляете вы — я готовлю черновик.
+        </div>
+      </StaggerItem>
     </Stagger>
   );
 }
 
-function Hero({ turn }: { turn: Turn }) {
+function Hero({ turn, onAsk }: { turn: Turn; onAsk: (q: string) => void }) {
   const c = turn.card;
+  const more = SUGGEST.filter((q) => q !== turn.q).slice(0, 3);
   return (
-    <div>
-      <div className="mt-[18px] text-[14px] font-semibold">Вы: «{turn.q}»</div>
+    <div className="lg:flex lg:flex-1 lg:flex-col">
+      <div className="mt-[18px] text-[12px] font-bold opacity-80">Вы спросили</div>
+      <div className="mt-1 inline-block max-w-full self-start rounded-[16px] rounded-tl-[6px] bg-glass-50 px-3.5 py-2 text-[15px] font-bold break-words">
+        {turn.q}
+      </div>
       {turn.error ? (
         <div role="alert" className="mt-4 rounded-[14px] bg-surface/90 px-3.5 py-3 text-[14px] font-semibold">
-          <b className="text-danger">!</b> {turn.error}
+          {turn.error}
         </div>
       ) : !turn.done && !turn.text ? (
-        <div className="mt-4">
+        <div className="mt-5">
           <div className="text-[14px] font-bold">{turn.thinking ?? 'Думаю'}…</div>
           <div className="mt-2 h-9 w-3/4 animate-pulse rounded-[12px] bg-glass-20" />
         </div>
@@ -271,17 +303,36 @@ function Hero({ turn }: { turn: Turn }) {
         <DraftHero card={c} meta={c.meta} />
       ) : (
         <>
-          <div className="mt-4 text-[14px] font-bold">{c?.kind === 'answer' ? c.cap : 'Ответ'}</div>
+          <div className="mt-5 text-[14px] font-bold">{c?.kind === 'answer' ? c.cap : 'Ответ'}</div>
           {c?.kind === 'answer' && (
-            <div className="mt-1.5 text-[36px] leading-none font-black tracking-[-0.04em]">{c.headline}</div>
+            <div className="mt-1.5 text-[36px] leading-none font-black tracking-[-0.04em] lg:text-[48px]">
+              {c.headline}
+            </div>
           )}
-          <p className="m-0 mt-2.5 text-[14px] leading-[1.45] font-semibold">
+          <p className="m-0 mt-2.5 text-[14px] leading-[1.45] font-semibold lg:max-w-[560px] lg:text-[15px]">
             {turn.text}
             {!turn.done && (
               <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-ink align-middle" aria-hidden />
             )}
           </p>
         </>
+      )}
+      {turn.done && (
+        <div className="mt-8 hidden lg:mt-auto lg:block lg:pt-8">
+          <div className="text-[13px] font-bold">Спросить ещё</div>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {more.map((q) => (
+              <button
+                key={q}
+                type="button"
+                onClick={() => onAsk(q)}
+                className="min-h-10 rounded-[12px] bg-glass-50 px-3 text-left text-[13px] font-bold transition-transform active:scale-[.97]"
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

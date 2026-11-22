@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, m } from 'motion/react';
-import { useRef, useState, useTransition } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import { cn } from '@/lib/cn';
 import { focusOf, isActive, movedToLabel, phaseOf, placeLabel, type Lesson } from '@/lib/day';
 import {
@@ -12,6 +12,7 @@ import {
   dayOf,
   dayNum,
   hhmm,
+  mondayOf,
   pairs,
   relativeIn,
   shortDate,
@@ -22,7 +23,6 @@ import {
 import type { TodoItem } from '@/lib/todo';
 import { DeskBlock, DeskCard, DeskRow, DeskValue } from '@/components/ui/desk';
 import { DayStrip, type DayItem } from '@/components/shell/DayStrip';
-import { Icon } from '@/components/ui/Icon';
 import { Odometer } from '@/components/motion/Odometer';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 import { spring } from '@/components/motion/tokens';
@@ -50,28 +50,37 @@ function EditMore() {
 export type DocLine = { id: string; title: string; text: string; tone: 'ok' | 'danger' | 'ink' | 'muted' };
 
 export function DeskToday({
-  day,
+  initialDay,
   today,
-  week,
-  lessons,
+  lessons2w,
   docs,
   study,
-  after,
   serverNow,
   layout,
+  todos,
 }: {
-  day: string;
+  initialDay: string;
   today: string;
-  week: { day: string; count: number }[];
-  lessons: Lesson[];
+  /** Пары двух недель: выбранной и следующей. Дни внутри недели переключаются без запроса к серверу. */
+  lessons2w: Lesson[];
   docs: DocLine[];
   study: TodoItem[];
-  after: { day: string; lessons: Lesson[] } | null;
   serverNow: number;
   layout: Block[];
+  todos: TodoItem[];
 }) {
   const router = useRouter();
   const [, startTransition] = useTransition();
+  const [day, setDay] = useState(initialDay);
+  // Новая неделя пришла с сервера (стрелки ‹ ›) — встаём на её день.
+  const [prevInitial, setPrevInitial] = useState(initialDay);
+  if (initialDay !== prevInitial) {
+    setPrevInitial(initialDay);
+    setDay(initialDay);
+  }
+  // Мемоизацию делает React Compiler — здесь обычные вычисления.
+  const lessons = lessons2w.filter((l) => dayOf(l.startsAt) === day);
+  const after = nextStudyDay(lessons2w, day);
   const boundaries = lessons.flatMap((l) => [Date.parse(l.startsAt), Date.parse(l.endsAt)]);
   const now = useNow(serverNow, boundaries);
   // Направление листания дня: запоминаем прошлый день в состоянии (паттерн «предыдущее значение»).
@@ -82,16 +91,25 @@ export function DeskToday({
     setPrevDay(day);
   }
 
-  const go = (d: string) =>
-    startTransition(() => router.push(d === today ? '/' : `/?day=${d}`, { scroll: false }));
-  const monday = week[0]!.day;
-  const days: DayItem[] = week.map((w) => ({
-    key: w.day,
-    weekday: wdShort(w.day),
-    day: dayNum(w.day),
-    muted: w.count === 0,
-    label: `${cap(wdFull(w.day))}, ${dayNum(w.day)} — ${w.count ? pairs(w.count) : 'пар нет'}${w.day === today ? ', сегодня' : ''}`,
-  }));
+  const monday = mondayOf(initialDay);
+  const urlOf = (d: string) => (d === today ? '/' : `/?day=${d}`);
+  // День внутри недели — мгновенно; адрес обновляем, чтобы ссылка и перезагрузка открывали тот же день.
+  const pick = (d: string) => {
+    setDay(d);
+    window.history.replaceState(null, '', urlOf(d));
+  };
+  const goWeek = (d: string) => startTransition(() => router.push(urlOf(d), { scroll: false }));
+  const days: DayItem[] = Array.from({ length: 6 }, (_, i) => {
+    const d = addDays(monday, i);
+    const count = lessons2w.filter((l) => dayOf(l.startsAt) === d && isActive(l)).length;
+    return {
+      key: d,
+      weekday: wdShort(d),
+      day: dayNum(d),
+      muted: count === 0,
+      label: `${cap(wdFull(d))}, ${dayNum(d)} — ${count ? pairs(count) : 'пар нет'}${d === today ? ', сегодня' : ''}`,
+    };
+  });
   const active = lessons.filter(isActive);
   const title = `${cap(wdFull(day))} — ${active.length ? pairs(active.length) : 'пар нет'}`;
 
@@ -111,11 +129,11 @@ export function DeskToday({
           </m.h1>
         </AnimatePresence>
         <div className="flex items-center gap-1.5">
-          <WeekArrow label="Предыдущая неделя" onClick={() => go(addDays(monday, -7))}>
+          <WeekArrow label="Предыдущая неделя" onClick={() => goWeek(addDays(monday, -7))}>
             ‹
           </WeekArrow>
-          <DayStrip days={days} selected={day} onSelect={go} />
-          <WeekArrow label="Следующая неделя" onClick={() => go(addDays(monday, 7))}>
+          <DayStrip days={days} selected={day} onSelect={pick} />
+          <WeekArrow label="Следующая неделя" onClick={() => goWeek(addDays(monday, 7))}>
             ›
           </WeekArrow>
         </div>
@@ -130,7 +148,14 @@ export function DeskToday({
           exit={{ opacity: 0, x: dir * -60 }}
           transition={spring.soft}
         >
-          <Cards lessons={lessons} isToday={day === today} now={now} after={after} today={today} />
+          <Cards
+            lessons={lessons}
+            isToday={day === today}
+            now={now}
+            after={after}
+            today={today}
+            todos={todos}
+          />
         </m.div>
       </AnimatePresence>
 
@@ -223,6 +248,16 @@ export function DeskToday({
   );
 }
 
+/** Ближайший после выбранного день с парами — для «Завтра» и пустого дня. */
+function nextStudyDay(lessons: Lesson[], day: string) {
+  for (let i = 1; i <= 7; i++) {
+    const d = addDays(day, i);
+    const ls = lessons.filter((l) => dayOf(l.startsAt) === d && isActive(l));
+    if (ls.length) return { day: d, lessons: ls };
+  }
+  return null;
+}
+
 function WeekArrow({
   label,
   onClick,
@@ -256,12 +291,14 @@ function Cards({
   now,
   after,
   today,
+  todos,
 }: {
   lessons: Lesson[];
   isToday: boolean;
   now: number;
   after: { day: string; lessons: Lesson[] } | null;
   today: string;
+  todos: TodoItem[];
 }) {
   const focus = isToday
     ? focusOf(lessons, now)
@@ -270,16 +307,16 @@ function Cards({
       : null;
 
   if (!lessons.length || (isToday && !focus)) {
-    return <EmptyDay hadLessons={lessons.length > 0} after={after} today={today} />;
+    return <EmptyDay hadLessons={lessons.length > 0} after={after} today={today} todos={todos} />;
   }
 
+  // Каждая прошедшая пара — своя узкая серая карточка: видно, что было, и не отнимает место.
   const models: CardModel[] = [];
-  const past = isToday
-    ? lessons.filter((l) => isActive(l) && phaseOf(l, focus?.lesson.id, now) === 'past')
-    : [];
-  if (past.length) models.push({ kind: 'past', lessons: past });
   for (const l of lessons) {
-    if (past.includes(l)) continue;
+    if (isToday && isActive(l) && phaseOf(l, focus?.lesson.id, now) === 'past') {
+      models.push({ kind: 'past', lessons: [l] });
+      continue;
+    }
     if (focus && l.id === focus.lesson.id) {
       const label =
         focus.mode === 'current'
@@ -291,15 +328,16 @@ function Cards({
     } else models.push({ kind: 'lesson', lesson: l });
   }
 
-  if (models.length <= 4) {
+  // До 6 карточек помещаются в один ряд целиком — без прокрутки. Высота у всех одна.
+  if (models.length <= 6) {
     const cols = models
       .map((c) => (c.kind === 'past' ? '0.62fr' : c.kind === 'focus' ? '1.6fr' : '1fr'))
       .join(' ');
     return (
-      <Stagger className="grid h-[452px] items-end gap-3.5" style={{ gridTemplateColumns: cols }}>
+      <Stagger className="grid min-h-[340px] gap-3.5" style={{ gridTemplateColumns: cols }}>
         {models.map((c, i) => (
-          <StaggerItem key={i}>
-            <CardView c={c} now={now} tall={c.kind === 'focus'} />
+          <StaggerItem key={i} className="flex min-w-0">
+            <CardView c={c} now={now} className="flex-1" />
           </StaggerItem>
         ))}
       </Stagger>
@@ -308,99 +346,99 @@ function Cards({
   return <Carousel models={models} now={now} />;
 }
 
+/** Больше 6 пар: ряд листается. Кнопки появляются только с той стороны, куда ещё можно листать. */
 function Carousel({ models, now }: { models: CardModel[]; now: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [atEnd, setAtEnd] = useState(false);
-  const hidden = Math.max(0, models.length - 4);
-  const scroll = (d: number) => ref.current?.scrollBy({ left: d * 420, behavior: 'smooth' });
+  const [edge, setEdge] = useState({ start: true, end: false });
+  const sync = () => {
+    const el = ref.current;
+    if (el) setEdge({ start: el.scrollLeft <= 8, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8 });
+  };
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    sync();
+    // Колесо мыши листает ряд по горизонтали — у многих мышей нет горизонтальной прокрутки.
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      const canMove = e.deltaY > 0 ? el.scrollLeft + el.clientWidth < el.scrollWidth - 1 : el.scrollLeft > 0;
+      if (!canMove) return;
+      e.preventDefault();
+      el.scrollBy({ left: e.deltaY });
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
+  const scroll = (d: number) => ref.current?.scrollBy({ left: d * 440, behavior: 'smooth' });
   return (
-    <div className="relative h-[476px]">
+    <div className="relative">
       <Stagger
         ref={ref}
         role="list"
         aria-label="Пары дня, прокручиваются по горизонтали"
-        onScroll={(e) => {
-          const el = e.currentTarget;
-          setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 8);
-        }}
-        className="flex h-full snap-x snap-mandatory items-end gap-3.5 overflow-x-auto overscroll-x-contain pr-24 [scrollbar-width:none]"
+        onScroll={sync}
+        className="flex h-[360px] snap-x snap-proximity gap-3.5 overflow-x-auto overscroll-x-contain [scrollbar-width:none]"
       >
         {models.map((c, i) => (
           <StaggerItem
             key={i}
             role="listitem"
-            className="snap-start"
-            style={{ flex: '0 0 auto', width: c.kind === 'past' ? 132 : c.kind === 'focus' ? 360 : 200 }}
+            className="flex snap-start"
+            style={{ flex: '0 0 auto', width: c.kind === 'past' ? 150 : c.kind === 'focus' ? 380 : 220 }}
           >
-            <CardView c={c} now={now} tall={c.kind === 'focus'} busy />
+            <CardView c={c} now={now} className="flex-1" />
           </StaggerItem>
         ))}
       </Stagger>
-      <AnimatePresence>
-        {!atEnd && (
-          <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-y-0 -right-7 w-[120px] bg-gradient-to-r from-transparent to-desk-bg to-70%"
-            />
-            <button
-              type="button"
-              onClick={() => scroll(1)}
-              aria-label="Показать следующие пары"
-              className="absolute top-1/2 right-0 flex size-[52px] -translate-y-1/2 items-center justify-center rounded-full bg-ink-desk text-[22px] font-bold text-surface shadow-[0_10px_24px_rgba(20,20,26,.25)] transition-transform hover:scale-105 active:scale-95"
-            >
-              ›
-            </button>
-            {hidden > 0 && (
-              <span className="absolute top-[calc(50%+36px)] right-0 w-[52px] text-center text-[12px] font-bold text-ink-2">
-                ещё {hidden}
-              </span>
-            )}
-          </m.div>
-        )}
-      </AnimatePresence>
+      <ScrollEdge side="start" show={!edge.start} onClick={() => scroll(-1)} />
+      <ScrollEdge side="end" show={!edge.end} onClick={() => scroll(1)} />
     </div>
   );
 }
 
-function CardView({ c, now, tall, busy }: { c: CardModel; now: number; tall?: boolean; busy?: boolean }) {
-  const h = busy ? (tall ? 'h-[476px]' : 'h-[410px]') : tall ? 'h-[452px]' : 'h-[388px]';
-  if (c.kind === 'past') return <PastCard lessons={c.lessons} className={h} />;
-  if (c.kind === 'focus') return <FocusCard c={c} now={now} className={h} />;
-  return <LessonCard l={c.lesson} className={h} />;
+function ScrollEdge({ side, show, onClick }: { side: 'start' | 'end'; show: boolean; onClick: () => void }) {
+  return (
+    <AnimatePresence>
+      {show && (
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className={cn(
+            'pointer-events-none absolute inset-y-0 flex w-24 items-center',
+            side === 'start'
+              ? 'left-0 justify-start bg-gradient-to-r from-desk-bg to-transparent'
+              : 'right-0 justify-end bg-gradient-to-l from-desk-bg to-transparent',
+          )}
+        >
+          <button
+            type="button"
+            onClick={onClick}
+            aria-label={side === 'start' ? 'Предыдущие пары' : 'Следующие пары'}
+            className="pointer-events-auto flex size-11 items-center justify-center rounded-full bg-surface text-ink-desk shadow-[0_6px_18px_rgba(22,22,29,.12)] ring-1 ring-desk-line transition-transform hover:scale-105 active:scale-95"
+          >
+            <MoreIcon name={side === 'start' ? 'back' : 'arrowRight'} size={18} stroke={2.4} />
+          </button>
+        </m.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function CardView({ c, now, className }: { c: CardModel; now: number; className?: string }) {
+  if (c.kind === 'past') return <PastCard lessons={c.lessons} className={className ?? ''} />;
+  if (c.kind === 'focus') return <FocusCard c={c} now={now} className={className ?? ''} />;
+  return <LessonCard l={c.lesson} className={className ?? ''} />;
 }
 
 function PastCard({ lessons, className }: { lessons: Lesson[]; className: string }) {
-  const [open, setOpen] = useState(false);
-  if (lessons.length === 1) {
-    const l = lessons[0]!;
-    return (
-      <DeskCard tone="muted" className={className}>
-        <span className="text-[13px] font-bold text-ink-2">{hhmm(l.startsAt)} · прошла</span>
-        <b className="mt-auto text-[15px] text-ink-soft">{l.subject}</b>
-        <span className="text-[13px] text-ink-2">{l.online ? 'онлайн' : `ауд. ${l.room}`}</span>
-      </DeskCard>
-    );
-  }
+  const l = lessons[0]!;
   return (
     <DeskCard tone="muted" className={className}>
-      <span className="text-[13px] font-bold text-ink-2">{lessons.length} прошли</span>
-      <div className="mt-auto text-[14px] leading-normal text-ink-soft">
-        {(open ? lessons : lessons.slice(-2)).map((l) => (
-          <div key={l.id}>
-            <b>{hhmm(l.startsAt)}</b> {l.short}
-          </div>
-        ))}
-      </div>
-      {lessons.length > 2 && (
-        <button
-          type="button"
-          onClick={() => setOpen((x) => !x)}
-          className="mt-2 h-10 rounded-[12px] bg-surface text-[13px] font-bold"
-        >
-          {open ? 'Скрыть' : 'Показать'}
-        </button>
-      )}
+      <span className="text-[13px] font-bold text-ink-2 tabular">{hhmm(l.startsAt)}</span>
+      <span className="text-[12px] font-semibold text-ink-2">прошла</span>
+      <b className="mt-auto text-[15px] leading-tight text-ink-soft">{l.subject}</b>
+      <span className="text-[13px] text-ink-2">{l.online ? 'онлайн' : `ауд. ${l.room}`}</span>
     </DeskCard>
   );
 }
@@ -435,7 +473,9 @@ function FocusCard({
         {hhmm(l.startsAt)}
       </div>
       <div className="relative mt-auto">
-        <div className="text-[34px] leading-[1.05] font-black tracking-[-0.02em]">{l.subject}</div>
+        <div className="text-[clamp(24px,2.6vw,34px)] leading-[1.05] font-black tracking-[-0.02em] [overflow-wrap:anywhere] hyphens-auto">
+          {l.subject}
+        </div>
         <div className="mt-2 text-[14px] font-semibold">
           {cap(l.kindLabel)} · <b>{l.online ? 'онлайн' : placeLabel(l.room)}</b> · {l.teacher}
           {l.previousRoom && <> · была {l.previousRoom}</>}
@@ -492,17 +532,23 @@ function LessonCard({ l, className }: { l: Lesson; className: string }) {
     <DeskCard tone="white" className={className}>
       <span className="text-[13px] font-bold text-ink-2 tabular">{hhmm(l.startsAt)}</span>
       <b className="text-[19px] leading-tight font-extrabold tracking-[-0.02em]">{l.subject}</b>
-      <span className="text-[13px] text-ink-2">
-        {l.kindLabel} · ауд. {l.room}
-      </span>
-      <span className="text-[13px] text-ink-2">{l.teacher}</span>
-      {(l.movedFrom || l.previousRoom) && (
-        <span className="mt-auto text-[13px] font-bold text-danger">
-          {l.movedFrom
-            ? `перенесена с ${wdGen(dayOf(l.movedFrom))}`
-            : `новая аудитория · была ${l.previousRoom}`}
+      <span className="text-[13px] text-ink-2">{l.kindLabel}</span>
+      <span className="text-[13px] whitespace-nowrap text-ink-2">{l.teacher}</span>
+      <div className="mt-auto flex flex-col items-start gap-2 pt-2">
+        {(l.movedFrom || l.previousRoom) && (
+          <span className="text-[13px] leading-snug font-bold text-danger">
+            {l.movedFrom
+              ? `перенесена с ${wdGen(dayOf(l.movedFrom))}`
+              : `аудиторию поменяли — была ${l.previousRoom}`}
+          </span>
+        )}
+        <span className="rounded-[11px] bg-desk-chip px-2.5 py-1.5 text-[13px] font-bold">
+          {placeLabel(l.room)}
         </span>
-      )}
+        <Link href={`/study/${l.courseId}`} className="text-[13px] font-bold hover:underline">
+          Материалы →
+        </Link>
+      </div>
     </DeskCard>
   );
 }
@@ -511,15 +557,17 @@ function EmptyDay({
   hadLessons,
   after,
   today,
+  todos,
 }: {
   hadLessons: boolean;
   after: { day: string; lessons: Lesson[] } | null;
   today: string;
+  todos: TodoItem[];
 }) {
   const first = after?.lessons[0];
   return (
-    <div className="grid h-[452px] grid-cols-[1.6fr_1fr] items-end gap-3.5">
-      <DeskCard tone="accent" className="h-[452px] p-[26px]">
+    <div className="grid min-h-[340px] grid-cols-[1.6fr_1fr] gap-3.5">
+      <DeskCard tone="accent" className="p-[26px]">
         <span
           aria-hidden
           className="absolute top-[-90px] right-[-80px] size-60 animate-breathe rounded-full bg-glass-20"
@@ -546,15 +594,34 @@ function EmptyDay({
           <div className="relative mt-auto text-[34px] font-black">Отдыхайте</div>
         )}
       </DeskCard>
-      <DeskCard tone="white" className="h-[388px]">
-        <Icon name="calendar" size={28} />
-        <b className="mt-auto text-[19px] font-extrabold">Вся неделя</b>
-        <span className="text-[13px] text-ink-2">пары, переносы и изменения</span>
-        <Link
-          href="/week"
-          className="mt-3 inline-flex h-[46px] items-center justify-center rounded-[14px] bg-ink-desk text-[14px] font-extrabold text-surface"
-        >
-          Открыть неделю
+      <DeskCard tone="white">
+        <b className="text-[19px] font-extrabold tracking-[-0.02em]">Можно успеть</b>
+        {todos.length ? (
+          todos.slice(0, 4).map((t, i) => (
+            <Link
+              key={t.key}
+              href={t.href}
+              className={cn(
+                'flex items-center gap-3 py-2.5 text-[14px]',
+                i > 0 && 'border-t border-desk-line',
+              )}
+            >
+              <span className="min-w-0 flex-1">
+                <b className="block truncate">{t.title}</b>
+                <span className={cn('text-[13px]', t.tone === 'danger' ? 'text-danger' : 'text-ink-2')}>
+                  {t.hint}
+                </span>
+              </span>
+              <span aria-hidden className="text-ink-2">
+                ›
+              </span>
+            </Link>
+          ))
+        ) : (
+          <span className="text-[14px] text-ink-2">Срочных дел нет — можно отдохнуть.</span>
+        )}
+        <Link href="/week" className="mt-auto text-[14px] font-bold hover:underline">
+          Вся неделя →
         </Link>
       </DeskCard>
     </div>

@@ -48,7 +48,7 @@ export default async function LoginPage({
               ) : (
                 <>
                   <StaggerItem>
-                    <h1 className="m-0 mt-14 text-[48px] leading-none font-black tracking-[-0.05em] lg:mt-24 lg:text-[64px]">
+                    <h1 className="m-0 mt-14 text-[48px] leading-none font-black tracking-[-0.05em] lg:mt-24 lg:text-[56px]">
                       Всё об&nbsp;учёбе&nbsp;—
                       <br />
                       в&nbsp;одном месте

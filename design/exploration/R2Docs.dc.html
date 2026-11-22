@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R2 — документы и помощник</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;family=Unbounded:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.h{font-family:'Unbounded',sans-serif}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;background:#EFEFF4;box-shadow:0 0 0 10px #16161D;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.field{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid rgba(22,22,29,.12);font-size:14px}
+.doc{position:relative;overflow:hidden;border-radius:26px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.blob{position:absolute;border-radius:50%}
+</style>
+</helmet>
+<div style="width: 910px; height: 924px; box-sizing: border-box; padding: 40px; display: flex; gap: 50px; background: #DADBE5; font-family: 'Onest', system-ui, sans-serif; color: #16161D">
+
+<div class="phone">
+  <div style="padding: 56px 18px 12px; display: flex; align-items: center; gap: 10px"><div class="h" style="font-size: 20px; font-weight: 700; flex: 1">Помощник</div><span style="font-size: 12px; color: #5C5C69">видит только ваши данные</span></div>
+  <div style="flex: 1; padding: 4px 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: flex-end; max-width: 80%; padding: 12px 14px; border-radius: 20px 20px 6px 20px; background: #16161D; color: #FFFFFF; font-size: 15px">Нужна справка в военкомат</div>
+    <div style="font-size: 15px; line-height: 1.45">Готово! Собрала заявку — данные из профиля, проверьте:</div>
+    <article class="doc" style="background: #FFC21A">
+      <div class="blob" style="width: 180px; height: 180px; right: -60px; top: -70px; background: rgba(255,255,255,.3)"></div>
+      <div style="font-size: 12px; font-weight: 700; position: relative">ЧЕРНОВИК</div>
+      <div class="h" style="font-size: 20px; font-weight: 700; position: relative">Справка об обучении</div>
+      <div style="margin-top: 4px">
+        <div class="field"><span>Студент</span><b>Воронцова А. Д.</b></div>
+        <div class="field"><span>Группа</span><b>ПИ-31</b></div>
+        <div class="field"><span>Куда</span><b>Военкомат</b></div>
+        <div class="field"><span>Формат</span><b>Бумага + PDF</b></div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 6px">
+        <button type="button" style="flex: 1; height: 46px; border: 0; border-radius: 15px; background: #16161D; color: #FFFFFF; font-size: 15px; font-weight: 700; cursor: pointer">Отправить</button>
+        <button type="button" style="height: 46px; padding: 0 14px; border: 0; border-radius: 15px; background: rgba(255,255,255,.6); font-size: 14px; font-weight: 600; cursor: pointer">Изменить</button>
+      </div>
+    </article>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap">
+      <span style="padding: 8px 12px; border-radius: 12px; background: #FFFFFF; font-size: 13px">Будет готова <b>завтра</b></span>
+      <span style="padding: 8px 12px; border-radius: 12px; background: #FFFFFF; font-size: 13px">Основание: <b>п. 2.1</b></span>
+    </div>
+  </div>
+  <div style="padding: 10px 14px 28px">
+    <label style="height: 54px; border-radius: 18px; background: #16161D; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px">
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Сообщение помощнику</span>
+      <input type="text" placeholder="Спроси ещё…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 15px; color: #FFFFFF">
+      <button type="button" aria-label="Отправить" style="width: 42px; height: 42px; border-radius: 14px; border: 0; background: #FFC21A; color: #16161D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+    </label>
+  </div>
+</div>
+
+<div class="phone">
+  <div style="padding: 56px 18px 0; display: flex; align-items: center; justify-content: space-between"><div class="h" style="font-size: 24px; font-weight: 700">Документы</div><button type="button" style="height: 42px; padding: 0 14px; border: 0; border-radius: 14px; background: #16161D; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">+ Заказать</button></div>
+  <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 12px">
+    <article class="doc" style="background: #FFC21A">
+      <div class="blob" style="width: 140px; height: 140px; right: -50px; bottom: -60px; background: rgba(255,255,255,.3)"></div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; position: relative"><span>№1052 · сегодня</span><span>ГОТОВА ЗАВТРА</span></div>
+      <div class="h" style="font-size: 17px; font-weight: 700; position: relative">Справка в военкомат</div>
+      <div style="font-size: 13px; position: relative">Принята · специалист О. П. Иванова</div>
+    </article>
+    <article class="doc" style="background: #12A76A; color: #FFFFFF">
+      <div class="blob" style="width: 140px; height: 140px; right: -50px; top: -60px; background: rgba(255,255,255,.14)"></div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; position: relative"><span>№1047 · 20 ноября</span><span>ГОТОВА</span></div>
+      <div class="h" style="font-size: 17px; font-weight: 700; position: relative">Справка об обучении</div>
+      <div style="display: flex; gap: 8px; position: relative"><button type="button" style="height: 38px; padding: 0 14px; border: 0; border-radius: 12px; background: #FFFFFF; color: #0B6B43; font-size: 13px; font-weight: 700; cursor: pointer">PDF с QR</button><span style="font-size: 13px; align-self: center">или в каб. 210</span></div>
+    </article>
+    <article class="doc" style="background: #FFFFFF">
+      <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #5C5C69"><span>№1031 · 18 ноября</span><span>КОМИССИЯ 26.11</span></div>
+      <div class="h" style="font-size: 17px; font-weight: 700">Материальная помощь</div>
+      <div style="display: flex; gap: 4px"><span style="flex: 1; height: 6px; border-radius: 3px; background: #16161D"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #16161D"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #DCDCE4"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #DCDCE4"></span></div>
+    </article>
+    <div class="h" style="font-size: 15px; font-weight: 700; margin-top: 4px">Частые</div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <button type="button" style="height: 58px; border: 0; border-radius: 16px; background: #FFFFFF; font-size: 14px; font-weight: 600; text-align: left; padding: 0 14px; cursor: pointer">Справка об обучении</button>
+      <button type="button" style="height: 58px; border: 0; border-radius: 16px; background: #FFFFFF; font-size: 14px; font-weight: 600; text-align: left; padding: 0 14px; cursor: pointer">Пересдача</button>
+      <button type="button" style="height: 58px; border: 0; border-radius: 16px; background: #FFFFFF; font-size: 14px; font-weight: 600; text-align: left; padding: 0 14px; cursor: pointer">Академ. отпуск</button>
+      <button type="button" style="height: 58px; border: 0; border-radius: 16px; background: #FFFFFF; font-size: 14px; font-weight: 600; text-align: left; padding: 0 14px; cursor: pointer">Перевод</button>
+    </div>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":910,"height":924}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

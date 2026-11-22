@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Концепция B — Ночной кампус</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&amp;family=Unbounded:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#C6F432}a:hover{color:#E0FF7A}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1620px; height: 940px; box-sizing: border-box; padding: 48px; display: flex; gap: 48px; align-items: center; background: #050608; font-family: 'Golos Text', system-ui, sans-serif; color: #F2F3F5">
+
+<!-- ===== DESKTOP ===== -->
+<div style="width: 1086px; height: 844px; flex-shrink: 0; border-radius: 22px; background: #0B0C0F; border: 1px solid #1E2127; display: flex; flex-direction: column; overflow: hidden; padding: 22px; box-sizing: border-box; gap: 16px">
+  <header style="display: flex; align-items: center; gap: 16px">
+    <div style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.02em">деканат<span style="color: {{accent}}">/</span></div>
+    <nav aria-label="Разделы" style="display: flex; gap: 6px; margin-left: 12px; padding: 4px; border-radius: 14px; background: #16181D">
+      <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 10px; background: {{accent}}; color: #0B0C0F; font-size: 14px; font-weight: 600; cursor: pointer">Главная</button>
+      <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 10px; background: transparent; color: #C3C7CF; font-size: 14px; cursor: pointer">Расписание</button>
+      <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 10px; background: transparent; color: #C3C7CF; font-size: 14px; cursor: pointer">Оценки</button>
+      <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 10px; background: transparent; color: #C3C7CF; font-size: 14px; cursor: pointer">Заявки</button>
+      <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 10px; background: transparent; color: #C3C7CF; font-size: 14px; cursor: pointer">Новости</button>
+    </nav>
+    <div style="flex: 1"></div>
+    <button type="button" style="height: 40px; padding: 0 14px; border-radius: 12px; border: 1px solid #2A2E36; background: #16181D; color: #9AA0AA; font-size: 13px; display: flex; align-items: center; gap: 10px; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>Поиск <span style="padding: 2px 6px; border-radius: 5px; background: #23262D; font-size: 11px">Ctrl K</span></button>
+    <div style="width: 40px; height: 40px; border-radius: 12px; background: #23262D; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px">АВ</div>
+  </header>
+
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 14px">
+    <!-- NOW: 2x2 -->
+    <section style="grid-column: span 2; grid-row: span 2; border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 26px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #9AA0AA"><span style="width: 8px; height: 8px; border-radius: 4px; background: {{accent}}"></span>Сейчас идёт · 10:45–12:20</div>
+      <div style="font-family: 'Unbounded', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em">Машинное<br>обучение</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <span style="padding: 6px 10px; border-radius: 8px; background: #23262D; font-size: 13px">Практика</span>
+        <span style="padding: 6px 10px; border-radius: 8px; background: #3A2412; color: #FFB27A; font-size: 13px; font-weight: 600">ауд. 214 · корп. Б — новая</span>
+        <span style="padding: 6px 10px; border-radius: 8px; background: #23262D; font-size: 13px">Козлов Д. С.</span>
+      </div>
+      <div style="flex: 1"></div>
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; color: #9AA0AA"><span>прошло 34 мин</span><span>осталось 61 мин</span></div>
+        <div style="height: 10px; border-radius: 5px; background: #23262D; margin-top: 8px"><div style="width: 36%; height: 10px; border-radius: 5px; background: {{accent}}"></div></div>
+      </div>
+      <div style="display: flex; gap: 10px; padding-top: 14px; border-top: 1px solid #23262D">
+        <div style="flex: 1"><div style="font-size: 12px; color: #9AA0AA">Дальше · 13:00</div><div style="font-size: 15px; font-weight: 600; margin-top: 2px">Английский язык, 118</div></div>
+        <div style="flex: 1"><div style="font-size: 12px; color: #9AA0AA">14:50</div><div style="font-size: 15px; font-weight: 600; margin-top: 2px; color: #FFB27A">Веб-разработка → чт</div></div>
+      </div>
+    </section>
+
+    <!-- GPA -->
+    <section style="border-radius: 22px; background: {{accent}}; color: #0B0C0F; padding: 20px; display: flex; flex-direction: column">
+      <div style="font-size: 13px; font-weight: 600">Средний балл</div>
+      <div style="font-family: 'Unbounded', sans-serif; font-size: 48px; font-weight: 700; letter-spacing: -0.03em; margin-top: 6px">4,62</div>
+      <div style="flex: 1"></div>
+      <svg width="100%" height="40" viewBox="0 0 200 40" preserveAspectRatio="none" role="img" aria-label="Средний балл по семестрам: 4,31; 4,40; 4,54; 4,62"><polyline points="0,34 66,26 133,14 200,6" fill="none" stroke="#0B0C0F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="200" cy="6" r="4" fill="#0B0C0F"></circle></svg>
+      <div style="font-size: 12px; font-weight: 500; margin-top: 4px">4 семестра · растёт</div>
+    </section>
+
+    <!-- SESSION -->
+    <section style="border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 20px; display: flex; flex-direction: column">
+      <div style="font-size: 13px; color: #9AA0AA">До сессии</div>
+      <div style="font-family: 'Unbounded', sans-serif; font-size: 48px; font-weight: 700; margin-top: 6px">28<span style="font-size: 18px; color: #9AA0AA"> дн</span></div>
+      <div style="flex: 1"></div>
+      <div style="display: flex; gap: 4px">
+        <span style="flex: 1; height: 8px; border-radius: 4px; background: {{accent}}"></span><span style="flex: 1; height: 8px; border-radius: 4px; background: {{accent}}"></span><span style="flex: 1; height: 8px; border-radius: 4px; background: {{accent}}"></span><span style="flex: 1; height: 8px; border-radius: 4px; background: {{accent}}"></span><span style="flex: 1; height: 8px; border-radius: 4px; background: {{accent}}"></span><span style="flex: 1; height: 8px; border-radius: 4px; background: #FF8A3D"></span>
+      </div>
+      <div style="font-size: 12px; color: #C3C7CF; margin-top: 8px">Допуск: 5 из 6 · ML — не хватает 2 баллов</div>
+    </section>
+
+    <!-- REQUEST -->
+    <section style="border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-size: 13px; color: #9AA0AA">Заявка №1047</div>
+      <div style="font-size: 17px; font-weight: 600">Справка об обучении</div>
+      <div style="display: flex; gap: 4px; margin-top: 4px"><span style="flex: 1; height: 4px; border-radius: 2px; background: {{accent}}"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: {{accent}}"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: {{accent}}"></span></div>
+      <div style="flex: 1"></div>
+      <button type="button" style="height: 40px; border-radius: 12px; border: 0; background: #F2F3F5; color: #0B0C0F; font-size: 14px; font-weight: 600; cursor: pointer">Скачать PDF с QR</button>
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section style="border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; font-size: 13px; color: #9AA0AA"><span>Новое</span><span style="color: {{accent}}">3</span></div>
+      <div style="font-size: 14px; line-height: 1.35"><b>Запись на элективы</b><br><span style="color: #9AA0AA">до 1 декабря</span></div>
+      <div style="font-size: 14px; line-height: 1.35"><b>Курсовая по БД</b><br><span style="color: #FFB27A">дедлайн 30 ноября</span></div>
+    </section>
+
+    <!-- WEEK STRIP -->
+    <section style="grid-column: span 4; border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 500">Неделя 12 · числитель</h2><span style="font-size: 13px; color: #9AA0AA">23–28 ноября</span></div>
+      <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; flex: 1">
+        <div style="border-radius: 14px; background: #23262D; padding: 12px; outline: 2px solid {{accent}}"><div style="font-size: 12px; color: #9AA0AA">Пн 23</div><div style="font-size: 15px; font-weight: 600; margin-top: 4px">3 пары</div><div style="font-size: 12px; color: #FFB27A; margin-top: 4px">1 перенос</div></div>
+        <div style="border-radius: 14px; background: #1C1F25; padding: 12px"><div style="font-size: 12px; color: #9AA0AA">Вт 24</div><div style="font-size: 15px; font-weight: 600; margin-top: 4px">4 пары</div></div>
+        <div style="border-radius: 14px; background: #1C1F25; padding: 12px"><div style="font-size: 12px; color: #9AA0AA">Ср 25</div><div style="font-size: 15px; font-weight: 600; margin-top: 4px">2 пары</div><div style="font-size: 12px; color: #9AA0AA; margin-top: 4px">КТ по матстату</div></div>
+        <div style="border-radius: 14px; background: #1C1F25; padding: 12px"><div style="font-size: 12px; color: #9AA0AA">Чт 26</div><div style="font-size: 15px; font-weight: 600; margin-top: 4px">4 пары</div><div style="font-size: 12px; color: #FFB27A; margin-top: 4px">+ веб-разработка</div></div>
+        <div style="border-radius: 14px; background: #1C1F25; padding: 12px"><div style="font-size: 12px; color: #9AA0AA">Пт 27</div><div style="font-size: 15px; font-weight: 600; margin-top: 4px">3 пары</div></div>
+        <div style="border-radius: 14px; background: #1C1F25; padding: 12px"><div style="font-size: 12px; color: #9AA0AA">Сб 28</div><div style="font-size: 15px; font-weight: 600; margin-top: 4px; color: #9AA0AA">выходной</div></div>
+      </div>
+    </section>
+  </div>
+  <div style="font-size: 11px; color: #7D838E; text-align: center">Концепт для конкурса · не официальный сервис вуза · данные вымышлены</div>
+</div>
+
+<!-- ===== PHONE ===== -->
+<div style="width: 390px; height: 844px; flex-shrink: 0; border-radius: 44px; background: #0B0C0F; box-shadow: 0 0 0 10px #1E2127; overflow: hidden; position: relative">
+  <div style="padding: 52px 18px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 18px">деканат<span style="color: {{accent}}">/</span></div>
+      <div style="width: 40px; height: 40px; border-radius: 12px; background: #23262D; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px">АВ</div>
+    </div>
+    <section style="border-radius: 24px; background: #16181D; border: 1px solid #23262D; padding: 20px">
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #9AA0AA"><span style="width: 8px; height: 8px; border-radius: 4px; background: {{accent}}"></span>Сейчас · до 12:20</div>
+      <div style="font-family: 'Unbounded', sans-serif; font-size: 24px; font-weight: 700; line-height: 1.15; margin-top: 10px">Машинное обучение</div>
+      <div style="margin-top: 10px; display: inline-block; padding: 6px 10px; border-radius: 8px; background: #3A2412; color: #FFB27A; font-size: 13px; font-weight: 600">ауд. 214 · корп. Б — новая</div>
+      <div style="height: 8px; border-radius: 4px; background: #23262D; margin-top: 16px"><div style="width: 36%; height: 8px; border-radius: 4px; background: {{accent}}"></div></div>
+    </section>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+      <section style="border-radius: 22px; background: {{accent}}; color: #0B0C0F; padding: 16px; height: 128px; box-sizing: border-box; display: flex; flex-direction: column">
+        <div style="font-size: 12px; font-weight: 600">Средний балл</div>
+        <div style="font-family: 'Unbounded', sans-serif; font-size: 36px; font-weight: 700; margin-top: 4px">4,62</div>
+        <div style="flex: 1"></div>
+        <div style="font-size: 12px; font-weight: 500">+0,08 за семестр</div>
+      </section>
+      <section style="border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 16px; height: 128px; box-sizing: border-box; display: flex; flex-direction: column">
+        <div style="font-size: 12px; color: #9AA0AA">До сессии</div>
+        <div style="font-family: 'Unbounded', sans-serif; font-size: 36px; font-weight: 700; margin-top: 4px">28<span style="font-size: 14px; color: #9AA0AA"> дн</span></div>
+        <div style="flex: 1"></div>
+        <div style="font-size: 12px; color: #FFB27A">допуск 5 из 6</div>
+      </section>
+      <section style="grid-column: span 2; border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 16px; display: flex; align-items: center; gap: 14px">
+        <div style="width: 44px; height: 44px; border-radius: 14px; background: #2B3A10; color: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg></div>
+        <div style="flex: 1"><div style="font-size: 15px; font-weight: 600">Справка готова</div><div style="font-size: 12px; color: #9AA0AA">Заявка №1047 · PDF с QR</div></div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9AA0AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+      </section>
+      <section style="grid-column: span 2; border-radius: 22px; background: #16181D; border: 1px solid #23262D; padding: 16px">
+        <div style="font-size: 12px; color: #9AA0AA">Неделя 12</div>
+        <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin-top: 10px; text-align: center">
+          <div style="padding: 8px 0; border-radius: 10px; background: {{accent}}; color: #0B0C0F"><div style="font-size: 11px; font-weight: 600">Пн</div><div style="font-size: 16px; font-weight: 700">23</div></div>
+          <div style="padding: 8px 0; border-radius: 10px; background: #23262D"><div style="font-size: 11px; color: #9AA0AA">Вт</div><div style="font-size: 16px; font-weight: 600">24</div></div>
+          <div style="padding: 8px 0; border-radius: 10px; background: #23262D"><div style="font-size: 11px; color: #9AA0AA">Ср</div><div style="font-size: 16px; font-weight: 600">25</div></div>
+          <div style="padding: 8px 0; border-radius: 10px; background: #23262D; outline: 1px solid #FF8A3D"><div style="font-size: 11px; color: #9AA0AA">Чт</div><div style="font-size: 16px; font-weight: 600">26</div></div>
+          <div style="padding: 8px 0; border-radius: 10px; background: #23262D"><div style="font-size: 11px; color: #9AA0AA">Пт</div><div style="font-size: 16px; font-weight: 600">27</div></div>
+          <div style="padding: 8px 0; border-radius: 10px; background: #1C1F25"><div style="font-size: 11px; color: #7D838E">Сб</div><div style="font-size: 16px; font-weight: 600; color: #7D838E">28</div></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <nav aria-label="Навигация" style="position: absolute; left: 18px; right: 18px; bottom: 24px; height: 64px; border-radius: 22px; background: #1C1F25; border: 1px solid #2A2E36; display: flex; align-items: center; justify-content: space-around">
+    <button type="button" aria-label="Главная" style="width: 48px; height: 48px; border-radius: 16px; border: 0; background: {{accent}}; color: #0B0C0F; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></button>
+    <button type="button" aria-label="Расписание" style="width: 48px; height: 48px; border-radius: 16px; border: 0; background: transparent; color: #C3C7CF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></button>
+    <button type="button" aria-label="Оценки" style="width: 48px; height: 48px; border-radius: 16px; border: 0; background: transparent; color: #C3C7CF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M3 20h18"></path></svg></button>
+    <button type="button" aria-label="Заявки" style="width: 48px; height: 48px; border-radius: 16px; border: 0; background: transparent; color: #C3C7CF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"></path><path d="M14 3v5h5"></path></svg></button>
+    <button type="button" aria-label="Уведомления" style="width: 48px; height: 48px; border-radius: 16px; border: 0; background: transparent; color: #C3C7CF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg></button>
+  </nav>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#7DD3FC","#F9A8D4","#FCD34D"]},"$preview":{"width":1620,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#C6F432' };
+  }
+}
+</script>
+</body>
+</html>

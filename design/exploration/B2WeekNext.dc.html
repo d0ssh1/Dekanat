@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R2 — неделя, компьютер</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#16161D;text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.h{font-family:'Inter Tight',sans-serif;letter-spacing:-0.03em}
+.card{position:relative;overflow:hidden;border-radius:28px;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:6px}
+.navb{height:42px;padding:0 14px;border:0;border-radius:13px;background:transparent;color:#4B4B57;font-size:14px;font-weight:600;cursor:pointer}
+.wd{width:52px;height:60px;border:0;border-radius:16px;background:#FFFFFF;color:#16161D;font-size:12px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.wd b{font-size:18px}
+.blk{background:#FFFFFF;border-radius:24px;padding:12px 18px 16px;display:flex;flex-direction:column;min-width:0;box-sizing:border-box;position:relative}
+.bh{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.bh b{font-size:16px;flex:1}
+.grip{width:32px;height:32px;margin-left:-8px;border:0;border-radius:10px;background:transparent;color:#8A8A96;display:flex;align-items:center;justify-content:center;cursor:grab}
+.more{width:36px;height:36px;border:0;border-radius:11px;background:#F3F3F7;color:#16161D;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.r{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid #EEEEF2;font-size:15px}
+.r:first-of-type{border-top:0}
+.w{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+.pill{padding:3px 8px;border-radius:8px;font-size:12px;font-weight:800;white-space:nowrap}
+.mi{display:flex;align-items:center;gap:10px;height:42px;padding:0 12px;border:0;border-radius:11px;background:transparent;font-size:14px;font-weight:600;color:#16161D;cursor:pointer;width:100%;text-align:left}
+.mi:hover{background:#F3F3F7}
+.p-unused{width:76px;border:0;background:transparent;color:#4B4B57;font-size:12px;font-weight:600;cursor:pointer;border-radius:14px}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;box-shadow:0 0 0 10px #14141A;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.ring{position:absolute;right:-130px;top:-110px;width:340px;height:340px;border-radius:50%;border:54px solid rgba(255,255,255,.16);pointer-events:none}
+.top{padding:50px 18px 22px;position:relative}
+.bar{display:flex;align-items:center;gap:8px}
+.bell{width:44px;height:44px;border-radius:15px;border:0;background:rgba(255,255,255,.5);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cnt{position:absolute;top:5px;right:5px;min-width:18px;height:18px;border-radius:9px;background:#14141A;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.ava{width:44px;height:44px;border-radius:22px;background:#FFFFFF;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.ask{margin-top:14px;height:48px;border-radius:15px;background:rgba(255,255,255,.92);display:flex;align-items:center;gap:10px;padding:0 12px 0 6px}
+.tag{height:36px;padding:0 10px;border-radius:11px;background:#14141A;color:#FFFFFF;font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap}
+.cap{font-size:15px;font-weight:700;margin-top:20px}
+.big{font-size:104px;font-weight:900;letter-spacing:-0.06em;line-height:.88;margin-top:4px}
+.big span{font-size:36px;margin-left:8px;letter-spacing:-0.02em}
+.ttl{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-top:12px}
+.meta{font-size:14px;font-weight:600;margin-top:6px;line-height:1.45}
+.cta{margin-top:16px;width:100%;height:48px;border:0;border-radius:15px;background:#14141A;color:#FFFFFF;font-size:15px;font-weight:800;cursor:pointer}
+.sheet{flex:1;min-height:0;background:#FFFFFF;border-radius:28px 28px 0 0;padding:16px 18px 0;display:flex;flex-direction:column}
+.sh{display:flex;align-items:center;justify-content:space-between}
+.sh b{font-size:18px}
+.sh a{font-size:13px;padding:12px 0}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;font-size:15px;border-top:1px solid #ECECF0;font-variant-numeric:tabular-nums}
+.row.first{border-top:0}
+.t{width:46px;font-weight:700}
+.sub{font-size:13px;font-weight:500;color:#4B4B57;margin-top:2px}
+.st{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+.lnk{min-height:48px;padding:0 14px;border-radius:14px;background:#F2F2F5;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;box-sizing:border-box}
+.join{height:34px;padding:0 12px;margin:-2px 0;border:0;border-radius:10px;background:#E8EEFF;color:#1A3FA6;font-size:13px;font-weight:800;cursor:pointer}
+.tabs{height:84px;padding:8px 10px 24px;box-sizing:border-box;background:#FFFFFF;border-top:1px solid #ECECF0;display:flex;justify-content:space-around;flex-shrink:0}
+.tab{width:76px;min-height:52px;border:0;background:transparent;color:#4B4B57;font-size:12px;font-weight:600;cursor:pointer;border-radius:14px}
+.tab.on{background:#F2F2F5;color:#14141A;font-weight:800}
+</style>
+<style>
+.wk{flex:1;min-height:0;display:grid;grid-template-columns:62px repeat(5,minmax(0,1fr)) minmax(0,1.45fr);grid-template-rows:58px repeat(6,minmax(0,1fr));gap:8px}
+.dh{border-radius:16px;background:#FFFFFF;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;font-weight:600;color:#4B4B57}
+.dh b{font-size:20px;color:#16161D;letter-spacing:-0.02em}
+.dh .n{margin-left:auto;font-size:12px;font-weight:700;color:#4B4B57}
+.sl{display:flex;flex-direction:column;justify-content:center;font-size:11px;font-weight:600;color:#6A6A76;font-variant-numeric:tabular-nums}
+.sl b{font-size:14px;color:#16161D}
+.c{border-radius:16px;background:#FFFFFF;padding:9px 12px;display:flex;flex-direction:column;gap:1px;min-width:0;box-sizing:border-box;overflow:hidden}
+.c .tm{font-size:12px;font-weight:700;color:#4B4B57;font-variant-numeric:tabular-nums}
+.c b{font-size:14px;font-weight:800;line-height:1.2;letter-spacing:-0.01em}
+.c .rm{font-size:12px;color:#4B4B57;margin-top:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.e{border-radius:16px;background:rgba(255,255,255,.38)}
+.chg{color:#B42318;font-weight:800}
+.wbtn{width:44px;height:44px;border:0;border-radius:14px;background:#FFFFFF;color:#16161D;font-size:20px;font-weight:700;cursor:pointer;font-family:inherit}
+.nr{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid #EEEEF2;font-size:13px;line-height:1.35}
+.nr.f{border-top:0}
+.dot{width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:900}
+</style>
+
+</helmet>
+<div style="width: 1182px; height: 940px; box-sizing: border-box; padding: 48px; display: flex; align-items: center; background: #DADBE5; font-family: 'Inter Tight', system-ui, sans-serif; color: #16161D">
+<div style="width: 1086px; height: 844px; flex-shrink: 0; border-radius: 26px; background: #EFEFF4; box-shadow: 0 24px 60px rgba(22,22,29,.14); overflow: hidden; padding: 20px 28px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+  <header style="display: flex; align-items: center; gap: 14px">
+    <div class="h" style="font-size: 20px; font-weight: 900; margin-right: 4px">деканат<span style="color: #FF6B2C">*</span></div>
+    <label style="flex: 1; height: 48px; border-radius: 16px; background: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 14px 0 6px">
+      <span style="height: 36px; padding: 0 12px; border-radius: 12px; background: #16161D; color: #FFFFFF; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; white-space: nowrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>Помощник</span>
+      <input type="text" aria-label="Спросить помощника" placeholder="опишите, что нужно — оформлю" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 14px; color: #16161D">
+    </label>
+    <nav aria-label="Разделы" style="display: flex; gap: 2px; padding: 3px; border-radius: 16px; background: #FFFFFF">
+      <button type="button" class="navb">День</button>
+      <button type="button" class="navb" style="background: #16161D; color: #FFFFFF; font-weight: 700" aria-current="page">Неделя</button>
+      <button type="button" class="navb">Учёба</button>
+      <button type="button" class="navb">Документы</button>
+    </nav>
+    <button type="button" aria-label="Уведомления: 3 новых" style="width: 48px; height: 48px; border-radius: 16px; border: 0; background: #FFFFFF; color: #16161D; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg><span style="position: absolute; top: 7px; right: 7px; min-width: 18px; height: 18px; border-radius: 9px; background: #FF6B2C; color: #16161D; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">3</span></button>
+    <div style="width: 48px; height: 48px; border-radius: 24px; background: #FFC21A; font-weight: 800; display: flex; align-items: center; justify-content: center">АВ</div>
+  </header>
+  <div style="display: flex; align-items: flex-end; justify-content: space-between">
+    <h1 class="h" style="margin: 0; font-size: 36px; font-weight: 900; letter-spacing: -0.03em">Неделя — 18 пар</h1>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <button type="button" class="wbtn" aria-label="Предыдущая неделя">‹</button>
+      <div style="height: 44px; padding: 0 16px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; font-size: 14px; font-weight: 700">23 – 28 ноября</div>
+      <button type="button" class="wbtn" aria-label="Следующая неделя">›</button>
+    </div>
+  </div>
+<div class="wk">
+<div></div>
+<div class="dh" style="background: #16161D; color: #FFFFFF" aria-current="date">пн<b style="color: #FFFFFF">23</b><span class="n" style="color: #FFFFFF">сегодня</span></div>
+<div class="dh">вт<b>24</b><span class="n">4 пары</span></div>
+<div class="dh">ср<b>25</b><span class="n">3 пары</span></div>
+<div class="dh">чт<b>26</b><span class="n">6 пар</span></div>
+<div class="dh">пт<b>27</b><span class="n">2 пары</span></div>
+<div class="dh" style="background: transparent">сб<b style="color: #4B4B57">28</b><span class="n">пар нет</span></div>
+<div class="sl">1 пара<b>09:00</b></div>
+<article class="c" style="background: #E6E6EC"><span class="tm">09:00 · прошла</span><b><span style="color: #33333D">Базы данных</span></b><span class="rm">ауд. 305</span></article>
+<article class="c"><span class="tm">09:00</span><b>Матстат</b><span class="rm">ауд. 201</span></article>
+<div class="e" aria-hidden="true"></div>
+<article class="c"><span class="tm">09:00</span><b>Философия</b><span class="rm">семинар · 110</span></article>
+<article class="c"><span class="tm">09:00</span><b>Базы данных</b><span class="rm">ауд. 404</span></article>
+<aside style="grid-column: 7; grid-row: 2 / span 6; border-radius: 22px; background: #FFFFFF; padding: 16px 16px 14px; display: flex; flex-direction: column; min-height: 0">
+  <b class="h" style="font-size: 18px; font-weight: 900">На этой неделе</b>
+  <div style="font-size: 12px; color: #4B4B57; margin-top: 2px">что изменилось и что важно</div>
+  <div style="margin-top: 10px">
+    <div class="nr f"><span class="dot" style="background: #FDE3E0; color: #B42318">!</span><div><b>Веб-разработка</b> перенесена с пн на чт, 14:50</div></div>
+    <div class="nr"><span class="dot" style="background: #FDE3E0; color: #B42318">!</span><div><b>Машинное обучение</b> в пн — ауд. Б-214 вместо 412</div></div>
+    <div class="nr"><span class="dot" style="background: #FFE2D4; color: #16161D">◷</span><div><b>КТ по матстату</b> — ср, 10:45. Допуск есть</div></div>
+    <div class="nr"><span class="dot" style="background: #DDF3E8; color: #0B6B43">✓</span><div><b>Справка в военкомат</b> будет готова во вт</div></div>
+    <div class="nr"><span class="dot" style="background: #F3F3F7; color: #16161D">✎</span><div><b>Курсовая по БД</b> — сдать до вс, 29.11</div></div>
+  </div>
+  <a href="#" style="margin-top: auto; width: 100%; box-sizing: border-box; min-height: 44px; border-radius: 14px; background: #F3F3F7; display: flex; align-items: center; padding: 0 12px; font-size: 13px; gap: 8px; white-space: nowrap"><span style="flex: 1">В календарь телефона</span><span aria-hidden="true">→</span></a>
+</aside>
+<div class="sl">2 пара<b>10:45</b></div>
+<article class="c" style="background: #FF6B2C; box-shadow: 0 12px 26px rgba(255,107,44,.32)"><span class="tm"><span style="color: #16161D">через 10 мин</span></span><b>Машинное обучение</b><span class="rm"><b style="font-size: 12px">Б-214</b> · была 412</span></article>
+<article class="c"><span class="tm">10:45</span><b>Веб-разработка</b><span class="rm">ауд. 220</span></article>
+<article class="c"><span class="tm">10:45 · <span class="chg">КТ</span></span><b>Матстат</b><span class="rm">ауд. 203 · 20 баллов</span></article>
+<article class="c"><span class="tm">10:45</span><b>Машинное обучение</b><span class="rm">лекция · 101</span></article>
+<article class="c"><span class="tm">10:45</span><b>Английский</b><span class="rm">ауд. 118</span></article>
+<div class="sl">3 пара<b>13:00</b></div>
+<article class="c" style="background: #E9EFFF"><span class="tm"><span style="color: #1E44C4">13:00 · онлайн</span></span><b>Английский</b><span class="rm">Петрова Е. В.</span></article>
+<article class="c"><span class="tm">13:00</span><b>Философия</b><span class="rm">ауд. 110</span></article>
+<article class="c"><span class="tm">13:00</span><b>Базы данных</b><span class="rm">ауд. 404</span></article>
+<article class="c"><span class="tm">13:00</span><b>Матстат</b><span class="rm">практика · 203</span></article>
+<div class="e" aria-hidden="true"></div>
+<div class="sl">4 пара<b>14:50</b></div>
+<article class="c" style="background: transparent; border: 1.5px dashed #9A9AA6"><span class="tm"><s>14:50</s> · <span class="chg">перенос</span></span><b><span style="color: #4B4B57">Веб-разработка</span></b><span class="rm">теперь чт, 14:50</span></article>
+<article class="c"><span class="tm">14:50</span><b>Машинное обучение</b><span class="rm">лаб. 312</span></article>
+<article class="c"><span class="tm">14:50</span><b>Английский</b><span class="rm">ауд. 118</span></article>
+<article class="c"><span class="tm">14:50 · <span class="chg">перенос с пн</span></span><b>Веб-разработка</b><span class="rm">ауд. 220</span></article>
+<div class="e" aria-hidden="true"></div>
+<div class="sl">5 пара<b>16:35</b></div>
+<div class="e" aria-hidden="true"></div>
+<div class="e" aria-hidden="true"></div>
+<div class="e" aria-hidden="true"></div>
+<article class="c" style="background: #E9EFFF"><span class="tm"><span style="color: #1E44C4">16:35 · онлайн</span></span><b>Английский</b><span class="rm">Петрова Е. В.</span></article>
+<div class="e" aria-hidden="true"></div>
+<div class="sl">6 пара<b>18:20</b></div>
+<div class="e" aria-hidden="true"></div>
+<div class="e" aria-hidden="true"></div>
+<div class="e" aria-hidden="true"></div>
+<article class="c"><span class="tm">18:20</span><b>Консультация по курсовой</b><span class="rm">ауд. 404</span></article>
+<div class="e" aria-hidden="true"></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1182,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

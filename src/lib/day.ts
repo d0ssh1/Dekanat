@@ -2,7 +2,7 @@
  * Логика «что сейчас» для дня занятий. Чистые функции без сервера: их вызывает и живой отсчёт в браузере.
  */
 import type { Lesson } from '@/server/dal/schedule';
-import { addDays, dayOf, diffDays, hhmm, relativeIn, shortDate, wdShort } from './time';
+import { addDays, dayOf, diffDays, hhmm, plural, relativeIn, shortDate, wdShort } from './time';
 
 export type { Lesson };
 
@@ -74,7 +74,10 @@ export function bigCountdown(now: number, target: number, today: string): { valu
     const h = Math.floor(min / 60);
     return { value: String(h), unit: h === 1 ? 'час' : h < 5 ? 'часа' : 'часов' };
   }
-  if (d === 1) return { value: hhmm(new Date(target)), unit: 'завтра' };
+  if (d === 1 || min < 24 * 60) {
+    const h = Math.round(min / 60);
+    return { value: String(h), unit: plural(h, 'час', 'часа', 'часов') };
+  }
   return { value: String(d), unit: d < 5 ? 'дня' : 'дней' };
 }
 

@@ -7,6 +7,7 @@ import { admission, controlLabel, daysToSession, gpa } from '@/lib/grades';
 import { dayMonth, dayOf, daysWord, plural } from '@/lib/time';
 import { SEMESTER } from '@/lib/university';
 import { cn } from '@/lib/cn';
+import { SPAN12, fillSpans } from '@/lib/fill';
 import { HeroRing, PhoneSheet } from '@/components/shell/PhoneTop';
 import { ButtonLink } from '@/components/ui/Button';
 import { DeskCard } from '@/components/ui/desk';
@@ -37,17 +38,21 @@ export default async function StudyPage({ searchParams }: { searchParams: Promis
     .sort((a, b) => admission(a).left - admission(b).left)[0];
   const days = daysToSession(today, SEMESTER.sessionFrom);
   const sorted = [...courses].sort(
-    (a, b) => Number(admission(a).ok) - Number(admission(b).ok) || b.points / b.semMax - a.points / a.semMax,
+    (a, b) =>
+      Number(admission(a).ok) - Number(admission(b).ok) ||
+      admission(b).value / admission(b).max - admission(a).value / admission(a).max,
   );
   const summary = [
     `Допуск к экзаменам ${withAdmission} из ${examCourses.length}`,
     problem &&
-      `по ${problem.short} не хватает ${admission(problem).left} ${plural(admission(problem).left, 'балла', 'баллов', 'баллов')}`,
+      `${problem.subject}: не хватает ${admission(problem).left} ${plural(admission(problem).left, 'балла', 'баллов', 'баллов')}`,
     days > 0 ? `сессия через ${days} ${daysWord(days)}` : 'идёт сессия',
   ]
     .filter(Boolean)
     .join(' · ');
 
+  // Предметы раскладываются так, чтобы в последнем ряду не оставалось пустых мест.
+  const spans = fillSpans(sorted.length);
   return (
     <>
       {/* ---------- Телефон ---------- */}
@@ -67,7 +72,7 @@ export default async function StudyPage({ searchParams }: { searchParams: Promis
             {problem && (
               <StaggerItem className="mt-4">
                 <ButtonLink href={`/study/${problem.id}`} block>
-                  Что сделать для допуска по {problem.short}
+                  Как добрать баллы до допуска
                 </ButtonLink>
               </StaggerItem>
             )}
@@ -93,22 +98,20 @@ export default async function StudyPage({ searchParams }: { searchParams: Promis
         </h1>
         <Stagger className="grid grid-cols-[1.3fr_1fr] gap-3.5">
           <StaggerItem>
-            <DeskCard tone="accent" className="h-full min-h-[300px] p-[26px]">
+            <DeskCard tone="accent" className="h-full p-[26px]">
               <span
                 aria-hidden
                 className="absolute top-[-90px] right-[-80px] size-60 animate-breathe rounded-full bg-glass-20"
               />
-              <div className="relative text-[14px] font-bold">
-                Средний балл за {new Set(finals.map((f) => f.semester)).size} сессии
-              </div>
+              <div className="relative text-[14px] font-bold">Средний балл</div>
               <div className="relative text-[88px] leading-[.9] font-black tracking-[-0.05em]">
                 {avg !== null ? <CountUp value={avg} decimals={2} /> : '—'}
               </div>
-              <div className="relative mt-auto text-[15px] leading-[1.45] font-semibold">{summary}</div>
+              <div className="relative mt-3 text-[15px] leading-[1.45] font-semibold">{summary}</div>
               {problem && (
                 <div className="relative mt-4">
                   <ButtonLink href={`/study/${problem.id}`} size="md" className="h-[46px] px-5">
-                    Что сделать для допуска по {problem.short}
+                    Как добрать баллы до допуска
                   </ButtonLink>
                 </div>
               )}
@@ -140,11 +143,11 @@ export default async function StudyPage({ searchParams }: { searchParams: Promis
           </StaggerItem>
         </Stagger>
         <h2 className="m-0 mt-7 mb-3 text-[22px] font-black tracking-[-0.02em]">Предметы семестра</h2>
-        <Stagger className="grid grid-cols-3 gap-3.5" delay={0.15}>
-          {sorted.map((c) => {
+        <Stagger className="grid grid-cols-12 gap-3.5" delay={0.15}>
+          {sorted.map((c, i) => {
             const a = admission(c);
             return (
-              <StaggerItem key={c.id}>
+              <StaggerItem key={c.id} className={SPAN12[spans[i]!]}>
                 <Link
                   href={`/study/${c.id}`}
                   className="block h-full transition-transform hover:-translate-y-0.5"
@@ -163,25 +166,24 @@ export default async function StudyPage({ searchParams }: { searchParams: Promis
                           !a.ok && 'text-danger',
                         )}
                       >
-                        <CountUp value={c.points} />
+                        <CountUp value={a.value} />
                       </span>
-                      <span className="text-[14px] font-bold text-ink-2">из {c.semMax}</span>
+                      <span className="text-[14px] font-bold text-ink-2">из {a.max}</span>
                     </div>
-                    <Bar
-                      value={c.points}
-                      max={c.semMax}
-                      danger={!a.ok}
-                      mark={c.control === 'exam' ? a.need : undefined}
-                      className="mt-2"
-                    />
-                    <span className={cn('mt-2 text-[13px] font-bold', a.ok ? 'text-ok' : 'text-danger')}>
-                      {a.ok
-                        ? c.control === 'exam'
-                          ? 'допуск есть'
-                          : c.points >= 61
-                            ? 'зачёт набран'
-                            : `к зачёту ${c.points} из 61`
-                        : `до допуска ${a.left} ${plural(a.left, 'балл', 'балла', 'баллов')}`}
+                    <Bar value={a.value} max={a.max} danger={!a.ok} mark={a.need} className="mt-2" />
+                    <span
+                      className={cn(
+                        'mt-2 text-[13px] font-bold',
+                        !a.ok ? 'text-danger' : a.reached ? 'text-ok' : 'text-ink-2',
+                      )}
+                    >
+                      {!a.ok
+                        ? `до допуска ${a.left} ${plural(a.left, 'балл', 'балла', 'баллов')}`
+                        : a.reached
+                          ? c.control === 'exam'
+                            ? 'допуск есть'
+                            : 'зачёт набран'
+                          : `зачёт от ${a.need} · осталось ${a.left}`}
                     </span>
                   </DeskCard>
                 </Link>
@@ -205,18 +207,17 @@ function SubjectRow({ c, first }: { c: CourseSummary; first: boolean }) {
       className={cn('flex min-h-11 items-center gap-3 py-2.5 text-[15px]', !first && 'border-t border-line')}
     >
       <div className="min-w-0 flex-1">
-        <div className={cn(!a.ok && 'font-bold')}>{c.subject}</div>
+        <div>{c.subject}</div>
         <div className={cn('mt-0.5 text-[12px] font-semibold', a.ok ? 'text-ink-2' : 'text-danger')}>
           {controlLabel(c.control)}
-          {a.ok
-            ? `${c.finalOn ? ` · ${dayMonth(dayOf(c.finalOn))}` : ''}${c.control !== 'exam' ? (c.points >= 61 ? ' · зачёт набран' : ` · ${c.points} из 61 к зачёту`) : ''}`
-            : ` · нет допуска: ${c.points} из ${a.need}`}
+          {c.finalOn && ` · ${dayMonth(dayOf(c.finalOn))}`}
+          {` · ${!a.ok ? 'нет допуска, нужно' : c.control === 'exam' ? 'допуск от' : 'зачёт от'} ${a.need}`}
         </div>
-        <Bar value={c.points} max={c.semMax} danger={!a.ok} className="mt-1.5" />
+        <Bar value={a.value} max={a.max} danger={!a.ok} mark={a.need} className="mt-1.5" />
       </div>
       <span className={cn('text-[20px] font-extrabold whitespace-nowrap tabular', !a.ok && 'text-danger')}>
-        {!a.ok && '! '}
-        <CountUp value={c.points} />
+        <CountUp value={a.value} />
+        <span className="text-[13px] font-bold text-ink-2">/{a.max}</span>
       </span>
     </Link>
   );

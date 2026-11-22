@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { credentials, login } from './helpers';
+import { credentials, login, baseOrigin } from './helpers';
 
 test.describe('Вход и сессия', () => {
   test('без входа любая страница ведёт на вход и потом возвращает обратно', async ({ page }) => {
@@ -29,18 +29,28 @@ test.describe('Вход и сессия', () => {
     await page.getByLabel('Пароль', { exact: true }).fill('whatever');
     await page.getByRole('button', { name: 'Войти' }).click();
     await expect(page.locator('#login-error')).toContainText(
-      'Неверный логин или пароль. Осталось 4 попытки.',
+      'Неверный логин или пароль. Проверьте раскладку и Caps Lock.',
     );
   });
 
   test('после 5 неудач вход блокируется', async ({ page }) => {
     const fake = `brute-${Date.now()}`;
     await page.goto('/login');
-    const expected = ['Осталось 4', 'Осталось 3', 'Осталось 2', 'Осталось 1', 'Слишком много попыток'];
+    // Счётчик виден только на последних попытках.
+    const expected = [
+      'Проверьте раскладку',
+      'Проверьте раскладку',
+      'Ещё 2',
+      'Ещё 1',
+      'Слишком много попыток',
+    ];
     for (const [i, text] of expected.entries()) {
       await page.getByLabel('Логин или почта').fill(fake);
       await page.getByLabel('Пароль', { exact: true }).fill(`guess-${i}`);
-      await page.getByRole('button', { name: 'Войти' }).click();
+      await Promise.all([
+        page.waitForResponse((r) => r.request().method() === 'POST'),
+        page.getByRole('button', { name: 'Войти' }).click(),
+      ]);
       // Ждём ответ именно на эту попытку, иначе сброс формы сотрёт следующий ввод.
       await expect(page.locator('#login-error')).toContainText(text);
     }
@@ -65,9 +75,7 @@ test.describe('Вход и сессия', () => {
   });
 
   test('подделанная cookie не пускает', async ({ page, context }) => {
-    await context.addCookies([
-      { name: 'dekanat-session', value: 'forged-token-value', url: 'http://localhost:3000' },
-    ]);
+    await context.addCookies([{ name: 'dekanat-session', value: 'forged-token-value', url: baseOrigin() }]);
     await page.goto('/profile');
     await expect(page).toHaveURL(/\/login/);
   });
@@ -78,6 +86,6 @@ test.describe('Вход и сессия', () => {
     await page.getByLabel('Логин или почта').fill(l);
     await page.getByLabel('Пароль', { exact: true }).fill(password);
     await page.getByRole('button', { name: 'Войти' }).click();
-    await expect(page).toHaveURL('http://localhost:3000/');
+    await expect(page).toHaveURL(`${baseOrigin()}/`);
   });
 });

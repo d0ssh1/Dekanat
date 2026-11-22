@@ -17,7 +17,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
   const [shell, prefs] = await Promise.all([getShell(viewer), getPrefs(viewer)]);
   return (
     <div
-      className="relative flex min-h-dvh flex-col overflow-x-clip bg-hero lg:bg-desk-bg"
+      className="relative flex min-h-dvh flex-col overflow-x-clip bg-[linear-gradient(var(--hero)_0_45%,var(--surface)_45%)] lg:bg-desk-bg lg:bg-none"
       style={{ ['--hero' as string]: prefs.heroColor }}
     >
       <div className="mx-auto hidden w-full max-w-[1280px] px-7 pt-5 lg:block">

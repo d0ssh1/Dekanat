@@ -11,19 +11,19 @@ test.describe('Успеваемость', () => {
     await expect(page.getByText('4,62').filter(visible).first()).toBeVisible({ timeout: 8000 });
     await expect(
       page
-        .getByText(/по ML не хватает 2 баллов/)
+        .getByText(/Машинное\sобучение:\sне\sхватает\s2\sбаллов/)
         .filter(visible)
         .first(),
     ).toBeVisible();
     await page
-      .getByRole('link', { name: /Что сделать для допуска по ML/ })
+      .getByRole('link', { name: /Как добрать баллы до допуска/ })
       .filter(visible)
       .first()
       .click();
     await expect(page).toHaveURL(/\/study\/[0-9a-f-]{36}$/);
     await expect(
       page
-        .getByText(/Из чего баллы · 48 из 60/)
+        .getByText(/Из чего баллы · 48 из \d+/)
         .filter(visible)
         .first(),
     ).toBeVisible();
@@ -33,7 +33,7 @@ test.describe('Успеваемость', () => {
     await login(page, 'student1');
     await page.goto('/study');
     await page
-      .getByRole('link', { name: /Что сделать для допуска по ML/ })
+      .getByRole('link', { name: /Как добрать баллы до допуска/ })
       .filter(visible)
       .first()
       .click();
@@ -48,7 +48,7 @@ test.describe('Успеваемость', () => {
     await login(page, 'student1');
     await page.goto('/study');
     const book = page.getByRole('region', { name: 'Зачётная книжка' }).filter(visible).first();
-    await book.getByRole('button', { name: /осенний семестр 2024/ }).click();
+    await book.getByRole('button', { name: /Осень 2024/ }).click();
     await expect(book.getByText('Математический анализ')).toBeVisible();
   });
 

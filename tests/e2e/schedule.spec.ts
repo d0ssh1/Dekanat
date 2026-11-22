@@ -44,20 +44,37 @@ test.describe('Расписание', () => {
   test('насыщенный четверг: 6 пар, прошедшие свёрнуты', async ({ page, isMobile }) => {
     await page.goto(`/?now=${at(addDays(A, 3), '11:44')}`);
     if (isMobile) {
-      await expect(page.getByText(/2 пары прошли/)).toBeVisible();
-      await page.getByText(/2 пары прошли/).click();
+      await expect(
+        page
+          .getByText(/2 пары прошли/)
+          .filter(visible)
+          .first(),
+      ).toBeVisible();
+      await page
+        .getByText(/2 пары прошли/)
+        .filter(visible)
+        .first()
+        .click();
       await expect(page.getByText('Философия').filter(visible).first()).toBeVisible();
     } else {
       await expect(page.getByRole('heading', { name: 'Четверг — 6 пар' })).toBeVisible();
-      await expect(page.getByText('2 прошли')).toBeVisible();
+      // Все 6 пар — в одном ряду, прошедшие — отдельными серыми карточками.
+      await expect(page.getByText('прошла', { exact: true }).filter(visible)).toHaveCount(2);
     }
   });
 
   test('выходной: отсчёт до следующей пары и «Можно успеть»', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Выходной-экран — телефонный макет B2PhoneB');
     await page.goto(`/?now=${at(addDays(A, -1), '12:00')}`);
-    await expect(page.getByText(/Сегодня пар нет/)).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Можно успеть' })).toBeVisible();
+    await expect(
+      page
+        .getByText(/Сегодня пар нет/)
+        .filter({ visible: true })
+        .first(),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Можно успеть' }).filter({ visible: true }).first(),
+    ).toBeVisible();
   });
 
   test('неделя: 18 пар, изменения в строках, листание недель', async ({ page }) => {

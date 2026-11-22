@@ -5,6 +5,8 @@ import { STATUS_WORD } from '@/lib/requests';
 import { dayMonth, dayOf, hhmm } from '@/lib/time';
 import { cn } from '@/lib/cn';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
+import { DeskCard } from '@/components/ui/desk';
+import { plural } from '@/lib/time';
 
 export const metadata = { title: 'Заявки — сотрудник' };
 
@@ -27,11 +29,53 @@ export default async function StaffQueue({ searchParams }: { searchParams: Promi
   const counts = Object.fromEntries(
     TABS.map((t) => [t.key, all.filter((r) => (t.statuses as readonly string[]).includes(r.status)).length]),
   );
+  const toDo = (counts.sent ?? 0) + (counts.in_progress ?? 0);
+  const oldest = all
+    .filter((r) => r.status === 'sent' || r.status === 'in_progress')
+    .sort((a, b) => +new Date(a.updatedAt) - +new Date(b.updatedAt))[0];
   const rows = all.filter((r) => (tab.statuses as readonly string[]).includes(r.status));
 
   return (
     <>
       <h1 className="m-0 text-[36px] font-black tracking-[-0.03em]">Заявки студентов</h1>
+      <div className="mt-4 grid gap-3.5 md:grid-cols-[1.1fr_1fr]">
+        <DeskCard tone="accent" className="p-[22px]">
+          <span
+            aria-hidden
+            className="absolute top-[-90px] right-[-80px] size-56 animate-breathe rounded-full bg-glass-20"
+          />
+          <div className="relative text-[14px] font-bold">Ждут вас</div>
+          <div className="relative mt-1 text-[56px] leading-none font-black tracking-[-0.04em] tabular">
+            {toDo}
+          </div>
+          <div className="relative mt-2 text-[14px] leading-snug font-semibold">
+            {toDo === 0
+              ? 'Новых и незавершённых заявок нет.'
+              : `${counts.sent} ${plural(counts.sent ?? 0, 'новая', 'новые', 'новых')} и ${counts.in_progress} в работе.`}
+            {oldest && ` Самая давняя — №${oldest.number}, ${dayMonth(dayOf(oldest.updatedAt))}.`}
+          </div>
+          {oldest && (
+            <Link
+              href={`/staff/requests/${oldest.id}`}
+              className="relative mt-4 inline-flex h-11 items-center rounded-[13px] bg-ink-desk px-5 text-[14px] font-extrabold text-surface"
+            >
+              Разобрать №{oldest.number}
+            </Link>
+          )}
+        </DeskCard>
+        <section className="grid grid-cols-3 gap-2 rounded-[24px] bg-surface p-4">
+          {[
+            ['Ждут документ', counts.need_action],
+            ['Готовы к выдаче', counts.ready],
+            ['Закрыто', counts.closed],
+          ].map(([t, n]) => (
+            <div key={t} className="flex flex-col justify-between rounded-[16px] bg-desk-chip p-3.5">
+              <div className="text-[13px] leading-tight font-bold text-ink-2">{t}</div>
+              <div className="mt-3 text-[32px] leading-none font-black tracking-[-0.03em] tabular">{n}</div>
+            </div>
+          ))}
+        </section>
+      </div>
       <div className="mt-4 flex flex-wrap gap-1.5" role="tablist">
         {TABS.map((t) => (
           <Link

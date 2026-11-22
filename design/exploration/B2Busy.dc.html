@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R2 v5 — насыщенный день: 6 пар</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14141A;text-decoration:none;font-weight:700}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.card{position:relative;overflow:hidden;border-radius:28px;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.navb{height:42px;padding:0 14px;border:0;border-radius:13px;background:transparent;color:#4B4B57;font-size:14px;font-weight:600;cursor:pointer}
+.wd{width:52px;height:60px;border:0;border-radius:16px;background:#FFFFFF;color:#14141A;font-size:12px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.wd b{font-size:18px}
+.arr{width:44px;height:60px;border:0;border-radius:16px;background:transparent;color:#14141A;font-size:20px;font-weight:700;cursor:pointer}
+.blk{background:#FFFFFF;border-radius:24px;padding:12px 18px 14px;display:flex;flex-direction:column;min-width:0}
+.bh{display:flex;align-items:center;gap:6px;margin-bottom:2px}
+.bh b{font-size:16px;flex:1}
+.r{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid #EEEEF2;font-size:15px}
+.w{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+.t{font-size:13px;font-weight:700;color:#4B4B57}
+/* phone */
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;box-shadow:0 0 0 10px #14141A;overflow:hidden;position:relative;display:flex;flex-direction:column;background:#FF6A3D}
+.ring{position:absolute;right:-130px;top:-110px;width:340px;height:340px;border-radius:50%;border:54px solid rgba(255,255,255,.16);pointer-events:none}
+.top{padding:50px 18px 22px;position:relative}
+.bell{width:44px;height:44px;border-radius:15px;border:0;background:rgba(255,255,255,.5);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cnt{position:absolute;top:5px;right:5px;min-width:18px;height:18px;border-radius:9px;background:#14141A;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.sheet{flex:1;min-height:0;background:#FFFFFF;box-shadow:0 -8px 24px rgba(20,20,26,.08);position:relative;border-radius:28px 28px 0 0;padding:12px 18px 0;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;font-size:15px;border-top:1px solid #ECE6E2}
+.tm{width:46px;font-weight:700}
+.st{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+.join{height:34px;padding:0 12px;margin:-2px 0;border:0;border-radius:10px;background:#E8EEFF;color:#1A3FA6;font-size:13px;font-weight:800;cursor:pointer}
+.tab{width:72px;min-height:52px;border:0;background:transparent;color:#4B4B57;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+.tab .pi{width:56px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center}
+.tab.on{color:#14141A;font-weight:800;background:transparent}
+.tab.on .pi{background:#FFE2D4}
+.tab.on .pi svg{fill:#FFE2D4}
+.tabs{height:84px;padding:6px 10px 22px;box-sizing:border-box;background:#FFFFFF;border-top:1px solid #ECE6E2;display:flex;justify-content:space-around;flex-shrink:0;position:relative}
+.dnav{width:44px;height:44px;border:0;border-radius:13px;background:#F4F1EF;font-size:18px;font-weight:700;cursor:pointer;color:#14141A}
+</style>
+</helmet>
+<div style="width: 1620px; height: 940px; box-sizing: border-box; padding: 48px; display: flex; gap: 48px; align-items: center; background: #DADBE5; font-family: 'Inter Tight', system-ui, sans-serif; color: #14141A">
+
+<!-- ===== DESKTOP ===== -->
+<div style="width: 1086px; height: 844px; flex-shrink: 0; border-radius: 26px; background: #EFEFF4; box-shadow: 0 24px 60px rgba(20,20,26,.14); overflow: hidden; padding: 20px 28px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+  <header style="display: flex; align-items: center; gap: 14px">
+    <div style="font-size: 20px; font-weight: 900; letter-spacing: -0.03em; margin-right: 4px">деканат<span style="color: #FF6B2C">*</span></div>
+    <label style="flex: 1; height: 48px; border-radius: 16px; background: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 14px 0 6px">
+      <span style="height: 36px; padding: 0 12px; border-radius: 12px; background: #14141A; color: #FFFFFF; font-size: 13px; font-weight: 700; display: flex; align-items: center; white-space: nowrap">Помощник</span>
+      <input type="text" aria-label="Спросить помощника" placeholder="опишите, что нужно — оформлю" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 14px; color: #14141A">
+    </label>
+    <nav aria-label="Разделы" style="display: flex; gap: 2px; padding: 3px; border-radius: 16px; background: #FFFFFF"><button type="button" class="navb" style="background: #14141A; color: #FFFFFF; font-weight: 700">День</button><button type="button" class="navb">Неделя</button><button type="button" class="navb">Учёба</button><button type="button" class="navb">Документы</button></nav>
+    <button type="button" aria-label="Уведомления: 3 новых" style="width: 48px; height: 48px; border-radius: 16px; border: 0; background: #FFFFFF; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#14141A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg><span style="position: absolute; top: 7px; right: 7px; min-width: 18px; height: 18px; border-radius: 9px; background: #FF6B2C; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">3</span></button>
+    <div style="width: 48px; height: 48px; border-radius: 24px; background: #FFC21A; font-weight: 800; display: flex; align-items: center; justify-content: center">АВ</div>
+  </header>
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between">
+    <div><h1 style="margin: 0; font-size: 36px; font-weight: 900; letter-spacing: -0.03em">Четверг — 6 пар</h1></div>
+    <div style="display: flex; align-items: center; gap: 6px">
+      <button type="button" class="arr" aria-label="Предыдущая неделя">‹</button>
+      <button type="button" class="wd">пн<b>23</b></button>
+      <button type="button" class="wd">вт<b>24</b></button>
+      <button type="button" class="wd">ср<b>25</b></button>
+      <button type="button" class="wd" style="background: #14141A; color: #FFFFFF" aria-current="date">чт<b>26</b></button>
+      <button type="button" class="wd">пт<b>27</b></button>
+      <button type="button" class="wd" style="background: transparent; color: #4B4B57">сб<b>28</b></button>
+      <button type="button" class="arr" aria-label="Следующая неделя">›</button>
+    </div>
+  </div>
+
+  <!-- scrolling strip of classes -->
+  <div style="position: relative; height: 476px">
+    <div style="display: flex; gap: 14px; height: 100%; align-items: flex-end; overflow: hidden" role="list" aria-label="Пары дня, прокручиваются по горизонтали">
+      <article class="card" role="listitem" style="width: 132px; height: 410px; background: #E6E6EC">
+        <span class="t">2 прошли</span>
+        <div style="margin-top: auto; font-size: 14px; line-height: 1.5; color: #33333D"><b>09:00</b> Философия<br><b>10:45</b> ML · лекция</div>
+        <button type="button" style="margin-top: 8px; height: 40px; border: 0; border-radius: 12px; background: #FFFFFF; font-size: 13px; font-weight: 700; cursor: pointer; color: #14141A">Показать</button>
+      </article>
+      <article class="card" role="listitem" style="width: 360px; height: 476px; background: #FF6B2C; padding: 26px; box-shadow: 0 22px 44px rgba(255,107,44,.3)">
+        <div style="position: absolute; width: 240px; height: 240px; right: -80px; top: -90px; border-radius: 50%; background: rgba(255,255,255,.2)"></div>
+        <div style="font-size: 14px; font-weight: 700; position: relative">Следующая · через 10 мин</div>
+        <div style="font-size: 88px; font-weight: 900; letter-spacing: -0.05em; line-height: .9; position: relative">13:00</div>
+        <div style="margin-top: auto; position: relative">
+          <div style="font-size: 32px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.05">Матстат</div>
+          <div style="font-size: 14px; font-weight: 600; margin-top: 8px">Практика · <b>ауд. 203</b> · Орлова Н. С.</div>
+          <div style="display: flex; gap: 16px; align-items: center; margin-top: 14px"><button type="button" style="height: 46px; padding: 0 20px; border: 0; border-radius: 15px; background: #14141A; color: #FFFFFF; font-size: 14px; font-weight: 800; cursor: pointer">Схема этажа</button><a href="#" style="font-size: 14px">Материалы →</a></div>
+        </div>
+      </article>
+      <article class="card" role="listitem" style="width: 200px; height: 410px; background: #FFFFFF">
+        <span class="t">14:50</span>
+        <b style="font-size: 19px; font-weight: 800; letter-spacing: -0.02em">Веб-разработка</b>
+        <span style="font-size: 13px; color: #4B4B57">практика · ауд. 220</span>
+        <span style="margin-top: auto; font-size: 13px; font-weight: 700; color: #A8320F">перенесена с понедельника</span>
+      </article>
+      <article class="card" role="listitem" style="width: 200px; height: 410px; background: #E9EFFF">
+        <span class="t" style="color: #1E44C4">16:35 · онлайн</span>
+        <b style="font-size: 19px; font-weight: 800; letter-spacing: -0.02em">Английский язык</b>
+        <span style="font-size: 13px; color: #4B4B57">Петрова Е. В.</span>
+        <button type="button" style="margin-top: auto; height: 46px; border: 0; border-radius: 14px; background: #1E44C4; color: #FFFFFF; font-size: 14px; font-weight: 800; cursor: pointer">Подключиться</button>
+      </article>
+      <article class="card" role="listitem" style="width: 200px; height: 410px; background: #FFFFFF">
+        <span class="t">18:20</span>
+        <b style="font-size: 19px; font-weight: 800; letter-spacing: -0.02em">Консультация по курсовой</b>
+        <span style="font-size: 13px; color: #4B4B57">ауд. 404 · Смирнов И. А.</span>
+      </article>
+    </div>
+    <div aria-hidden="true" style="position: absolute; right: -28px; top: 0; bottom: 0; width: 120px; background: linear-gradient(90deg, rgba(239,239,244,0), #EFEFF4 70%)"></div>
+    <button type="button" aria-label="Показать следующие пары" style="position: absolute; right: 0; top: 50%; width: 52px; height: 52px; border-radius: 26px; border: 0; background: #14141A; color: #FFFFFF; font-size: 22px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 24px rgba(20,20,26,.25)">›</button>
+    <span style="position: absolute; right: 0; top: calc(50% + 60px); font-size: 12px; font-weight: 700; color: #4B4B57">ещё 1</span>
+  </div>
+
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+    <section class="blk"><div class="bh"><b>Документы</b><a href="#" style="font-size: 13px; color: #4B4B57">Все →</a></div><div class="r" style="border-top: 0"><span style="flex: 1">Справка в военкомат</span><span class="w" style="color: #14141A">готова · каб. 210</span></div><div class="r"><span style="flex: 1">Материальная помощь</span><span class="w">комиссия сегодня</span></div></section>
+    <section class="blk"><div class="bh"><b>Учёба</b><a href="#" style="font-size: 13px; color: #4B4B57">Все →</a></div><div class="r" style="border-top: 0"><span style="flex: 1">Курсовая по БД</span><span class="w" style="color: #14141A">через 4 дня</span></div><div class="r"><span style="flex: 1">КТ по матстату</span><span class="w">результат 18/20</span></div></section>
+    <section class="blk"><div class="bh"><b>Завтра, пятница</b><a href="#" style="font-size: 13px; color: #4B4B57">→</a></div><div class="r" style="border-top: 0"><b style="width: 44px">09:00</b><span style="flex: 1">Базы данных</span><span class="w">404</span></div><div class="r"><span style="flex: 1; color: #4B4B57">ещё 2 пары · до 14:35</span></div></section>
+  </div>
+</div>
+
+<!-- ===== PHONE ===== -->
+<div class="phone">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="top">
+    <div style="display: flex; align-items: center; gap: 8px"><b style="font-size: 17px; flex: 1">деканат</b><button type="button" class="bell" aria-label="Уведомления: 3 новых"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#14141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg><span class="cnt">3</span></button><div style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">АВ</div></div>
+    <div style="font-size: 15px; font-weight: 700; margin-top: 18px">До следующей пары</div>
+    <div style="font-size: 104px; font-weight: 900; letter-spacing: -0.06em; line-height: .88; margin-top: 4px">10<span style="font-size: 36px; margin-left: 8px; letter-spacing: -0.02em">мин</span></div>
+    <div style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-top: 12px">Матстат</div>
+    <div style="font-size: 14px; font-weight: 600; margin-top: 6px">13:00 · ауд. 203 · Орлова Н. С.</div>
+    <button type="button" style="margin-top: 16px; width: 100%; height: 48px; border: 0; border-radius: 15px; background: #14141A; color: #FFFFFF; font-size: 15px; font-weight: 800; cursor: pointer">Схема этажа</button>
+  </div>
+  <div class="sheet">
+    <div style="display: flex; align-items: center; gap: 8px"><button type="button" class="dnav" aria-label="Предыдущий день">‹</button><div style="flex: 1; text-align: center"><b style="font-size: 17px">Чт, 26 ноября</b><div style="font-size: 12px; color: #4B4B57; font-weight: 600">6 пар · листайте дни свайпом</div></div><button type="button" class="dnav" aria-label="Следующий день">›</button></div>
+    <button type="button" class="row" style="border-top: 0; margin-top: 6px; background: transparent; border-left: 0; border-right: 0; border-bottom: 0; width: 100%; text-align: left; cursor: pointer; color: #4B4B57; font-family: inherit"><span style="flex: 1; font-size: 14px; font-weight: 600">2 пары прошли · Философия, ML</span><span class="st">показать ▾</span></button>
+    <div class="row" data-now="1" style="background: #FFE2D4; border-radius: 12px; border-top-color: transparent; margin: 2px -10px; padding-left: 10px; padding-right: 10px; box-shadow: inset 4px 0 0 #FF6A3D"><b class="tm">13:00</b><span style="flex: 1; font-weight: 800">Матстат</span><span class="st" style="color: #9E4317; font-weight: 800">через 10 мин</span></div>
+    <div class="row"><b class="tm">14:50</b><span style="flex: 1">Веб-разработка</span><span class="st" style="color: #B42318">перенос с пн</span></div>
+    <div class="row"><b class="tm">16:35</b><span style="flex: 1">Английский <span style="font-size: 12px; font-weight: 700; color: #1A3FA6">онлайн</span></span><button type="button" class="join">Войти</button></div>
+    <div class="row"><b class="tm">18:20</b><span style="flex: 1">Консультация по курсовой</span><span class="st">404</span></div>
+    <div class="row"><b class="tm">20:00</b><span style="flex: 1">Физкультура · секция</span><span class="st">спортзал</span></div>
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 48px; background: linear-gradient(180deg, rgba(255,255,255,0), #FFFFFF)"></div>
+  </div>
+  <nav class="tabs" aria-label="Навигация"><button type="button" class="tab on" aria-current="page"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></span>Сегодня</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>Неделя</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M3 20h18"></path></svg></span>Учёба</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"></path><path d="M14 3v5h5"></path></svg></span>Документы</button></nav>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1620,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

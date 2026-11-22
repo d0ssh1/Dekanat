@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>N5 — документы и помощник</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.d{font-family:'Dela Gothic One',sans-serif;font-weight:400}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;background:#F1F1F4;box-shadow:0 0 0 10px #121217;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.t{border-radius:26px;padding:18px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px}
+.lb{font-size:12px;font-weight:800;letter-spacing:.02em}
+.f{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-top:1.5px solid rgba(18,18,23,.15)}
+</style>
+</helmet>
+<div style="width: 910px; height: 924px; box-sizing: border-box; padding: 40px; display: flex; gap: 50px; background: #DCDCE3; font-family: 'Manrope', system-ui, sans-serif; color: #121217">
+
+<div class="phone">
+  <div style="padding: 52px 16px 12px; background: #121217; color: #FFFFFF"><div class="lb" style="color: #C6F24E">СПРОСИ ДЕКАНАТ</div><div class="d" style="font-size: 24px; margin-top: 4px">Что нужно?</div></div>
+  <div style="flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+    <div style="align-self: flex-end; max-width: 80%; padding: 12px 14px; border-radius: 18px 18px 6px 18px; background: #121217; color: #FFFFFF; font-size: 15px; font-weight: 600">Нужна справка в военкомат</div>
+    <section class="t" style="background: #C6F24E">
+      <div class="lb">ГОТОВО К ОТПРАВКЕ</div>
+      <div class="d" style="font-size: 22px; line-height: 1.1">Справка об обучении</div>
+      <div>
+        <div class="f"><span>Кому</span><b>Военкомат</b></div>
+        <div class="f"><span>Студент</span><b>Воронцова А. Д., ПИ-31</b></div>
+        <div class="f"><span>Формат</span><b>Бумага + PDF с QR</b></div>
+      </div>
+      <button type="button" style="height: 48px; border: 0; border-radius: 15px; background: #121217; color: #FFFFFF; font-size: 15px; font-weight: 800; cursor: pointer">Отправить · готова завтра</button>
+    </section>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <section class="t" style="background: #FF8FC7; padding: 14px"><div class="lb">ОСНОВАНИЕ</div><div style="font-size: 13px; font-weight: 700">Положение о справках, п. 2.1</div></section>
+      <section class="t" style="background: #FFFFFF; padding: 14px"><div class="lb">ЕЩЁ</div><div style="font-size: 13px; font-weight: 700">Нужна вторая копия?</div></section>
+    </div>
+  </div>
+  <div style="padding: 10px 14px 28px">
+    <label style="height: 54px; border-radius: 18px; background: #121217; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px">
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Сообщение помощнику</span>
+      <input type="text" placeholder="Спроси ещё…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 15px; color: #FFFFFF">
+      <button type="button" aria-label="Отправить" style="width: 42px; height: 42px; border-radius: 14px; border: 0; background: #C6F24E; color: #121217; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+    </label>
+  </div>
+</div>
+
+<div class="phone">
+  <div style="padding: 52px 16px 0; display: flex; align-items: center; justify-content: space-between"><div class="d" style="font-size: 26px">Документы</div><button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 13px; background: #121217; color: #FFFFFF; font-size: 14px; font-weight: 800; cursor: pointer">+ Заказать</button></div>
+  <div style="padding: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <section class="t" style="grid-column: span 2; background: #FFD23F"><div style="display: flex; justify-content: space-between"><span class="lb">№1052 · В РАБОТЕ</span><span class="lb">ЗАВТРА</span></div><div class="d" style="font-size: 20px">Справка в военкомат</div><div style="display: flex; gap: 4px"><span style="flex: 1; height: 8px; border-radius: 4px; background: #121217"></span><span style="flex: 1; height: 8px; border-radius: 4px; background: #121217"></span><span style="flex: 1; height: 8px; border-radius: 4px; background: rgba(18,18,23,.2)"></span></div><div style="font-size: 13px; font-weight: 700">Готовит О. П. Иванова</div></section>
+    <section class="t" style="background: #3D6BFF; color: #FFFFFF; height: 170px"><span class="lb">№1047 · ГОТОВА</span><div class="d" style="font-size: 17px; line-height: 1.15">Справка об обучении</div><button type="button" style="margin-top: auto; height: 38px; border: 0; border-radius: 12px; background: #FFFFFF; color: #2347C9; font-size: 13px; font-weight: 800; cursor: pointer">PDF с QR</button></section>
+    <section class="t" style="background: #FFFFFF; height: 170px"><span class="lb" style="color: #5A5A66">№1031 · КОМИССИЯ</span><div class="d" style="font-size: 17px; line-height: 1.15">Мат. помощь</div><div class="d" style="font-size: 30px; margin-top: auto">2/4</div></section>
+    <section class="t" style="grid-column: span 2; background: #121217; color: #FFFFFF"><span class="lb" style="color: #C6F24E">ЗАКАЗАТЬ ЗА ОДНО КАСАНИЕ</span><div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="padding: 7px 11px; border-radius: 11px; background: #26262E; font-size: 13px; font-weight: 700">Справка об обучении</span><span style="padding: 7px 11px; border-radius: 11px; background: #26262E; font-size: 13px; font-weight: 700">Пересдача</span><span style="padding: 7px 11px; border-radius: 11px; background: #26262E; font-size: 13px; font-weight: 700">Академ</span><span style="padding: 7px 11px; border-radius: 11px; background: #26262E; font-size: 13px; font-weight: 700">Перевод</span></div></section>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":910,"height":924}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

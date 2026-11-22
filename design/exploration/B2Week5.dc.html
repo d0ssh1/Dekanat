@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R2 — неделя, компьютер</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+
+
+a{color:#14141A;text-decoration:none;font-weight:700}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;box-shadow:0 0 0 10px #14141A;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.ring{position:absolute;right:-130px;top:-110px;width:340px;height:340px;border-radius:50%;border:54px solid rgba(255,255,255,.16);pointer-events:none}
+.top{padding:50px 18px 22px;position:relative}
+.bar{display:flex;align-items:center;gap:8px}
+.bell{width:44px;height:44px;border-radius:15px;border:0;background:rgba(255,255,255,.5);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cnt{position:absolute;top:5px;right:5px;min-width:18px;height:18px;border-radius:9px;background:#14141A;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.ava{width:44px;height:44px;border-radius:22px;background:#FFFFFF;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.ask{margin-top:14px;height:48px;border-radius:15px;background:rgba(255,255,255,.92);display:flex;align-items:center;gap:10px;padding:0 12px 0 6px}
+.tag{height:36px;padding:0 10px;border-radius:11px;background:#14141A;color:#FFFFFF;font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap}
+.cap{font-size:15px;font-weight:700;margin-top:20px}
+.big{font-size:104px;font-weight:900;letter-spacing:-0.06em;line-height:.88;margin-top:4px}
+.big span{font-size:36px;margin-left:8px;letter-spacing:-0.02em}
+.ttl{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-top:12px}
+.meta{font-size:14px;font-weight:600;margin-top:6px;line-height:1.45}
+.cta{margin-top:16px;width:100%;height:48px;border:0;border-radius:15px;background:#14141A;color:#FFFFFF;font-size:15px;font-weight:800;cursor:pointer}
+.sheet{flex:1;min-height:0;background:#FFFFFF;box-shadow:0 -8px 24px rgba(20,20,26,.08);position:relative;border-radius:28px 28px 0 0;padding:16px 18px 0;display:flex;flex-direction:column}
+.sh{display:flex;align-items:center;justify-content:space-between}
+.sh b{font-size:18px}
+.sh a{font-size:13px;padding:12px 0}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;font-size:15px;border-top:1px solid #ECE6E2;font-variant-numeric:tabular-nums}
+.row.first{border-top:0}
+.t{width:46px;font-weight:700}
+.sub{font-size:13px;font-weight:500;color:#4B4B57;margin-top:2px}
+.st{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+.lnk{min-height:48px;padding:0 14px;border-radius:14px;background:#F4F1EF;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;box-sizing:border-box}
+.join{height:34px;padding:0 12px;margin:-2px 0;border:0;border-radius:10px;background:#E8EEFF;color:#1A3FA6;font-size:13px;font-weight:800;cursor:pointer}
+.tab{width:72px;min-height:52px;border:0;background:transparent;color:#4B4B57;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+.tab .pi{width:56px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center}
+.tab.on{color:#14141A;font-weight:800;background:transparent}
+.tab.on .pi{background:#FFE2D4}
+.tab.on .pi svg{fill:#FFE2D4}
+.tabs{height:84px;padding:6px 10px 22px;box-sizing:border-box;background:#FFFFFF;border-top:1px solid #ECE6E2;display:flex;justify-content:space-around;flex-shrink:0}
+.lbl{font-size:13px;font-weight:600;color:#4B4B57;margin:0 0 8px}
+
+.d{width:1086px;height:844px;flex-shrink:0;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 60px rgba(20,20,26,.16)}
+.dring{position:absolute;right:-170px;top:-230px;width:640px;height:640px;border-radius:50%;border:92px solid rgba(255,255,255,.16);pointer-events:none}
+.dhd{display:flex;align-items:center;gap:14px;padding:18px 28px 0;position:relative}
+.dnb{height:42px;padding:0 14px;border:0;border-radius:13px;background:transparent;color:#14141A;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.dnb.on{background:rgba(255,255,255,.6);font-weight:800}
+.dib{width:46px;height:46px;border-radius:15px;border:0;background:rgba(255,255,255,.5);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#14141A}
+.dhero{display:flex;align-items:flex-end;gap:44px;padding:24px 28px 34px;position:relative}
+.dsheet{flex:1;min-height:0;background:#FFFFFF;border-radius:30px 30px 0 0;box-shadow:0 -8px 24px rgba(20,20,26,.08);padding:20px 28px 22px;display:flex;flex-direction:column;gap:16px;position:relative}
+.wd{width:50px;height:56px;border:0;border-radius:15px;background:#F4F1EF;color:#14141A;font-size:12px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:inherit}
+.wd b{font-size:17px}
+.warr{width:44px;height:56px;border:0;border-radius:15px;background:transparent;font-size:20px;font-weight:700;cursor:pointer;color:#14141A;font-family:inherit}
+.pc{border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:4px;box-sizing:border-box;background:#F4F1EF;min-width:0}
+.pc .tt{font-size:13px;font-weight:700;color:#4B4B57;font-variant-numeric:tabular-nums}
+.pc b{font-size:16px;font-weight:800;line-height:1.2}
+.pc .mm{font-size:13px;color:#4B4B57}
+.db{border:1.5px solid #ECE6E2;border-radius:22px;padding:12px 16px;display:flex;flex-direction:column;min-width:0}
+.dbh{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.dbh b{font-size:16px}
+.dbh a{font-size:13px;color:#4B4B57;padding:10px 0}
+.dr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #ECE6E2;font-size:14px}
+.dr.f{border-top:0}
+.dw{font-size:13px;font-weight:700;color:#4B4B57;white-space:nowrap}
+
+</style>
+</helmet>
+<div style="--hero: {{hero}}; width: 1182px; height: 940px; box-sizing: border-box; padding: 48px; display: flex; gap: 48px; align-items: center; background: #E9E4E0; font-family: 'Inter Tight', system-ui, sans-serif; color: #14141A">
+<div class="d" style="background: {{hero}}">
+  <div class="dring" aria-hidden="true"></div>
+  <header class="dhd">
+    <div style="font-size: 20px; font-weight: 900; letter-spacing: -0.03em; margin-right: 6px">деканат</div>
+    <nav aria-label="Разделы" style="display: flex; gap: 2px"><button type="button" class="dnb">День</button><button type="button" class="dnb on" aria-current="page">Неделя</button><button type="button" class="dnb">Учёба</button><button type="button" class="dnb">Документы</button></nav>
+    <label style="flex: 1; height: 46px; border-radius: 15px; background: rgba(255,255,255,.92); display: flex; align-items: center; gap: 10px; padding: 0 14px 0 6px">
+      <span style="height: 34px; padding: 0 11px; border-radius: 11px; background: #14141A; color: #FFFFFF; font-size: 13px; font-weight: 700; display: flex; align-items: center; white-space: nowrap">Помощник</span>
+      <input type="text" aria-label="Спросить помощника" placeholder="опишите, что нужно — оформлю" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 14px; color: #14141A; font-family: inherit">
+    </label>
+    <button type="button" class="dib" aria-label="Уведомления: 3 новых"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg><span style="position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; border-radius: 9px; background: #14141A; color: #FFFFFF; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">3</span></button>
+    <div style="width: 46px; height: 46px; border-radius: 23px; background: #FFFFFF; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">АВ</div>
+  </header>
+  <section class="dhero" style="padding-bottom: 30px">
+    <div>
+      <div style="font-size: 17px; font-weight: 700">Неделя 12 · 23–28 ноября</div>
+      <div style="font-size: 130px; font-weight: 900; letter-spacing: -0.06em; line-height: .84; margin-top: 8px">18<span style="font-size: 46px; letter-spacing: -0.02em; margin-left: 10px">пар</span></div>
+    </div>
+    <div style="flex: 1; min-width: 0; padding-bottom: 4px">
+      <div style="font-size: 16px; font-weight: 600; line-height: 1.5">2 изменения: ML в Б-214, веб-разработка → чт.<br>КТ по матстату в среду. Суббота свободна.</div>
+      <div style="display: flex; gap: 10px; margin-top: 16px"><button type="button" style="height: 48px; padding: 0 18px; border: 0; border-radius: 15px; background: #14141A; color: #FFFFFF; font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit">‹ Прошлая неделя</button><button type="button" style="height: 48px; padding: 0 18px; border: 0; border-radius: 15px; background: rgba(255,255,255,.6); color: #14141A; font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit">Следующая ›</button><button type="button" style="height: 48px; padding: 0 18px; border: 0; border-radius: 15px; background: rgba(255,255,255,.6); color: #14141A; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit">В календарь .ics</button></div>
+    </div>
+  </section>
+  <div class="dsheet" style="flex-direction: row; gap: 10px; padding-top: 18px">
+    <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0"><div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 10px; border-radius: 12px; background: #14141A; color: #FFFFFF"><b style="font-size: 15px">Пн 23</b><span style="font-size: 12px; font-weight: 700; color: #D6D0CB">сегодня · 4</span></div><div style="border-radius: 14px; padding: 9px 10px; background: #F4F1EF; color: #4B4B57; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">09:00</b><div style="font-weight: 700; font-size: 14px">Базы данных</div><div style="color: #4B4B57">305 · прошла</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFE2D4; box-shadow: inset 4px 0 0 {{hero}}; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">10:45 · через 10 мин</b><div style="font-weight: 700; font-size: 14px">Маш. обучение</div><div style="color: #4B4B57">Б-214 · изменено</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #E9EFFF; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">13:00</b><div style="font-weight: 700; font-size: 14px">Английский</div><div style="color: #4B4B57">онлайн</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px dashed #9A9AA6; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums"><s>14:50</s></b><div style="font-weight: 700; font-size: 14px">Веб-разработка</div><div style="color: #4B4B57"><span style="color: #B42318">→ чт</span></div></div></div><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0"><div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 10px; border-radius: 12px; "><b style="font-size: 15px">Вт 24</b><span style="font-size: 12px; font-weight: 700; color: #4B4B57">4 пары</span></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">09:00</b><div style="font-weight: 700; font-size: 14px">Матстат</div><div style="color: #4B4B57">201</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">10:45</b><div style="font-weight: 700; font-size: 14px">Веб-разработка</div><div style="color: #4B4B57">220</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">13:00</b><div style="font-weight: 700; font-size: 14px">Базы данных</div><div style="color: #4B4B57">лаб. 404</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">14:50</b><div style="font-weight: 700; font-size: 14px">Философия</div><div style="color: #4B4B57">101</div></div></div><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0"><div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 10px; border-radius: 12px; "><b style="font-size: 15px">Ср 25</b><span style="font-size: 12px; font-weight: 700; color: #4B4B57">2 пары</span></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #14141A; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">10:45</b><div style="font-weight: 700; font-size: 14px">КТ · матстат</div><div style="color: #4B4B57">201 · контрольная</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">13:00</b><div style="font-weight: 700; font-size: 14px">Физкультура</div><div style="color: #4B4B57">спортзал</div></div></div><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0"><div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 10px; border-radius: 12px; "><b style="font-size: 15px">Чт 26</b><span style="font-size: 12px; font-weight: 700; color: #4B4B57">4 пары</span></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">09:00</b><div style="font-weight: 700; font-size: 14px">Философия</div><div style="color: #4B4B57">семинар · 110</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">10:45</b><div style="font-weight: 700; font-size: 14px">Маш. обучение</div><div style="color: #4B4B57">лекция · 101</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">13:00</b><div style="font-weight: 700; font-size: 14px">Матстат</div><div style="color: #4B4B57">203</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">14:50</b><div style="font-weight: 700; font-size: 14px">Веб-разработка</div><div style="color: #4B4B57">220 · <span style="color: #B42318">перенос</span></div></div></div><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0"><div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 10px; border-radius: 12px; "><b style="font-size: 15px">Пт 27</b><span style="font-size: 12px; font-weight: 700; color: #4B4B57">3 пары</span></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">09:00</b><div style="font-weight: 700; font-size: 14px">Базы данных</div><div style="color: #4B4B57">лаб. 404</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">10:45</b><div style="font-weight: 700; font-size: 14px">Английский</div><div style="color: #4B4B57">118</div></div><div style="border-radius: 14px; padding: 9px 10px; background: #FFFFFF; border: 1.5px solid #ECE6E2; font-size: 13px; line-height: 1.3"><b style="font-variant-numeric: tabular-nums">13:00</b><div style="font-weight: 700; font-size: 14px">Маш. обучение</div><div style="color: #4B4B57">практика · 412</div></div></div><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0"><div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 10px; border-radius: 12px; "><b style="font-size: 15px">Сб 28</b><span style="font-size: 12px; font-weight: 700; color: #4B4B57">—</span></div><div style="border-radius: 14px; border: 1.5px dashed #D6D0CB; padding: 14px 10px; font-size: 13px; color: #4B4B57; text-align: center">Пар нет</div></div>
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"hero":{"editor":"color","default":"#FF6A3D","options":["#FF6A3D","#C6F24E","#7CC4FF","#FF8FC7","#FFC93C"]},"$preview":{"width":1182,"height":940}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { hero: this.props.hero ?? '#FF6A3D' };
+  }
+}
+</script>
+</body>
+</html>

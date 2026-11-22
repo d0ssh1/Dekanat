@@ -99,13 +99,15 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
         <div className="relative px-[18px] pt-[calc(var(--safe-top)+14px)] pb-[22px]">
           <div className="flex items-center gap-2.5">
             <h1 className="m-0 flex-1 text-[17px] font-bold">Документы</h1>
-            <a
-              href="#archive"
-              aria-label="Архив заявок"
-              className="flex size-11 items-center justify-center rounded-[15px] bg-glass-50"
-            >
-              <IconTileless />
-            </a>
+            {archive.length > 0 && (
+              <a
+                href="#archive"
+                className="flex h-11 items-center gap-2 rounded-[15px] bg-glass-50 px-3 text-[13px] font-extrabold"
+              >
+                <IconTileless />
+                Архив · {archive.length}
+              </a>
+            )}
           </div>
           {hero}
         </div>
@@ -126,7 +128,7 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
             href="/assistant?q=нужна справка"
             className="mt-3 flex min-h-12 items-center gap-2.5 rounded-[14px] bg-surface-2 px-3.5 text-[14px] font-bold"
           >
-            <span className="flex-1">Заказать — опишите помощнику, что нужно</span>
+            <span className="flex-1">Не знаете, какая справка? Спросите помощника</span>
             <span aria-hidden>→</span>
           </Link>
           <h2 className="m-0 mt-6 text-[18px] font-bold">Заказать</h2>
@@ -161,7 +163,7 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
       <div className="hidden lg:block">
         <div className="mb-[18px] flex items-end justify-between">
           <h1 className="m-0 text-[36px] font-black tracking-[-0.03em]">Документы</h1>
-          <ButtonLink href="/documents/new" size="md" className="h-11">
+          <ButtonLink href="/documents/new" size="md" variant="white" className="h-11">
             Заказать справку
           </ButtonLink>
         </div>
@@ -201,9 +203,11 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
             ))}
           </div>
         </section>
-        <section className="mt-3.5 rounded-[24px] bg-surface px-5 py-4">
-          <Archive items={archive} today={today} desk />
-        </section>
+        {archive.length > 0 && (
+          <section className="mt-3.5 rounded-[24px] bg-surface px-5 py-4">
+            <Archive items={archive} today={today} desk />
+          </section>
+        )}
       </div>
     </>
   );

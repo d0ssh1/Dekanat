@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R1 v3 — документы и помощник</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14141A;font-weight:800;text-decoration:none}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;box-shadow:0 0 0 10px #14141A;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.chk{display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #ECECF0;font-size:14px}
+.tk{width:22px;height:22px;border-radius:7px;background:#14141A;color:#FFFFFF;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.src{font-size:12px;color:#4B4B57;white-space:nowrap}
+.st{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:700;width:62px;text-align:center;position:relative}
+.st i{width:18px;height:18px;border-radius:9px;display:block}
+.q{height:54px;border:0;border-radius:16px;background:#F2F2F5;font-size:14px;font-weight:700;text-align:left;padding:0 14px;cursor:pointer;color:#14141A}
+.navt{width:72px;border:0;background:transparent;color:#4B4B57;font-size:12px;font-weight:600;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 910px; height: 924px; box-sizing: border-box; padding: 40px; display: flex; gap: 50px; background: #E2E2E8; font-family: 'Inter Tight', system-ui, sans-serif; color: #14141A">
+
+<!-- ===== ASSISTANT ===== -->
+<div class="phone" style="background: #F4F4F7">
+  <div style="padding: 52px 18px 16px; background: #FF6A3D">
+    <div style="display: flex; align-items: center; gap: 10px"><button type="button" aria-label="Назад" style="width: 44px; height: 44px; border: 0; border-radius: 14px; background: rgba(255,255,255,.6); cursor: pointer; display: flex; align-items: center; justify-content: center"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#14141A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg></button><div><div style="font-size: 20px; font-weight: 900; letter-spacing: -0.02em">Помощник</div><div style="font-size: 12px; font-weight: 600">видит только ваши данные</div></div></div>
+  </div>
+  <div style="flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: flex-end; max-width: 80%; padding: 12px 14px; border-radius: 18px 18px 6px 18px; background: #14141A; color: #FFFFFF; font-size: 15px">Нужна справка в военкомат</div>
+    <div style="font-size: 15px; line-height: 1.45">Собрала заявку. Вот что взяла и откуда — проверьте:</div>
+    <div style="background: #FFFFFF; border-radius: 22px; overflow: hidden">
+      <div style="background: #FF6A3D; padding: 12px 16px"><div style="font-size: 12px; font-weight: 800">ЧЕРНОВИК ЗАЯВКИ</div><div style="font-size: 19px; font-weight: 900; margin-top: 2px">Справка об обучении</div></div>
+      <div style="padding: 2px 16px 14px">
+        <div class="chk" style="border-top: 0"><span class="tk">✓</span><span style="flex: 1">Воронцова А. Д., ПИ-31</span><span class="src">из профиля</span></div>
+        <div class="chk"><span class="tk">✓</span><span style="flex: 1">Форма для военкомата</span><span class="src">ф. 26</span></div>
+        <div class="chk"><span class="tk">✓</span><span style="flex: 1">Бумажная + PDF с QR</span><span class="src">обычно так</span></div>
+        <div class="chk"><span class="tk" style="background: #FF6A3D; color: #14141A">◷</span><span style="flex: 1"><b>Готова завтра, 24.11</b></span></div>
+        <div style="display: flex; gap: 8px; margin-top: 8px">
+          <button type="button" style="flex: 1; height: 48px; border: 0; border-radius: 15px; background: #14141A; color: #FFFFFF; font-size: 15px; font-weight: 800; cursor: pointer">Отправить</button>
+          <button type="button" style="height: 48px; padding: 0 16px; border: 1.5px solid #14141A; border-radius: 15px; background: #FFFFFF; color: #14141A; font-size: 14px; font-weight: 800; cursor: pointer">Изменить</button>
+        </div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #4B4B57">Основание: Положение о справках, п. 2.1 (вымышленное)</div>
+  </div>
+  <div style="padding: 10px 16px 28px">
+    <label style="height: 54px; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px; box-shadow: 0 6px 18px rgba(20,20,26,.08)">
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Сообщение помощнику</span>
+      <input type="text" placeholder="Спросить ещё…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 15px; color: #14141A">
+      <button type="button" aria-label="Отправить" style="width: 42px; height: 42px; border-radius: 14px; border: 0; background: #14141A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+    </label>
+  </div>
+</div>
+
+<!-- ===== DOCUMENTS ===== -->
+<div class="phone" style="background: #FFFFFF">
+  <div style="padding: 52px 18px 0"><div style="font-size: 30px; font-weight: 900; letter-spacing: -0.03em">Документы</div><div style="font-size: 13px; color: #4B4B57">3 заявки · 1 готова</div></div>
+  <div style="flex: 1; padding: 14px 16px 0; display: flex; flex-direction: column; gap: 10px">
+    <div style="border-radius: 24px; background: #FF6A3D; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 800"><span>№1052 · СЕГОДНЯ 10:31</span><span>ГОТОВА ЗАВТРА</span></div>
+      <div style="font-size: 19px; font-weight: 900">Справка в военкомат</div>
+      <div style="position: relative; display: flex; justify-content: space-between">
+        <div style="position: absolute; left: 31px; right: 31px; top: 8px; height: 3px; background: rgba(20,20,26,.2)"></div>
+        <div style="position: absolute; left: 31px; width: 46%; top: 8px; height: 3px; background: #14141A"></div>
+        <div class="st"><i style="background: #14141A"></i>подана</div>
+        <div class="st"><i style="background: #14141A"></i>принята</div>
+        <div class="st"><i style="background: #FFFFFF; border: 4px solid #14141A; box-sizing: border-box"></i>готовится</div>
+        <div class="st"><i style="background: rgba(255,255,255,.6)"></i>каб. 210</div>
+      </div>
+      <div style="font-size: 13px; font-weight: 600">Ведёт О. П. Иванова · <a href="#">написать</a></div>
+    </div>
+    <div style="border-radius: 20px; background: #F2F2F5; padding: 14px 16px; display: flex; align-items: center; gap: 12px">
+      <div style="flex: 1"><div style="font-size: 12px; font-weight: 800; color: #0B6B43">№1047 · ГОТОВА</div><div style="font-size: 16px; font-weight: 800">Справка об обучении</div><div style="font-size: 12px; color: #4B4B57">PDF с QR или каб. 210</div></div>
+      <button type="button" style="height: 44px; padding: 0 16px; border: 0; border-radius: 14px; background: #14141A; color: #FFFFFF; font-size: 14px; font-weight: 800; cursor: pointer">PDF</button>
+    </div>
+    <div style="border-radius: 20px; background: #F2F2F5; padding: 14px 16px; display: flex; align-items: center; gap: 12px">
+      <div style="flex: 1"><div style="font-size: 12px; font-weight: 800; color: #4B4B57">№1031 · НА РАССМОТРЕНИИ</div><div style="font-size: 16px; font-weight: 800">Материальная помощь</div><div style="font-size: 12px; color: #4B4B57">комиссия 26 ноября</div></div>
+      <span style="font-size: 20px; font-weight: 900">2/4</span>
+    </div>
+    <div style="font-size: 15px; font-weight: 900; margin-top: 4px">Заказать</div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <button type="button" class="q">Справка об обучении</button><button type="button" class="q">Пересдача</button>
+      <button type="button" class="q">Академ. отпуск</button><button type="button" class="q">Ещё 9 видов</button>
+    </div>
+  </div>
+  <nav aria-label="Навигация" style="height: 84px; padding: 8px 10px 24px; box-sizing: border-box; background: #FFFFFF; border-top: 1px solid #ECECF0; display: flex; justify-content: space-around">
+    <button type="button" class="navt">Сегодня</button><button type="button" class="navt">Неделя</button><button type="button" class="navt">Учёба</button><button type="button" class="navt" style="width: 84px; border-radius: 14px; background: #14141A; color: #FFFFFF; font-weight: 800">Документы</button>
+  </nav>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"hero":{"editor":"color","default":"#FF6A3D","options":["#FF6A3D","#C6F24E","#7CC4FF","#FF8FC7","#FFC93C"]},"$preview":{"width":910,"height":924}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { hero: this.props.hero ?? '#FF6A3D' };
+  }
+}
+</script>
+</body>
+</html>

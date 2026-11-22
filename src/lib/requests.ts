@@ -39,7 +39,7 @@ export function listLine(
   switch (r.status) {
     case 'need_action':
       return {
-        text: `! Нужен документ от вас${r.actionDueOn ? ` · до ${r.actionDueOn.slice(8)}.${r.actionDueOn.slice(5, 7)}` : ''}`,
+        text: `Нужен документ от вас${r.actionDueOn ? ` · до ${r.actionDueOn.slice(8)}.${r.actionDueOn.slice(5, 7)}` : ''}`,
         tone: 'danger',
       };
     case 'ready':
@@ -55,7 +55,10 @@ export function listLine(
           tone: 'muted',
         };
       }
-      return { text: `Принята · точной даты пока нет, ${r.etaText}`, tone: 'muted' };
+      return {
+        text: `Принята · точной даты пока нет, ${r.etaText.replace(/ (дня|дней|день)/, ' $1')}`,
+        tone: 'muted',
+      };
     case 'sent':
       return { text: `Отправлена · ${r.etaText}`, tone: 'muted' };
     case 'issued':
@@ -116,10 +119,13 @@ export function steps(r: RequestDetail): Step[] {
     });
   }
   if (isAid) {
+    // Комиссия заседает по четвергам — показываем ближайшую дату, а не «раз в две недели».
+    let c = addDays(dayOf(new Date().toISOString()), 1);
+    while (weekday(c) !== 4) c = addDays(c, 1);
     list.push({
       key: 'commission',
       title: 'Комиссия',
-      note: 'ближайшее заседание — раз в две недели',
+      note: `ближайшее заседание — ${dayMonth(c)}`,
       state: pos >= 3 ? 'done' : 'todo',
     });
     list.push({

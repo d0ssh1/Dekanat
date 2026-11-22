@@ -24,6 +24,8 @@ type WeekProps = {
   notes: WeekNote[];
   summary: string;
   serverNow: number;
+  /** Контрольные точки недели: отмечаются «КТ» прямо в строке пары. */
+  marks: { courseId: string; day: string }[];
 };
 
 const href = (monday: string, today: string) => (monday === mondayOf(today) ? '/week' : `/week?w=${monday}`);
@@ -99,14 +101,18 @@ export function PhoneWeek(p: WeekProps) {
                   <h2
                     className={cn(
                       'm-0 flex items-baseline justify-between text-[14px] font-extrabold',
-                      di > 0 && 'mt-3 border-t-2 border-ink pt-2.5',
+                      di > 0 && 'mt-4 rounded-[10px] bg-surface-2 px-2.5 py-2',
+                      di === 0 && 'px-2.5 py-2 rounded-[10px] bg-surface-2',
                     )}
                   >
                     <span>
                       {cap(wdShort(d))}, {dayNum(d)}
                       {isToday && ' · сегодня'}
                     </span>
-                    <span className="text-[12px] font-bold text-ink-2">{act ? pairs(act) : 'пар нет'}</span>
+                    <span className="text-[12px] font-bold text-ink-2">
+                      {act ? pairs(act) : 'пар нет'}
+                      {p.marks.some((k) => k.day === d) && <b className="text-hero-ink"> · КТ</b>}
+                    </span>
                   </h2>
                   {ls.map((l, i) => (
                     <PhoneWeekRow
@@ -115,6 +121,7 @@ export function PhoneWeek(p: WeekProps) {
                       first={i === 0}
                       focus={l.id === focusId}
                       past={Date.parse(l.endsAt) < now}
+                      kt={p.marks.some((k) => k.day === d && k.courseId === l.courseId) && isActive(l)}
                     />
                   ))}
                 </section>
@@ -122,9 +129,7 @@ export function PhoneWeek(p: WeekProps) {
             })}
           </m.div>
         </AnimatePresence>
-        <p className="m-0 mt-4 mb-2 text-center text-[12px] font-semibold text-ink-2">
-          Недели листаются стрелками или свайпом
-        </p>
+        <div className="h-4" />
       </PhoneSheet>
     </div>
   );
@@ -135,11 +140,13 @@ function PhoneWeekRow({
   first,
   focus,
   past,
+  kt,
 }: {
   l: Lesson;
   first: boolean;
   focus: boolean;
   past: boolean;
+  kt?: boolean;
 }) {
   const off = l.status !== 'scheduled';
   let st: { text: string; cls: string };
@@ -149,6 +156,7 @@ function PhoneWeekRow({
     st = { text: `${l.room} · перенос с ${wdShort(dayOf(l.movedFrom))}`, cls: 'text-danger' };
   else if (l.previousRoom) st = { text: `${l.room} · изменено`, cls: 'text-danger' };
   else if (l.online) st = { text: 'онлайн', cls: 'text-online' };
+  else if (kt) st = { text: `КТ · ${l.room ?? ''}`, cls: 'text-hero-ink' };
   else st = { text: l.room ?? '', cls: 'text-ink-2' };
   return (
     <div
@@ -252,18 +260,11 @@ export function DeskWeek(p: WeekProps & { calendarHref: string }) {
                 </b>
                 <span className="ml-auto text-[12px] font-bold">
                   {isToday ? 'сегодня' : act ? pairs(act) : 'пар нет'}
+                  {!isToday && p.marks.some((k) => k.day === d) && ' · КТ'}
                 </span>
               </m.div>
             );
           })}
-          <div className="flex items-center gap-2 px-3 text-[13px] font-semibold text-ink-2">
-            {!hasSat && (
-              <>
-                сб<b className="text-[20px] text-ink-2">{dayNum(addDays(p.monday, 5))}</b>
-                <span className="ml-auto text-[12px] font-bold">пар нет</span>
-              </>
-            )}
-          </div>
 
           {slots.map((s, si) => (
             <SlotRow
@@ -274,12 +275,13 @@ export function DeskWeek(p: WeekProps & { calendarHref: string }) {
               lessons={p.lessons}
               focusId={focusId}
               now={now}
+              marks={p.marks}
             />
           ))}
 
           <aside
             className="flex min-h-0 flex-col rounded-[22px] bg-surface px-4 pt-4 pb-3.5"
-            style={{ gridColumn: days.length + 2, gridRow: `2 / span ${slots.length}` }}
+            style={{ gridColumn: days.length + 2, gridRow: `1 / span ${slots.length + 1}` }}
           >
             <b className="text-[18px] font-black">На этой неделе</b>
             <div className="mt-0.5 text-[12px] text-ink-2">что изменилось и что важно</div>
@@ -299,7 +301,7 @@ export function DeskWeek(p: WeekProps & { calendarHref: string }) {
               className="mt-auto flex min-h-11 items-center gap-2 rounded-[14px] bg-desk-chip px-3 text-[13px] font-bold whitespace-nowrap"
             >
               <Icon name="download" size={16} />
-              <span className="flex-1">В календарь телефона</span>
+              <span className="flex-1">Добавить в календарь</span>
               <span aria-hidden>→</span>
             </a>
           </aside>
@@ -316,7 +318,9 @@ function SlotRow({
   lessons,
   focusId,
   now,
+  marks,
 }: {
+  marks: { courseId: string; day: string }[];
   si: number;
   slot: (typeof SLOTS)[number];
   days: string[];
@@ -351,6 +355,7 @@ function SlotRow({
                 past={Date.parse(l.endsAt) < now}
                 now={now}
                 extra={ls.length - 1}
+                kt={marks.some((k) => k.day === d && k.courseId === l.courseId) && isActive(l)}
               />
             ) : (
               <div className="h-full rounded-[16px] bg-surface/40" aria-hidden />
@@ -368,12 +373,14 @@ function WeekCell({
   past,
   now,
   extra,
+  kt,
 }: {
   l: Lesson;
   focus: boolean;
   past: boolean;
   now: number;
   extra: number;
+  kt?: boolean;
 }) {
   const off = l.status !== 'scheduled';
   let tone = 'bg-surface';
@@ -413,6 +420,13 @@ function WeekCell({
     tm = (
       <>
         {hhmm(l.startsAt)} · <span className="font-extrabold text-danger">экзамен</span>
+      </>
+    );
+
+  if (kt && !off && !focus)
+    tm = (
+      <>
+        {hhmm(l.startsAt)} · <span className="font-extrabold text-danger">КТ</span>
       </>
     );
 

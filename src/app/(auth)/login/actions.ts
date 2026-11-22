@@ -56,7 +56,11 @@ export async function loginAction(_: LoginState, form: FormData): Promise<LoginS
         values: { login: loginValue },
       };
     return {
-      error: `Неверный логин или пароль. Осталось ${res.left} ${plural(res.left)}.`,
+      // Счётчик показываем, только когда до паузы осталось мало, — иначе он пугает с первой опечатки.
+      error:
+        res.left <= 2
+          ? `Неверный логин или пароль. Ещё ${res.left} ${plural(res.left)} — потом вход закроется на 15 минут.`
+          : 'Неверный логин или пароль. Проверьте раскладку и Caps Lock.',
       left: res.left,
       values: { login: loginValue },
     };

@@ -42,7 +42,7 @@ export function Calculator({
   );
 
   return (
-    <div className="rounded-[18px] bg-surface-2 p-4">
+    <div className="calc-box h-full rounded-[18px] bg-surface-2 p-4">
       <div className="text-[13px] font-bold text-ink-2">Калькулятор</div>
       {pending.map((p) => (
         <Slider
@@ -90,20 +90,27 @@ export function Calculator({
         </AnimatePresence>
       </div>
       <p className="m-0 mt-3 text-[14px] leading-[1.45]">
-        <b>
-          За семестр — {sem} {sem === points ? '' : `(сейчас ${points})`}.
-        </b>{' '}
-        {control === 'exam' && !admitted
-          ? `Для допуска нужно ${threshold} — не хватает ${threshold - sem}.`
-          : targets
-              .filter((t) => t.need !== null)
-              .slice(0, 2)
-              .map((t) =>
-                t.need === 0
-                  ? `«${t.label}» уже набрано.`
-                  : `Для «${t.label}» (${t.from}) на экзамене нужно ${t.need} из ${examMax}.`,
-              )
-              .join(' ') || 'Высшая оценка уже недостижима — но «удовлетворительно» ещё можно.'}
+        {control === 'exam' && !admitted ? (
+          <>
+            <b>Не хватает {threshold - sem} до допуска.</b> Поднимите баллы за оставшиеся работы.
+          </>
+        ) : (
+          (() => {
+            const t = targets.find((x) => x.need !== null && x.need > 0);
+            const head =
+              sem === points ? `За семестр — ${sem}.` : `Если сдать оставшееся так — ${sem} за семестр.`;
+            return (
+              <>
+                <b>{head}</b>{' '}
+                {t
+                  ? `Для «${t.label}» на экзамене нужно ${t.need} из ${examMax}.`
+                  : targets[0]?.need === 0
+                    ? '«Отлично» уже набрано.'
+                    : 'Двигайте ползунки, чтобы посчитать оценку.'}
+              </>
+            );
+          })()
+        )}
       </p>
     </div>
   );

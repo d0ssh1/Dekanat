@@ -40,6 +40,8 @@ async function shot(page: Page, name: string, w: number, h: number) {
   await page.waitForTimeout(1600);
   const tag = w < 800 ? 'telefon' : 'pk';
   await page.screenshot({ path: `${OUT}/${name}-${tag}.png` });
+  // Таб-бар «прилипает» к низу окна — на снимке страницы целиком он закрывал бы середину.
+  await page.addStyleTag({ content: 'nav[aria-label="Разделы"]{position:static!important}' });
   // Страница целиком — для дизайн-ревью (пустоты внизу, длинные списки).
   await page.screenshot({ path: `tests/visual/output/${name}-${tag}-full.png`, fullPage: true });
 }
@@ -53,7 +55,7 @@ test.beforeAll(() => {
 
 test('снимки экранов', async ({ browser }) => {
   test.setTimeout(240_000);
-  const ctx = await browser.newContext({ reducedMotion: 'no-preference', deviceScaleFactor: 2 });
+  const ctx = await browser.newContext({ reducedMotion: 'reduce', deviceScaleFactor: 2 });
   const student = await ctx.newPage();
   const staffCtx = await browser.newContext({ deviceScaleFactor: 2 });
   const staff = await staffCtx.newPage();

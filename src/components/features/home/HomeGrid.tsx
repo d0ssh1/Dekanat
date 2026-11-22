@@ -57,7 +57,31 @@ const PRESETS: { key: string; label: string; blocks: Block[] }[] = [
   },
   { key: 'min', label: 'Минимум — только расписание', blocks: DEFAULT.map((b) => ({ ...b, hidden: true })) },
 ];
-const SPAN = { S: 'col-span-1', M: 'col-span-2', L: 'col-span-3' } as const;
+const WIDTH = { S: 1, M: 2, L: 3 } as const;
+const SPAN = ['', 'col-span-1', 'col-span-2', 'col-span-3'] as const;
+
+/**
+ * Сколько колонок займёт каждый блок. Размер S/M/L — пожелание; если в ряду остаётся пустая колонка,
+ * последний блок ряда растягивается на неё — на главной не бывает «дыр».
+ */
+export function spansOf(blocks: Pick<Block, 'size'>[]) {
+  const out: number[] = [];
+  let left = 3;
+  let rowLast = -1;
+  blocks.forEach((b, i) => {
+    const w = WIDTH[b.size];
+    if (w > left && rowLast >= 0) {
+      out[rowLast]! += left;
+      left = 3;
+    }
+    out[i] = w;
+    left -= w;
+    rowLast = i;
+    if (left === 0) left = 3;
+  });
+  if (left < 3 && rowLast >= 0) out[rowLast]! += left;
+  return out;
+}
 
 /** Контекст режима настройки: «···» в шапке блока включает его. */
 export const EditCtx = createContext<{ editing: boolean; start: () => void }>({
@@ -67,9 +91,10 @@ export const EditCtx = createContext<{ editing: boolean; start: () => void }>({
 export const useHomeEdit = () => useContext(EditCtx);
 
 /**
- * Сетка блоков главной (макет B2CustomV4): S — 1 колонка, M — 2, L — во всю ширину.
- * В режиме настройки блоки покачиваются, тянутся за ⋮⋮ (мышью, пальцем или стрелками с клавиатуры),
- * меняют размер и прячутся. Раскладка сохраняется в профиле.
+ * Сетка блоков главной (макет B2CustomV4): S — 1 колонка, M — 2, L — во всю ширину;
+ * неполный ряд дотягивается последним блоком (spansOf).
+ * В режиме настройки блоки едва заметно покачиваются, тянутся целиком (мышью, пальцем) или за ⋮⋮
+ * стрелками с клавиатуры, меняют размер и прячутся. Раскладка сохраняется в профиле.
  */
 export function HomeGrid({
   initial,
@@ -89,6 +114,7 @@ export function HomeGrid({
   );
   const visible = blocks.filter((b) => !b.hidden);
   const hidden = blocks.filter((b) => b.hidden);
+  const spans = spansOf(visible);
 
   const onDragEnd = (e: DragEndEvent) => {
     if (!e.over || e.active.id === e.over.id) return;
@@ -167,7 +193,7 @@ export function HomeGrid({
         <SortableContext items={visible.map((b) => b.id)} strategy={rectSortingStrategy}>
           <div className="grid grid-cols-3 gap-3.5">
             {visible.map((b, i) => (
-              <Sortable key={b.id} block={b} index={i} editing={editing} onPatch={patch}>
+              <Sortable key={b.id} block={b} span={spans[i]!} index={i} editing={editing} onPatch={patch}>
                 {render[b.id]}
               </Sortable>
             ))}
@@ -206,12 +232,14 @@ export function HomeGrid({
 
 function Sortable({
   block,
+  span,
   index,
   editing,
   onPatch,
   children,
 }: {
   block: Block;
+  span: number;
   index: number;
   editing: boolean;
   onPatch: (id: BlockId, p: Partial<Block>) => void;
@@ -220,72 +248,86 @@ function Sortable({
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } =
     useSortable({ id: block.id, disabled: !editing });
   return (
-    <m.div
+    // Сдвиг — только переносом (Translate): у блоков разной ширины масштаб искажал их при перетаскивании.
+    // Motion `layout` здесь не ставим — он перебивал transform от dnd-kit, и блок не ехал за курсором.
+    <div
       ref={setNodeRef}
-      layout
-      transition={spring.soft}
       style={{
-        transform: CSS.Transform.toString(transform),
+        transform: CSS.Translate.toString(transform),
         transition,
         zIndex: isDragging ? 10 : undefined,
       }}
-      className={cn(SPAN[block.size], 'relative min-w-0')}
+      className={cn(SPAN[span], 'relative min-w-0')}
     >
       <m.div
-        animate={editing && !isDragging ? { rotate: [0, -0.6, 0.6, 0] } : { rotate: 0 }}
-        transition={editing ? { duration: 0.5, repeat: Infinity, delay: index * 0.07 } : spring.soft}
+        // Блок тянется целиком; кнопки внутри срабатывают, потому что перетаскивание начинается после 6 px.
+        {...(editing ? listeners : {})}
+        animate={
+          isDragging
+            ? { rotate: 0, scale: 1.02 }
+            : editing
+              ? { rotate: [0, -0.25, 0, 0.25, 0], scale: 1 }
+              : { rotate: 0, scale: 1 }
+        }
+        transition={
+          editing && !isDragging
+            ? { duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }
+            : spring.soft
+        }
         className={cn(
-          'h-full rounded-[24px]',
-          editing && 'ring-2 ring-ink-desk/15',
-          isDragging && 'shadow-[0_24px_50px_rgba(20,20,26,.2)]',
+          'flex h-full flex-col rounded-[24px]',
+          editing && 'cursor-grab bg-surface/60 p-1.5 ring-2 ring-ink-desk/10 active:cursor-grabbing',
+          isDragging && 'shadow-[0_24px_50px_rgba(20,20,26,.18)]',
         )}
       >
-        {children}
-      </m.div>
-      {editing && (
-        <div className="absolute inset-x-3 bottom-3 flex items-center gap-1.5 rounded-[14px] bg-surface/95 p-1 shadow-[0_6px_18px_rgba(20,20,26,.12)] backdrop-blur">
-          <button
-            ref={setActivatorNodeRef}
-            type="button"
-            aria-label={`Перетащить блок «${TITLES[block.id]}»`}
-            className="flex size-9 cursor-grab touch-none items-center justify-center rounded-[10px] text-ink-3 active:cursor-grabbing"
-            {...attributes}
-            {...listeners}
-          >
-            <Icon name="grip" size={18} />
-          </button>
-          <div
-            className="flex rounded-[10px] bg-desk-chip p-0.5"
-            role="radiogroup"
-            aria-label={`Размер блока «${TITLES[block.id]}»`}
-          >
-            {(['S', 'M', 'L'] as const).map((s) => (
-              <button
-                key={s}
-                type="button"
-                role="radio"
-                aria-checked={block.size === s}
-                onClick={() => onPatch(block.id, { size: s })}
-                className={cn(
-                  'h-8 w-8 rounded-[8px] text-[12px] font-extrabold',
-                  block.size === s ? 'bg-ink-desk text-surface' : 'text-ink-2',
-                )}
-              >
-                {s}
-              </button>
-            ))}
+        {editing && (
+          <div className="mb-1.5 flex items-center gap-1.5 rounded-[18px] bg-surface p-1">
+            <button
+              ref={setActivatorNodeRef}
+              type="button"
+              aria-label={`Перетащить блок «${TITLES[block.id]}»`}
+              className="flex size-9 touch-none items-center justify-center rounded-[10px] text-ink-3"
+              {...attributes}
+            >
+              <Icon name="grip" size={18} />
+            </button>
+            <span className="flex-1" />
+            <div
+              className="flex rounded-[10px] bg-desk-chip p-0.5"
+              role="radiogroup"
+              aria-label={`Размер блока «${TITLES[block.id]}»`}
+            >
+              {(['S', 'M', 'L'] as const).map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  role="radio"
+                  aria-checked={block.size === s}
+                  onClick={() => onPatch(block.id, { size: s })}
+                  className={cn(
+                    'h-8 w-8 rounded-[8px] text-[12px] font-extrabold transition-colors',
+                    block.size === s ? 'bg-ink-desk text-surface' : 'text-ink-2 hover:text-ink-desk',
+                  )}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label={`Скрыть блок «${TITLES[block.id]}»`}
+              onClick={() => onPatch(block.id, { hidden: true })}
+              className="flex size-9 items-center justify-center rounded-[10px] bg-desk-chip"
+            >
+              <Icon name="eye" size={18} />
+            </button>
           </div>
-          <span className="flex-1" />
-          <button
-            type="button"
-            aria-label={`Скрыть блок «${TITLES[block.id]}»`}
-            onClick={() => onPatch(block.id, { hidden: true })}
-            className="flex size-9 items-center justify-center rounded-[10px] bg-desk-chip"
-          >
-            <Icon name="eye" size={18} />
-          </button>
+        )}
+        {/* В режиме настройки ссылки внутри блока не перехватывают клик и перетаскивание. */}
+        <div className={cn('flex flex-1 flex-col', editing && 'pointer-events-none select-none')}>
+          {children}
         </div>
-      )}
-    </m.div>
+      </m.div>
+    </div>
   );
 }

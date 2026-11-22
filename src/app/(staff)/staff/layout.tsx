@@ -14,9 +14,7 @@ export default async function StaffLayout({ children }: { children: React.ReactN
       <div className="mx-auto max-w-[1280px] px-4 pt-5 pb-10 lg:px-7">
         <header className="flex flex-wrap items-center gap-3">
           <Wordmark variant="desk" />
-          <span className="rounded-[10px] bg-ink-desk px-2.5 py-1 text-[12px] font-bold text-surface">
-            деканат · сотрудник
-          </span>
+          <span className="-ml-1 text-[14px] font-semibold text-ink-2">сотрудник</span>
           <StaffNav />
           <div className="ml-auto flex items-center gap-3">
             <div className="text-right text-[13px] leading-tight">

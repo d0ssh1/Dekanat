@@ -10,6 +10,8 @@ const securityHeaders = [
 
 const config: NextConfig = {
   output: 'standalone',
+  // Тестовый сервер Playwright собирается в свою папку и не мешает `npm run dev`.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   poweredByHeader: false,
   reactStrictMode: true,
   devIndicators: false,

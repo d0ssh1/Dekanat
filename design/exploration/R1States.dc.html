@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R1 — состояния таймера</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit}
+.st{width:360px;height:470px;border-radius:34px;padding:26px 24px;box-sizing:border-box;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.ring{position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;border:44px solid rgba(255,255,255,.2)}
+.lbl{font-size:15px;font-weight:600;position:relative}
+.big{font-size:92px;font-weight:900;letter-spacing:-0.06em;line-height:.9;margin-top:6px;position:relative}
+.big span{font-size:32px;letter-spacing:-0.02em;margin-left:6px}
+.subj{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-top:14px;line-height:1.1}
+.meta{font-size:14px;font-weight:600;margin-top:8px}
+.btn{height:48px;border:0;border-radius:15px;background:#14141A;color:#FFFFFF;font-size:15px;font-weight:700;cursor:pointer;margin-top:auto}
+.cap{width:360px;font-size:14px;line-height:1.45;color:#3A3A46;margin-top:14px}
+.cap b{color:#14141A}
+</style>
+</helmet>
+<div style="width: 1610px; height: 640px; box-sizing: border-box; padding: 40px; display: flex; gap: 30px; background: #E2E2E8; font-family: 'Inter Tight', system-ui, sans-serif; color: #14141A">
+
+  <div>
+    <div class="st" style="background: #C6F24E">
+      <div class="ring"></div>
+      <div class="lbl">Идёт пара · осталось</div>
+      <div class="big">34<span>мин</span></div>
+      <div class="subj">Машинное обучение</div>
+      <div class="meta">Б-214 · до 12:20</div>
+      <div style="height: 8px; border-radius: 4px; background: rgba(20,20,26,.15); margin-top: 16px"><div style="width: 64%; height: 8px; border-radius: 4px; background: #14141A"></div></div>
+      <button type="button" class="btn">Материалы к паре</button>
+    </div>
+    <div class="cap"><b>Во время пары</b> — таймер считает, сколько осталось. Цвет — лайм.</div>
+  </div>
+
+  <div>
+    <div class="st" style="background: #FF6A3D">
+      <div class="ring"></div>
+      <div class="lbl">До следующей пары</div>
+      <div class="big">25<span>мин</span></div>
+      <div class="subj">Машинное обучение</div>
+      <div class="meta">Корпус Б · 2 этаж · ауд. 214</div>
+      <div style="margin-top: 14px; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.35); font-size: 13px; line-height: 1.4; font-weight: 500">Вход со стороны библиотеки, лестница направо, вторая дверь. Идти ~6 минут.</div>
+      <button type="button" class="btn">Схема этажа</button>
+    </div>
+    <div class="cap"><b>Перед очной парой</b> — вместо абстрактного «как пройти»: корпус, этаж, подсказка словами и схема этажа.</div>
+  </div>
+
+  <div>
+    <div class="st" style="background: #7CC4FF">
+      <div class="ring"></div>
+      <div class="lbl">Онлайн-пара через</div>
+      <div class="big">5<span>мин</span></div>
+      <div class="subj">Английский язык</div>
+      <div class="meta">Петрова Е. В. · ссылка от преподавателя</div>
+      <div style="margin-top: 14px; display: flex; gap: 8px; font-size: 13px; font-weight: 600"><span style="padding: 6px 10px; border-radius: 10px; background: rgba(255,255,255,.45)">Камера по желанию</span><span style="padding: 6px 10px; border-radius: 10px; background: rgba(255,255,255,.45)">Запись будет</span></div>
+      <button type="button" class="btn" style="display: flex; align-items: center; justify-content: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3z"></path></svg>Подключиться к паре</button>
+    </div>
+    <div class="cap"><b>Онлайн-пара</b> — главная кнопка сразу ведёт по ссылке. Нажатие на любую онлайн-пару в списке делает то же.</div>
+  </div>
+
+  <div>
+    <div class="st" style="background: #FF8FC7">
+      <div class="ring"></div>
+      <div class="lbl">На сегодня всё</div>
+      <div class="big" style="font-size: 64px; line-height: 1">Свободна<br>до завтра</div>
+      <div class="subj" style="font-size: 19px">Вт, 09:00 — Матстат</div>
+      <div class="meta">ауд. 201 · первая пара</div>
+      <div style="margin-top: 14px; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.4); font-size: 13px; font-weight: 600">Курсовая по БД — через 7 дней</div>
+      <button type="button" class="btn">Расписание на завтра</button>
+    </div>
+    <div class="cap"><b>Пары закончились</b> или выходной — вместо таймера: когда следующая пара и ближайший дедлайн.</div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1610,"height":640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

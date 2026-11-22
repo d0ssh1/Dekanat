@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>R2 v5 — неделя, учёба, предмет</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14141A;text-decoration:none;font-weight:700}
+button,input{font-family:inherit}
+.ico{width:20px;height:20px;flex-shrink:0}
+.phone{width:390px;height:844px;flex-shrink:0;border-radius:48px;box-shadow:0 0 0 10px #14141A;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--hero)}
+.ring{position:absolute;right:-130px;top:-110px;width:340px;height:340px;border-radius:50%;border:54px solid rgba(255,255,255,.16);pointer-events:none}
+.top{padding:50px 18px 22px;position:relative}
+.bar{display:flex;align-items:center;gap:10px}
+.ib{width:44px;height:44px;border-radius:15px;border:0;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:20px;font-weight:700;color:#14141A}
+.cap{font-size:14px;font-weight:700;margin-top:20px}
+.big{font-size:96px;font-weight:900;letter-spacing:-0.06em;line-height:.88;margin-top:4px}
+.big span{font-size:32px;margin-left:8px;letter-spacing:-0.02em}
+.meta{font-size:14px;font-weight:600;margin-top:10px;line-height:1.45}
+.cta{margin-top:16px;width:100%;height:48px;border:0;border-radius:15px;background:#14141A;color:#FFFFFF;font-size:15px;font-weight:800;cursor:pointer}
+.sheet{flex:1;min-height:0;background:#FFFFFF;box-shadow:0 -8px 24px rgba(20,20,26,.08);position:relative;border-radius:28px 28px 0 0;padding:16px 18px 0;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.sh{font-size:18px;font-weight:700}
+.dh{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:800;margin:12px 0 0;padding-top:10px;border-top:2px solid #14141A}
+.dh span{font-size:12px;font-weight:700;color:#4B4B57}
+.row{display:flex;gap:10px;align-items:center;padding:8px 0;font-size:14px;border-top:1px solid #ECE6E2;font-variant-numeric:tabular-nums}
+.row.first{border-top:0}
+.tm{width:44px;font-weight:700}
+.st{font-size:12px;font-weight:700;color:#4B4B57;white-space:nowrap}
+.item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #ECE6E2;font-size:15px;min-height:44px;box-sizing:border-box}
+.item.first{border-top:0}
+.item .s{font-size:12px;font-weight:600;color:#4B4B57;margin-top:2px}
+.sc{font-size:20px;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar2{height:5px;border-radius:3px;background:#ECE6E2;margin-top:6px;position:relative}
+.bar2 i{display:block;height:5px;border-radius:3px;background:#14141A}
+.tab{width:72px;min-height:52px;border:0;background:transparent;color:#4B4B57;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+.tab .pi{width:56px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center}
+.tab.on{color:#14141A;font-weight:800;background:transparent}
+.tab.on .pi{background:#FFE2D4}
+.tab.on .pi svg{fill:#FFE2D4}
+.tabs{height:84px;padding:6px 10px 22px;box-sizing:border-box;background:#FFFFFF;border-top:1px solid #ECE6E2;display:flex;justify-content:space-around;flex-shrink:0;position:relative}
+.fade{position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,rgba(255,255,255,0),#FFFFFF)}
+.capt{font-size:14px;line-height:1.45;color:#3A3A46;width:390px;margin-top:14px}
+.capt b{color:#14141A}
+</style>
+</helmet>
+<div style="--hero: {{hero}}; width: 1350px; height: 1000px; box-sizing: border-box; padding: 40px; display: flex; gap: 50px; background: #E9E4E0; font-family: 'Inter Tight', system-ui, sans-serif; color: #14141A">
+
+<!-- ===== WEEK ===== -->
+<div>
+<div class="phone" style="background: {{hero}}">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="top">
+    <div class="bar"><button type="button" class="ib" aria-label="Предыдущая неделя">‹</button><b style="font-size: 15px; flex: 1; text-align: center">23–28 ноября · неделя 12</b><button type="button" class="ib" aria-label="Следующая неделя">›</button></div>
+    <div class="cap">На этой неделе</div>
+    <div class="big">18<span>пар</span></div>
+    <div class="meta">2 изменения · КТ по матстату в среду · суббота свободна</div>
+  </div>
+  <div class="sheet">
+    <div class="dh" style="margin-top: 0; border-top: 0; padding-top: 0">Пн, 23 · сегодня<span>4 пары</span></div>
+    <div class="row"><b class="tm">09:00</b><span style="flex: 1">Базы данных</span><span class="st">305</span></div>
+    <div class="row"><b class="tm">10:45</b><span style="flex: 1">Машинное обучение</span><span class="st" style="color: #B42318">Б-214 · изменено</span></div>
+    <div class="row"><b class="tm">13:00</b><span style="flex: 1">Английский</span><span class="st" style="color: #1A3FA6">онлайн</span></div>
+    <div class="dh">Вт, 24<span>4 пары</span></div>
+    <div class="row first"><b class="tm">09:00</b><span style="flex: 1">Матстат</span><span class="st">201</span></div>
+    <div class="row"><b class="tm">10:45</b><span style="flex: 1">Веб-разработка</span><span class="st">220</span></div>
+    <div class="row"><b class="tm">13:00</b><span style="flex: 1">Базы данных · лаб.</span><span class="st">404</span></div>
+    <div class="row"><b class="tm">14:50</b><span style="flex: 1">Философия</span><span class="st">101</span></div>
+    <div class="dh">Ср, 25<span>2 пары · КТ</span></div>
+    <div class="row first"><b class="tm">10:45</b><span style="flex: 1; font-weight: 800">КТ по матстату</span><span class="st">201</span></div>
+    <div class="fade" aria-hidden="true"></div>
+  </div>
+  <nav class="tabs" aria-label="Навигация"><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></span>Сегодня</button><button type="button" class="tab on" aria-current="page"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>Неделя</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M3 20h18"></path></svg></span>Учёба</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"></path><path d="M14 3v5h5"></path></svg></span>Документы</button></nav>
+</div>
+<div class="capt"><b>Неделя.</b> Все пары списком по дням, листается вниз; недели — стрелками или свайпом. Изменения подписаны прямо в строке.</div>
+</div>
+
+<!-- ===== STUDY ===== -->
+<div>
+<div class="phone" style="background: {{hero}}">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="top">
+    <div class="bar"><b style="font-size: 17px; flex: 1">Учёба</b><span style="font-size: 13px; font-weight: 700">5 семестр</span></div>
+    <div class="cap">Средний балл</div>
+    <div class="big">4,62</div>
+    <div class="meta">Допуск к сессии 5 из 6 · по ML не хватает 2 баллов · сессия через 28 дней</div>
+    <button type="button" class="cta">Что сделать для допуска по ML</button>
+  </div>
+  <div class="sheet">
+    <div class="sh">Предметы</div>
+    <a href="#" class="item first"><div style="flex: 1"><div>Математическая статистика</div><div class="s">экзамен · 21 декабря</div><div class="bar2"><i style="width: 92%"></i></div></div><span class="sc">92</span></a>
+    <a href="#" class="item"><div style="flex: 1"><div>Базы данных</div><div class="s">экзамен · 25 декабря</div><div class="bar2"><i style="width: 87%"></i></div></div><span class="sc">87</span></a>
+    <a href="#" class="item"><div style="flex: 1"><div>Веб-разработка</div><div class="s">дифф. зачёт · 16 декабря</div><div class="bar2"><i style="width: 81%"></i></div></div><span class="sc">81</span></a>
+    <a href="#" class="item"><div style="flex: 1"><div><b>Машинное обучение</b></div><div class="s" style="color: #B42318">экзамен · нет допуска: 48 из 50</div><div class="bar2"><i style="width: 48%; background: #B42318"></i></div></div><span class="sc" style="color: #B42318">! 48</span></a>
+    <div class="fade" aria-hidden="true"></div>
+  </div>
+  <nav class="tabs" aria-label="Навигация"><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></span>Сегодня</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>Неделя</button><button type="button" class="tab on" aria-current="page"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M3 20h18"></path></svg></span>Учёба</button><button type="button" class="tab"><span class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"></path><path d="M14 3v5h5"></path></svg></span>Документы</button></nav>
+</div>
+<div class="capt"><b>Учёба.</b> «Как у меня дела» одним числом и одной фразой. Ниже предметы: балл, форма контроля и дата. Проблемный — красным, кнопка ведёт к решению.</div>
+</div>
+
+<!-- ===== SUBJECT ===== -->
+<div>
+<div class="phone" style="background: {{hero}}">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="top">
+    <div class="bar"><button type="button" class="ib" aria-label="Назад"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#14141A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg></button><b style="font-size: 15px">Машинное обучение · экзамен</b></div>
+    <div class="cap">До допуска</div>
+    <div class="big">2<span>балла</span></div>
+    <div class="meta">Сдайте лабораторную №5 до 4 декабря — она даёт до 5 баллов. Допуск — от 50.</div>
+    <button type="button" class="cta">Открыть задание лабы №5</button>
+  </div>
+  <div class="sheet">
+    <div class="sh">Из чего баллы · 48 из 60</div>
+    <div class="item first"><span style="flex: 1">Посещение</span><span class="sc">10 / 10</span></div>
+    <div class="item"><span style="flex: 1">Лабораторные 1–4</span><span class="sc">28 / 30</span></div>
+    <div class="item"><span style="flex: 1">Лабораторная 5<div class="s" style="color: #B42318">срок 4 декабря</div></span><span class="sc" style="color: #B42318">0 / 5</span></div>
+    <div class="item"><span style="flex: 1">Контрольная точка</span><span class="sc">10 / 15</span></div>
+    <div style="margin-top: 10px; padding: 12px 14px; border-radius: 14px; background: #F4F1EF; font-size: 14px; line-height: 1.45"><b>Если сдать лабу на 5:</b> 53 балла. Для «отлично» (85) на экзамене нужно 32 из 40.</div>
+  </div>
+</div>
+<div class="capt"><b>Предмет.</b> Откуда взялись баллы и что именно сделать. Калькулятор отвечает на главный вопрос: сколько нужно на экзамене.</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"hero":{"editor":"color","default":"#FF6A3D","options":["#FF6A3D","#C6F24E","#7CC4FF","#FF8FC7","#FFC93C"]},"$preview":{"width":1350,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { hero: this.props.hero ?? '#FF6A3D' };
+  }
+}
+</script>
+</body>
+</html>

@@ -96,7 +96,7 @@ function FocusHero({
         {lesson.previousRoom && (
           <>
             <br />
-            была {lesson.previousRoom}
+            аудиторию поменяли — была {lesson.previousRoom}
           </>
         )}
       </StaggerItem>
@@ -135,8 +135,7 @@ function FreeHero({
   return (
     <Stagger delay={0.04}>
       <StaggerItem className="mt-5 text-[15px] font-bold">
-        {hadLessons ? 'Пары закончились' : 'Сегодня пар нет'} ·{' '}
-        {diffDays(today, nd) === 1 ? 'завтра первая' : 'до следующей'}
+        {hadLessons ? 'Пары закончились' : 'Сегодня пар нет'} · до следующей
       </StaggerItem>
       <StaggerItem
         className={cn(
@@ -151,7 +150,8 @@ function FreeHero({
         {next.subject}
       </StaggerItem>
       <StaggerItem className="mt-1.5 text-[14px] leading-[1.45] font-semibold">
-        {shortDate(nd)}, {hhmm(next.startsAt)} · {next.online ? 'онлайн' : next.room} · {next.teacher}
+        {diffDays(today, nd) === 1 ? 'завтра' : shortDate(nd)}, {hhmm(next.startsAt)} ·{' '}
+        {next.online ? 'онлайн' : next.room} · {next.teacher}
       </StaggerItem>
       <StaggerItem className="mt-4">
         <ButtonLink href="/week" block>
@@ -288,7 +288,7 @@ function DayList({
 function FreeSheet({ todos }: { todos: TodoItem[] }) {
   return (
     <>
-      <SectionHead title="Можно успеть" link={{ href: '/week', label: 'Неделя →' }} />
+      <SectionHead title="Можно успеть" />
       {todos.length ? (
         <TodoList items={todos.slice(0, 4)} />
       ) : (

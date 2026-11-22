@@ -4,11 +4,11 @@
  * Переносы и заявки расставляются относительно «сейчас», поэтому кабинет живой в любой день.
  *
  * Запуск: npm run db:seed (от имени владельца схемы — RLS сиду не мешает).
- * Пароли берутся из SEED_PASSWORD_* или генерируются и сохраняются в test-accounts.local.md (не в git).
+ * Пароли берутся из SEED_PASSWORD_*, иначе из прошлого test-accounts.local.md, иначе генерируются и сохраняются туда (не в git).
  */
 import 'dotenv/config';
 import { randomBytes, randomInt, randomUUID } from 'node:crypto';
-import { writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { sql } from 'drizzle-orm';
@@ -46,10 +46,22 @@ function genPassword() {
   const w = () => WORDS[randomInt(WORDS.length)]!;
   return `${w()}-${w()}-${randomInt(10, 99)}${randomBytes(1).toString('hex')}`;
 }
+/**
+ * Пароль из прошлого сида: пересоздание данных (и прогон тестов) не должно менять пароли —
+ * иначе у того, кто уже вошёл или помнит пароль, вход внезапно перестаёт работать.
+ */
+function previousPassword(login: string) {
+  if (!existsSync('test-accounts.local.md')) return undefined;
+  const row = readFileSync('test-accounts.local.md', 'utf8')
+    .split(/\r?\n/)
+    .map((l) => l.split('|').map((c) => c.trim()))
+    .find((c) => c[2] === login);
+  return row?.[3] || undefined;
+}
 const passwords = {
-  student1: process.env.SEED_PASSWORD_STUDENT1 || genPassword(),
-  student2: process.env.SEED_PASSWORD_STUDENT2 || genPassword(),
-  staff: process.env.SEED_PASSWORD_STAFF || genPassword(),
+  student1: process.env.SEED_PASSWORD_STUDENT1 || previousPassword('alina.vorontsova') || genPassword(),
+  student2: process.env.SEED_PASSWORD_STUDENT2 || previousPassword('daniil.kim') || genPassword(),
+  staff: process.env.SEED_PASSWORD_STAFF || previousPassword('metodist.ivanova') || genPassword(),
 };
 
 // ---------------- Справочники ----------------

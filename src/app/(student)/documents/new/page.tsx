@@ -10,6 +10,18 @@ import { HeroSubmit, NewRequestForm } from '@/components/features/documents/NewR
 
 export const metadata = { title: 'Новая заявка' };
 
+const FAQ: [string, string][] = [
+  [
+    'Сколько ждать?',
+    'Срок указан под каждой справкой. Статус меняется в «Документах», о готовности придёт уведомление.',
+  ],
+  [
+    'Нужна бумага с печатью?',
+    'При оформлении выберите бумажный формат — заберёте справку в дирекции института.',
+  ],
+  ['PDF примут?', 'В каждом PDF есть QR-код: по нему организация сама проверит, что справка настоящая.'],
+];
+
 /**
  * Новая заявка. Одно дерево компонентов на телефон и компьютер (одна форма — одна отправка),
  * различается только оформление: оранжевый верх и «простыня» ↔ две карточки.
@@ -31,6 +43,7 @@ export default async function NewRequestPage({
     sub?: string;
     hero: React.ReactNode;
     body: React.ReactNode;
+    aside?: React.ReactNode;
   }) => (
     <div className="relative flex flex-1 flex-col lg:block">
       <div className="lg:hidden">
@@ -42,27 +55,34 @@ export default async function NewRequestPage({
         </Link>
         <h1 className="m-0 mt-2 mb-[18px] text-[36px] font-black tracking-[-0.03em]">{opts.title}</h1>
       </div>
-      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-3.5">
-        <section className="relative px-[18px] pt-[calc(var(--safe-top)+14px)] pb-[22px] lg:overflow-hidden lg:rounded-[28px] lg:bg-accent-desk lg:p-[26px] lg:shadow-accent">
-          <span
-            aria-hidden
-            className="absolute top-[-90px] right-[-80px] hidden size-60 animate-breathe rounded-full bg-glass-20 lg:block"
-          />
-          <div className="flex items-center gap-2.5 lg:hidden">
-            <Link
-              href={opts.back}
-              aria-label="Назад"
-              className="flex size-11 shrink-0 items-center justify-center rounded-[15px] bg-glass-50"
-            >
-              <Icon name="back" stroke={2.4} />
-            </Link>
-            <div>
-              <b className="text-[15px]">{opts.title}</b>
-              {opts.sub && <div className="text-[12px] font-semibold">{opts.sub}</div>}
+      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-stretch lg:gap-3.5">
+        <div className="contents lg:flex lg:flex-col lg:gap-3.5">
+          <section className="relative px-[18px] pt-[calc(var(--safe-top)+14px)] pb-[22px] lg:overflow-hidden lg:rounded-[28px] lg:bg-accent-desk lg:p-[26px] lg:shadow-accent">
+            <span
+              aria-hidden
+              className="absolute top-[-90px] right-[-80px] hidden size-60 animate-breathe rounded-full bg-glass-20 lg:block"
+            />
+            <div className="flex items-center gap-2.5 lg:hidden">
+              <Link
+                href={opts.back}
+                aria-label="Назад"
+                className="flex size-11 shrink-0 items-center justify-center rounded-[15px] bg-glass-50"
+              >
+                <Icon name="back" stroke={2.4} />
+              </Link>
+              <div>
+                <b className="text-[15px]">{opts.title}</b>
+                {opts.sub && <div className="text-[12px] font-semibold">{opts.sub}</div>}
+              </div>
             </div>
-          </div>
-          <div className="relative">{opts.hero}</div>
-        </section>
+            <div className="relative">{opts.hero}</div>
+          </section>
+          {opts.aside && (
+            <aside className="hidden rounded-[24px] bg-surface px-6 py-5 lg:flex lg:flex-1 lg:flex-col">
+              {opts.aside}
+            </aside>
+          )}
+        </div>
         <section className="relative flex flex-1 flex-col rounded-t-[28px] bg-surface px-[18px] pt-[18px] pb-6 shadow-sheet lg:rounded-[24px] lg:px-6 lg:pt-5 lg:shadow-none">
           {opts.body}
         </section>
@@ -94,6 +114,29 @@ export default async function NewRequestPage({
             </Link>
           </StaggerItem>
         </Stagger>
+      ),
+      aside: (
+        <>
+          <h2 className="m-0 mb-1 text-[18px] font-bold">Частые вопросы</h2>
+          {FAQ.map(([q, a], n) => (
+            <div key={q} className={cn('py-3', n > 0 && 'border-t border-desk-line')}>
+              <div className="text-[15px] font-bold">{q}</div>
+              <div className="mt-0.5 text-[14px] leading-snug text-ink-2">{a}</div>
+            </div>
+          ))}
+          <Link
+            href="/assistant?q=нужна справка, которой нет в списке"
+            className="mt-auto flex items-center gap-3 rounded-[16px] bg-desk-chip px-4 py-3.5 hover:bg-desk-muted"
+          >
+            <span className="min-w-0 flex-1">
+              <b className="block text-[15px]">Не нашли нужную справку?</b>
+              <span className="text-[13px] text-ink-2">Опишите помощнику — подскажет, где её взять</span>
+            </span>
+            <span aria-hidden className="text-[18px] font-bold">
+              →
+            </span>
+          </Link>
+        </>
       ),
       body: (
         <>
@@ -133,7 +176,7 @@ export default async function NewRequestPage({
   return shell({
     back: '/documents',
     title: 'Новая заявка',
-    sub: phrase ? 'собрал помощник по вашей фразе' : undefined,
+    sub: phrase ? 'черновик по вашей фразе' : undefined,
     hero: (
       <Stagger delay={0.04}>
         <StaggerItem className="mt-[22px] text-[14px] font-bold">
@@ -157,6 +200,32 @@ export default async function NewRequestPage({
           <HeroSubmit />
         </StaggerItem>
       </Stagger>
+    ),
+    aside: (
+      <>
+        <h2 className="m-0 mb-1 text-[18px] font-bold">Что будет дальше</h2>
+        {[
+          [
+            'Заявка уходит в дирекцию',
+            'Её видит методист вашего института — номер и статус сразу появятся в «Документах».',
+          ],
+          ['Проверка', 'Если чего-то не хватит, придёт уведомление: что приложить и до какого дня.'],
+          [
+            'Готово',
+            `Срок — ${type.etaText}. PDF с QR-кодом можно скачать, бумажную справку — забрать в дирекции.`,
+          ],
+        ].map(([t, d], n) => (
+          <div key={t} className={cn('flex gap-3 py-3', n > 0 && 'border-t border-desk-line')}>
+            <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-desk-chip text-[13px] font-black">
+              {n + 1}
+            </span>
+            <div>
+              <div className="text-[15px] font-bold">{t}</div>
+              <div className="mt-0.5 text-[14px] leading-snug text-ink-2">{d}</div>
+            </div>
+          </div>
+        ))}
+      </>
     ),
     body: <NewRequestForm type={type} studentLine={studentLine} related={related} source={source} />,
   });

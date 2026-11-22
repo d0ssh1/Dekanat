@@ -110,7 +110,8 @@ export function NewRequestForm({
   );
 
   return (
-    <div>
+    // flex-1: на компьютере форма тянется по высоте колонки, подсказка о выдаче — внизу.
+    <div className="flex flex-1 flex-col">
       <AnimatePresence>
         {error && (
           <m.div
@@ -275,8 +276,10 @@ export function NewRequestForm({
         </>
       )}
       {type.pickupPlace && (
-        <div className="mt-2.5 rounded-[14px] bg-surface-2 px-3.5 py-3 text-[13px] leading-[1.45]">
-          Готовую справку пришлём уведомлением. Бумажную — ауд. {type.pickupPlace}, {DEAN_OFFICE.hours}.
+        <div className="mt-auto pt-2.5">
+          <div className="rounded-[14px] bg-surface-2 px-3.5 py-3 text-[13px] leading-[1.45]">
+            Готовую справку пришлём уведомлением. Бумажную — ауд. {type.pickupPlace}, {DEAN_OFFICE.hours}.
+          </div>
         </div>
       )}
 

@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
+import { test } from '@playwright/test';
 
 export type Account = 'student1' | 'student2' | 'staff';
 const LOGINS: Record<Account, string> = {
@@ -19,8 +20,9 @@ export function credentials(who: Account) {
   if (!password && existsSync('test-accounts.local.md')) {
     const row = readFileSync('test-accounts.local.md', 'utf8')
       .split('\n')
-      .find((l) => l.includes(`| ${LOGINS[who]} |`));
-    password = row?.split('|')[3]?.trim();
+      .map((l) => l.split('|').map((c) => c.trim()))
+      .find((cells) => cells[2] === LOGINS[who]);
+    password = row?.[3];
   }
   if (!password) throw new Error(`Нет пароля для ${who}: задайте ${env} или запустите npm run db:seed`);
   return { login: LOGINS[who], password };
@@ -34,3 +36,6 @@ export async function login(page: Page, who: Account) {
   await page.getByRole('button', { name: 'Войти' }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
 }
+
+/** Адрес сервера, на котором идёт прогон (локально — тестовый :3100, в CI — :3000). */
+export const baseOrigin = () => new URL(test.info().project.use.baseURL!).origin;
