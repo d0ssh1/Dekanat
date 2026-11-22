@@ -143,3 +143,36 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Ползунок калькулятора: дорожка с заливкой и крупный бегунок (зона касания 44 px). */
+.calc-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--ink) var(--pct), var(--line) var(--pct));
+}
+.calc-range::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--ink) var(--pct), var(--line) var(--pct));
+}
+.calc-range::-webkit-slider-thumb {
+  appearance: none;
+  margin-top: -9px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  box-shadow: 0 4px 10px rgba(20, 20, 26, 0.18);
+  transition: transform 0.15s;
+}
+.calc-range:active::-webkit-slider-thumb {
+  transform: scale(1.18);
+}
+.calc-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+}
