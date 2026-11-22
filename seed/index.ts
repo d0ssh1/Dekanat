@@ -887,6 +887,14 @@ async function main() {
       ['issued', hoursAgo(300, now), uStaff],
     ],
   });
+  await request({
+    number: 1061,
+    studentId: uKim,
+    type: 'call_cert',
+    delivery: 'pdf_and_paper',
+    payload: { employer: 'ООО «Тихоокеанский кофе»' },
+    events: [['sent', hoursAgo(3, now), uKim]],
+  });
   await client`select setval(pg_get_serial_sequence('requests', 'number'), (select max(number) from requests))`;
 
   // Уведомления

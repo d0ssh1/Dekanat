@@ -39,7 +39,7 @@ export default async function RequestPage({ params }: { params: Promise<{ id: st
         {missing[0]?.title ?? 'Документ'}
       </StaggerItem>
       <StaggerItem className="mt-2.5 text-[14px] leading-[1.45] font-semibold">
-        {lastNeed?.comment ?? 'Деканат просит приложить документ.'}
+        {(lastNeed?.comment ?? 'Деканат просит приложить документ').replace(/[.!]?$/, '.')}
         {r.actionDueOn && (
           <>
             {' '}

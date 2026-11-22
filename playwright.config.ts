@@ -8,7 +8,10 @@ config();
  * Локально переиспользует уже запущенный `npm run dev`; в CI поднимает сборку сам.
  */
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: './tests',
+  testMatch: /(e2e|visual)\/.*\.spec\.ts$/,
+  // Снимки экранов запускаются отдельно: npx playwright test tests/visual --project=desktop
+  testIgnore: process.env.SCREENS ? [] : ['**/visual/**'],
   fullyParallel: false,
   workers: 1,
   retries: process.env.CI ? 1 : 0,

@@ -171,12 +171,12 @@ export function AssistantView({
 
         {/* ---------- «Простыня» / правая колонка ---------- */}
         <section className="relative flex flex-1 flex-col rounded-t-[28px] bg-surface px-[18px] pt-4 shadow-sheet lg:rounded-[24px] lg:px-6 lg:pt-5 lg:pb-5 lg:shadow-none">
-          <AnimatePresence mode="wait" initial={false}>
+          {/* Без ожидания выезда: при быстрой смене «думаю → ответ» содержимое не застревает. */}
+          <>
             <m.div
               key={(last?.id ?? 'empty') + String(Boolean(last?.card))}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
               className="flex-1"
             >
               {last?.card?.kind === 'draft' ? (
@@ -195,7 +195,7 @@ export function AssistantView({
               )}
               {earlier.length > 0 && <Earlier turns={earlier} />}
             </m.div>
-          </AnimatePresence>
+          </>
 
           <form
             className="sticky bottom-[calc(var(--safe-bottom)+80px)] z-10 -mx-[18px] mt-4 bg-surface px-[18px] pt-2.5 pb-3 lg:bottom-0 lg:mx-0 lg:px-0 lg:pb-0"

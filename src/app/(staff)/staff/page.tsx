@@ -20,8 +20,10 @@ const TABS = [
 export default async function StaffQueue({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
   const viewer = await requireStaff();
   const sp = await searchParams;
-  const tab = TABS.find((t) => t.key === sp.tab) ?? TABS[0];
   const all = await listQueue(viewer);
+  // Без выбранной вкладки открываем первую непустую — методист сразу видит, что разбирать.
+  const firstBusy = TABS.find((t) => all.some((r) => (t.statuses as readonly string[]).includes(r.status)));
+  const tab = TABS.find((t) => t.key === sp.tab) ?? firstBusy ?? TABS[0];
   const counts = Object.fromEntries(
     TABS.map((t) => [t.key, all.filter((r) => (t.statuses as readonly string[]).includes(r.status)).length]),
   );
@@ -34,7 +36,7 @@ export default async function StaffQueue({ searchParams }: { searchParams: Promi
         {TABS.map((t) => (
           <Link
             key={t.key}
-            href={t.key === 'sent' ? '/staff' : `/staff?tab=${t.key}`}
+            href={`/staff?tab=${t.key}`}
             role="tab"
             aria-selected={t.key === tab.key}
             className={cn(
