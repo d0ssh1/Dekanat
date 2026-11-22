@@ -1,9 +1,9 @@
 /*
- * Токены из финальных макетов (design/boards). Источник правды для цветов, радиусов и шрифта.
+ * Токены из финальных макетов (design/boards). Источник правды для цветов, радиусов, теней.
  * Цвета «на глаз» в компонентах запрещены — только эти переменные (см. CLAUDE.md).
  */
 :root {
-  /* Телефон: язык A1Calm / B2Phone */
+  /* Телефон: язык B2Phone */
   --hero: #ff6a3d;
   --hero-wash: #ffe2d4;
   --hero-ink: #9e4317;
@@ -11,10 +11,12 @@
   --surface-2: #f4f1ef;
   --line: #ece6e2;
   --canvas: #e9e4e0;
+  --join: #e8eeff;
 
   /* Компьютер: язык B2Next */
   --accent-desk: #ff6b2c;
   --desk-bg: #efeff4;
+  --desk-board: #dadbe5;
   --desk-muted: #e6e6ec;
   --desk-chip: #f3f3f7;
   --desk-line: #eeeef2;
@@ -23,8 +25,10 @@
   /* Текст */
   --ink: #14141a;
   --ink-desk: #16161d;
+  --ink-soft: #33333d;
   --ink-2: #4b4b57;
   --ink-3: #8a8a96;
+  --ink-4: #9a9aa6;
 
   /* Статусы */
   --ok: #0b6b43;
@@ -35,10 +39,18 @@
   --online-desk: #1e44c4;
   --online-wash: #e9efff;
 
-  /* Радиусы */
-  --r-card: 28px;
-  --r-block: 24px;
-  --r-day: 16px;
-  --r-btn: 14px;
-  --r-icon: 10px;
+  /* Тени */
+  --shadow-sheet: 0 -8px 24px rgba(20, 20, 26, 0.08);
+  --shadow-accent: 0 22px 44px rgba(255, 107, 44, 0.3);
+  --shadow-frame: 0 24px 60px rgba(22, 22, 29, 0.14);
+
+  /* Белая полупрозрачность на оранжевом */
+  --glass-50: rgba(255, 255, 255, 0.5);
+  --glass-92: rgba(255, 255, 255, 0.92);
+  --glass-16: rgba(255, 255, 255, 0.16);
+  --glass-20: rgba(255, 255, 255, 0.2);
+
+  /* Безопасные зоны телефона */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }

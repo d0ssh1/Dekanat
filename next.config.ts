@@ -12,6 +12,7 @@ const config: NextConfig = {
   output: 'standalone',
   poweredByHeader: false,
   reactStrictMode: true,
+  devIndicators: false,
   // нативный модуль argon2 не бандлим
   serverExternalPackages: ['@node-rs/argon2'],
   experimental: {

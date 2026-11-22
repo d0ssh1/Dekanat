@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { UNIVERSITY } from '@/lib/university';
+import { MotionProvider } from '@/components/motion/MotionProvider';
+import { ToastProvider } from '@/components/motion/Toast';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -27,7 +29,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <MotionProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </MotionProvider>
+      </body>
     </html>
   );
 }
