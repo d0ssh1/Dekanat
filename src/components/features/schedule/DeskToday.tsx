@@ -227,13 +227,21 @@ export function DeskToday({
                     <span className="min-w-0 flex-1 truncate">{after.lessons[0]!.short}</span>
                     <DeskValue>{after.lessons[0]!.online ? 'онлайн' : after.lessons[0]!.room}</DeskValue>
                   </DeskRow>
-                  <DeskRow>
-                    <span className="flex-1 text-ink-2">
-                      {after.lessons.length > 1
-                        ? `ещё ${pairs(after.lessons.length - 1)} · до ${hhmm(after.lessons.at(-1)!.endsAt)}`
-                        : `одна пара · до ${hhmm(after.lessons[0]!.endsAt)}`}
-                    </span>
-                  </DeskRow>
+                  {after.lessons.length === 2 ? (
+                    <DeskRow>
+                      <b className="w-11 tabular">{hhmm(after.lessons[1]!.startsAt)}</b>
+                      <span className="min-w-0 flex-1 truncate">{after.lessons[1]!.short}</span>
+                      <DeskValue>{after.lessons[1]!.online ? 'онлайн' : after.lessons[1]!.room}</DeskValue>
+                    </DeskRow>
+                  ) : (
+                    <DeskRow>
+                      <span className="flex-1 text-ink-2">
+                        {after.lessons.length > 2
+                          ? `ещё ${pairs(after.lessons.length - 1)}, последняя до ${hhmm(after.lessons.at(-1)!.endsAt)}`
+                          : `одна пара, до ${hhmm(after.lessons[0]!.endsAt)}`}
+                      </span>
+                    </DeskRow>
+                  )}
                 </>
               ) : (
                 <DeskRow>

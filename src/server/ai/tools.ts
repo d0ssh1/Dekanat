@@ -67,9 +67,20 @@ export async function toolSchedule(viewer: StudentViewer, day: string, now: Date
     rows: lessons.map(lessonRow),
     links: [{ href: '/week', label: 'Вся неделя' }],
   };
+  // Модели — полный список с началом и концом каждой пары: иначе она путала конец последней пары с началом второй.
+  const list = act
+    .map(
+      (l) =>
+        `${hhmm(l.startsAt)}–${hhmm(l.endsAt)} ${l.subject} (${l.kindLabel}, ${l.online ? 'онлайн' : `ауд. ${l.room}`})`,
+    )
+    .join('; ');
+  const off = lessons
+    .filter((l) => !isActive(l))
+    .map((l) => `${hhmm(l.startsAt)} ${l.subject} — ${l.status === 'moved' ? 'перенесена' : 'отменена'}`)
+    .join('; ');
   const text = act.length
-    ? `${label} ${pairs(act.length)}: первая в ${hhmm(act[0]!.startsAt)} (${act[0]!.subject}, ${act[0]!.online ? 'онлайн' : `ауд. ${act[0]!.room}`}), последняя заканчивается в ${hhmm(act.at(-1)!.endsAt)}.`
-    : `${label} пар нет.`;
+    ? `${label} ${pairs(act.length)}: ${list}.${off ? ` Не состоится: ${off}.` : ''}`
+    : `${label} пар нет.${off ? ` Не состоится: ${off}.` : ''}`;
   return { text, card, data: lessons };
 }
 
